@@ -7,13 +7,15 @@ part 'taskInSprint.g.dart';
 class TaskInSprint extends Table {
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get value => text().withLength(min: 1, max: 50)();
-
   IntColumn get status => integer()();
 
-  IntColumn get subcategoryId => integer()
+  IntColumn get sprintId => integer()
       .nullable()
-      .customConstraint('NULLABLE REFERENCES subcategories(id)')();
+      .customConstraint('NULLABLE REFERENCES sprints(id)')();
+
+  IntColumn get taskId => integer()
+      .nullable()
+      .customConstraint('NULLABLE REFERENCES tasks(id)')();
 
 }
 

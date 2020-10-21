@@ -12,19 +12,19 @@ class CategoryBlock {
   }
 
   Stream<List<CategoryData>> getCategoriesStream() {
-    return db.categoryDao.watchAllCategories();
+    return db.categoryDao.watchAll();
   }
   
   Future<List<CategoryData>> getCategoriesFuture() {
-    return db.categoryDao.getAllCategories();
+    return db.categoryDao.getAll();
   }
 
   Stream<List<SubcategoryData>> getSubcategoriesStream(int categoryId) {
-    return db.subcategoryDao.watchSubcategoriesByCategoryId(categoryId);
+    return db.subcategoryDao.watchByCategoryId(categoryId);
   }
   
   Future<List<SubcategoryData>> getSubcategories(int categoryId) {
-    return db.subcategoryDao.getSubcategoriesByCategoryId(categoryId);
+    return db.subcategoryDao.getByCategoryId(categoryId);
   }
 
   close() {

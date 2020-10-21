@@ -1085,27 +1085,23 @@ class $SprintTable extends Sprint with TableInfo<$SprintTable, SprintData> {
 class TaskInSprintData extends DataClass
     implements Insertable<TaskInSprintData> {
   final int id;
-  final String value;
   final int status;
-  final int subcategoryId;
+  final int sprintId;
+  final int taskId;
   TaskInSprintData(
-      {@required this.id,
-      @required this.value,
-      @required this.status,
-      this.subcategoryId});
+      {@required this.id, @required this.status, this.sprintId, this.taskId});
   factory TaskInSprintData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
     return TaskInSprintData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      value:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}value']),
       status: intType.mapFromDatabaseResponse(data['${effectivePrefix}status']),
-      subcategoryId: intType
-          .mapFromDatabaseResponse(data['${effectivePrefix}subcategory_id']),
+      sprintId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}sprint_id']),
+      taskId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}task_id']),
     );
   }
   @override
@@ -1114,14 +1110,14 @@ class TaskInSprintData extends DataClass
     if (!nullToAbsent || id != null) {
       map['id'] = Variable<int>(id);
     }
-    if (!nullToAbsent || value != null) {
-      map['value'] = Variable<String>(value);
-    }
     if (!nullToAbsent || status != null) {
       map['status'] = Variable<int>(status);
     }
-    if (!nullToAbsent || subcategoryId != null) {
-      map['subcategory_id'] = Variable<int>(subcategoryId);
+    if (!nullToAbsent || sprintId != null) {
+      map['sprint_id'] = Variable<int>(sprintId);
+    }
+    if (!nullToAbsent || taskId != null) {
+      map['task_id'] = Variable<int>(taskId);
     }
     return map;
   }
@@ -1129,13 +1125,13 @@ class TaskInSprintData extends DataClass
   TaskInSprintCompanion toCompanion(bool nullToAbsent) {
     return TaskInSprintCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      value:
-          value == null && nullToAbsent ? const Value.absent() : Value(value),
       status:
           status == null && nullToAbsent ? const Value.absent() : Value(status),
-      subcategoryId: subcategoryId == null && nullToAbsent
+      sprintId: sprintId == null && nullToAbsent
           ? const Value.absent()
-          : Value(subcategoryId),
+          : Value(sprintId),
+      taskId:
+          taskId == null && nullToAbsent ? const Value.absent() : Value(taskId),
     );
   }
 
@@ -1144,9 +1140,9 @@ class TaskInSprintData extends DataClass
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return TaskInSprintData(
       id: serializer.fromJson<int>(json['id']),
-      value: serializer.fromJson<String>(json['value']),
       status: serializer.fromJson<int>(json['status']),
-      subcategoryId: serializer.fromJson<int>(json['subcategoryId']),
+      sprintId: serializer.fromJson<int>(json['sprintId']),
+      taskId: serializer.fromJson<int>(json['taskId']),
     );
   }
   @override
@@ -1154,86 +1150,84 @@ class TaskInSprintData extends DataClass
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'value': serializer.toJson<String>(value),
       'status': serializer.toJson<int>(status),
-      'subcategoryId': serializer.toJson<int>(subcategoryId),
+      'sprintId': serializer.toJson<int>(sprintId),
+      'taskId': serializer.toJson<int>(taskId),
     };
   }
 
-  TaskInSprintData copyWith(
-          {int id, String value, int status, int subcategoryId}) =>
+  TaskInSprintData copyWith({int id, int status, int sprintId, int taskId}) =>
       TaskInSprintData(
         id: id ?? this.id,
-        value: value ?? this.value,
         status: status ?? this.status,
-        subcategoryId: subcategoryId ?? this.subcategoryId,
+        sprintId: sprintId ?? this.sprintId,
+        taskId: taskId ?? this.taskId,
       );
   @override
   String toString() {
     return (StringBuffer('TaskInSprintData(')
           ..write('id: $id, ')
-          ..write('value: $value, ')
           ..write('status: $status, ')
-          ..write('subcategoryId: $subcategoryId')
+          ..write('sprintId: $sprintId, ')
+          ..write('taskId: $taskId')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(value.hashCode, $mrjc(status.hashCode, subcategoryId.hashCode))));
+      $mrjc(status.hashCode, $mrjc(sprintId.hashCode, taskId.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is TaskInSprintData &&
           other.id == this.id &&
-          other.value == this.value &&
           other.status == this.status &&
-          other.subcategoryId == this.subcategoryId);
+          other.sprintId == this.sprintId &&
+          other.taskId == this.taskId);
 }
 
 class TaskInSprintCompanion extends UpdateCompanion<TaskInSprintData> {
   final Value<int> id;
-  final Value<String> value;
   final Value<int> status;
-  final Value<int> subcategoryId;
+  final Value<int> sprintId;
+  final Value<int> taskId;
   const TaskInSprintCompanion({
     this.id = const Value.absent(),
-    this.value = const Value.absent(),
     this.status = const Value.absent(),
-    this.subcategoryId = const Value.absent(),
+    this.sprintId = const Value.absent(),
+    this.taskId = const Value.absent(),
   });
   TaskInSprintCompanion.insert({
     this.id = const Value.absent(),
-    @required String value,
     @required int status,
-    this.subcategoryId = const Value.absent(),
-  })  : value = Value(value),
-        status = Value(status);
+    this.sprintId = const Value.absent(),
+    this.taskId = const Value.absent(),
+  }) : status = Value(status);
   static Insertable<TaskInSprintData> custom({
     Expression<int> id,
-    Expression<String> value,
     Expression<int> status,
-    Expression<int> subcategoryId,
+    Expression<int> sprintId,
+    Expression<int> taskId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (value != null) 'value': value,
       if (status != null) 'status': status,
-      if (subcategoryId != null) 'subcategory_id': subcategoryId,
+      if (sprintId != null) 'sprint_id': sprintId,
+      if (taskId != null) 'task_id': taskId,
     });
   }
 
   TaskInSprintCompanion copyWith(
       {Value<int> id,
-      Value<String> value,
       Value<int> status,
-      Value<int> subcategoryId}) {
+      Value<int> sprintId,
+      Value<int> taskId}) {
     return TaskInSprintCompanion(
       id: id ?? this.id,
-      value: value ?? this.value,
       status: status ?? this.status,
-      subcategoryId: subcategoryId ?? this.subcategoryId,
+      sprintId: sprintId ?? this.sprintId,
+      taskId: taskId ?? this.taskId,
     );
   }
 
@@ -1243,14 +1237,14 @@ class TaskInSprintCompanion extends UpdateCompanion<TaskInSprintData> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (value.present) {
-      map['value'] = Variable<String>(value.value);
-    }
     if (status.present) {
       map['status'] = Variable<int>(status.value);
     }
-    if (subcategoryId.present) {
-      map['subcategory_id'] = Variable<int>(subcategoryId.value);
+    if (sprintId.present) {
+      map['sprint_id'] = Variable<int>(sprintId.value);
+    }
+    if (taskId.present) {
+      map['task_id'] = Variable<int>(taskId.value);
     }
     return map;
   }
@@ -1259,9 +1253,9 @@ class TaskInSprintCompanion extends UpdateCompanion<TaskInSprintData> {
   String toString() {
     return (StringBuffer('TaskInSprintCompanion(')
           ..write('id: $id, ')
-          ..write('value: $value, ')
           ..write('status: $status, ')
-          ..write('subcategoryId: $subcategoryId')
+          ..write('sprintId: $sprintId, ')
+          ..write('taskId: $taskId')
           ..write(')'))
         .toString();
   }
@@ -1281,15 +1275,6 @@ class $TaskInSprintTable extends TaskInSprint
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
-  final VerificationMeta _valueMeta = const VerificationMeta('value');
-  GeneratedTextColumn _value;
-  @override
-  GeneratedTextColumn get value => _value ??= _constructValue();
-  GeneratedTextColumn _constructValue() {
-    return GeneratedTextColumn('value', $tableName, false,
-        minTextLength: 1, maxTextLength: 50);
-  }
-
   final VerificationMeta _statusMeta = const VerificationMeta('status');
   GeneratedIntColumn _status;
   @override
@@ -1302,19 +1287,26 @@ class $TaskInSprintTable extends TaskInSprint
     );
   }
 
-  final VerificationMeta _subcategoryIdMeta =
-      const VerificationMeta('subcategoryId');
-  GeneratedIntColumn _subcategoryId;
+  final VerificationMeta _sprintIdMeta = const VerificationMeta('sprintId');
+  GeneratedIntColumn _sprintId;
   @override
-  GeneratedIntColumn get subcategoryId =>
-      _subcategoryId ??= _constructSubcategoryId();
-  GeneratedIntColumn _constructSubcategoryId() {
-    return GeneratedIntColumn('subcategory_id', $tableName, true,
-        $customConstraints: 'NULLABLE REFERENCES subcategories(id)');
+  GeneratedIntColumn get sprintId => _sprintId ??= _constructSprintId();
+  GeneratedIntColumn _constructSprintId() {
+    return GeneratedIntColumn('sprint_id', $tableName, true,
+        $customConstraints: 'NULLABLE REFERENCES sprints(id)');
+  }
+
+  final VerificationMeta _taskIdMeta = const VerificationMeta('taskId');
+  GeneratedIntColumn _taskId;
+  @override
+  GeneratedIntColumn get taskId => _taskId ??= _constructTaskId();
+  GeneratedIntColumn _constructTaskId() {
+    return GeneratedIntColumn('task_id', $tableName, true,
+        $customConstraints: 'NULLABLE REFERENCES tasks(id)');
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, value, status, subcategoryId];
+  List<GeneratedColumn> get $columns => [id, status, sprintId, taskId];
   @override
   $TaskInSprintTable get asDslTable => this;
   @override
@@ -1329,23 +1321,19 @@ class $TaskInSprintTable extends TaskInSprint
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (data.containsKey('value')) {
-      context.handle(
-          _valueMeta, value.isAcceptableOrUnknown(data['value'], _valueMeta));
-    } else if (isInserting) {
-      context.missing(_valueMeta);
-    }
     if (data.containsKey('status')) {
       context.handle(_statusMeta,
           status.isAcceptableOrUnknown(data['status'], _statusMeta));
     } else if (isInserting) {
       context.missing(_statusMeta);
     }
-    if (data.containsKey('subcategory_id')) {
-      context.handle(
-          _subcategoryIdMeta,
-          subcategoryId.isAcceptableOrUnknown(
-              data['subcategory_id'], _subcategoryIdMeta));
+    if (data.containsKey('sprint_id')) {
+      context.handle(_sprintIdMeta,
+          sprintId.isAcceptableOrUnknown(data['sprint_id'], _sprintIdMeta));
+    }
+    if (data.containsKey('task_id')) {
+      context.handle(_taskIdMeta,
+          taskId.isAcceptableOrUnknown(data['task_id'], _taskIdMeta));
     }
     return context;
   }
