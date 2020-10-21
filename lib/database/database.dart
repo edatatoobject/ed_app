@@ -1,12 +1,16 @@
 import 'package:ed_app/database/entities/category.dart';
 import 'package:ed_app/database/entities/subcategory.dart';
+import 'package:ed_app/database/entities/taskInSprint.dart';
 import 'package:flutter/material.dart';
 import 'package:moor/moor.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 
+import 'entities/sprint.dart';
+import 'entities/task.dart';
+
 part 'database.g.dart';
 
-@UseMoor(tables: [Category, Subcategory], daos: [CategoryDao, SubcategoryDao])
+@UseMoor(tables: [Category, Subcategory, Task, Sprint, TaskInSprint], daos: [CategoryDao, SubcategoryDao, TaskDao, SprintDao, TaskInSprintDao])
 class Database extends _$Database {
   Database()
       // Specify the location of the database file

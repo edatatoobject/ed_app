@@ -18,16 +18,19 @@ class CategoryDao extends DatabaseAccessor<Database> with _$CategoryDaoMixin {
 
   CategoryDao(this.db) : super(db);
 
-  Future<List<CategoryData>> getAllCategories() => select(category).get();
+  Future<List<CategoryData>> getAll() => select(category).get();
 
   // Moor supports Streams which emit elements when the watched data changes
-  Stream<List<CategoryData>> watchAllCategories() => select(category).watch();
+  Stream<List<CategoryData>> watchAll() => select(category).watch();
+  
+  Future insertEntity(CategoryData categoryModel) =>
+      into(category).insert(categoryModel);
 
   // Updates a Task with a matching primary key
-  Future updateCategory(CategoryData categoryModel) =>
+  Future updateEntity(CategoryData categoryModel) =>
       update(category).replace(categoryModel);
 
-  Future deleteCategory(CategoryData categoryModel) =>
+  Future deleteEntity(CategoryData categoryModel) =>
       delete(category).delete(categoryModel);
 
   close() {

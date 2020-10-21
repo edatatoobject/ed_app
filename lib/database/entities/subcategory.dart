@@ -25,31 +25,31 @@ class SubcategoryDao extends DatabaseAccessor<Database>
     db.close();
   }
 
-  Stream<List<SubcategoryData>> watchAllSubcategories() =>
+  Stream<List<SubcategoryData>> watchAll() =>
       select(subcategory).watch();
 
-  Future<List<SubcategoryData>> getAllSubcategories() =>
+  Future<List<SubcategoryData>> getAll() =>
       select(subcategory).get();
 
-  Stream<List<SubcategoryData>> watchSubcategoriesByCategoryId(int categoryId) {
+  Stream<List<SubcategoryData>> watchByCategoryId(int categoryId) {
     return (select(subcategory)
           ..where((tbl) => tbl.categoryId.equals(categoryId)))
         .watch();
   }
 
-  Future<List<SubcategoryData>> getSubcategoriesByCategoryId(int categoryId) {
+  Future<List<SubcategoryData>> getByCategoryId(int categoryId) {
     return (select(subcategory)
           ..where((tbl) => tbl.categoryId.equals(categoryId)))
         .get();
   }
 
-  Future insertCategory(SubcategoryData subcategoryModel) =>
+  Future insertEntity(SubcategoryData subcategoryModel) =>
       into(subcategory).insert(subcategoryModel);
 
   // Updates a Task with a matching primary key
-  Future updateCategory(SubcategoryData subcategoryModel) =>
+  Future updateEntity(SubcategoryData subcategoryModel) =>
       update(subcategory).replace(subcategoryModel);
 
-  Future deleteCategory(SubcategoryData subcategoryModel) =>
+  Future deleteEntity(SubcategoryData subcategoryModel) =>
       delete(subcategory).delete(subcategoryModel);
 }
