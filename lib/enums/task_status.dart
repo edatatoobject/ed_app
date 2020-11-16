@@ -1,0 +1,4 @@
+enum TaskStatus{
+  ToDo,
+  Done
+}

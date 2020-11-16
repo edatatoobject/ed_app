@@ -5,5 +5,6 @@ class Sprint {
   final DateTime finishDate;
   final int duration;
 
-  Sprint(this.id, this.number, this.startDate, this.finishDate, this.duration);
+  Sprint(
+      {this.id, this.number, this.startDate, this.finishDate, this.duration});
 }

@@ -3,5 +3,5 @@ class Subcategory {
   final String name;
   final String categoryId;
 
-  Subcategory(this.id, this.name, this.categoryId);
+  Subcategory({this.id, this.name, this.categoryId});
 }
