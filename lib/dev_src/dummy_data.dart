@@ -1,8 +1,8 @@
-import 'package:ed_app/classes/category.dart';
-import 'package:ed_app/classes/sprint.dart';
-import 'package:ed_app/classes/subcategory.dart';
-import 'package:ed_app/classes/task.dart';
-import 'package:ed_app/classes/taskInSprint.dart';
+import 'package:ed_app/models/category.dart';
+import 'package:ed_app/models/sprint.dart';
+import 'package:ed_app/models/subcategory.dart';
+import 'package:ed_app/models/task.dart';
+import 'package:ed_app/models/taskInSprint.dart';
 import 'package:ed_app/enums/category_size.dart';
 import 'package:ed_app/enums/task_in_sprint_status.dart';
 import 'package:ed_app/enums/task_status.dart';
