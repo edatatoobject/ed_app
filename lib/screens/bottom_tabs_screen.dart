@@ -1,5 +1,5 @@
 import 'package:animations/animations.dart';
-import 'package:ed_app/screens/category_screen.dart';
+import 'package:ed_app/screens/category/category_screen.dart';
 import 'package:ed_app/screens/placeholder_screen.dart';
 import 'package:flutter/material.dart';
 

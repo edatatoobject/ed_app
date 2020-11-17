@@ -1,36 +1,38 @@
+import 'package:ed_app/models/category.dart';
 import 'package:ed_app/models/subcategory.dart';
-import 'package:ed_app/providers/category_provider.dart';
-import 'package:ed_app/providers/subcategory_provider.dart';
-import 'package:ed_app/providers/task_provider.dart';
+import 'package:ed_app/models/task.dart';
 import 'package:flutter/cupertino.dart';
 
 class CategoryDataBlock extends ChangeNotifier {
-  final CategoryProvider _categoryProvider;
-  final SubcategoryProvider _subcategoryProvider;
-  final TaskProvider _taskProvider;
+  final List<Category> _categories;
+  final List<Subcategory> _subcategories;
+  final List<Task> _tasks;
 
-  CategoryDataBlock(
-      this._categoryProvider, this._subcategoryProvider, this._taskProvider);
+  CategoryDataBlock(this._categories, this._subcategories, this._tasks);
+
+  Category getCategoryById(String categoryId) {
+    return _categories.firstWhere((category) => category.id == categoryId);
+  }
 
   List<Subcategory> getSubcategoriesByCategoryId(String categoryId) {
-    return _subcategoryProvider.items
+    return _subcategories
         .where((subcategory) => subcategory.categoryId == categoryId)
         .toList();
   }
 
   int getSubcategoryCount(String categoryId) {
-    return _subcategoryProvider.items
+    return _subcategories
         .where((subcategory) => subcategory.categoryId == categoryId)
         .length;
   }
 
   int getTasksCount(String categoryId) {
-    var subcategoryIds = _subcategoryProvider.items
+    var subcategoryIds = _subcategories
         .where((subcategory) => subcategory.categoryId == categoryId)
         .map((subcategory) => subcategory.id)
         .toList();
 
-    return _taskProvider.items
+    return _tasks
         .where((task) => subcategoryIds.contains(task.subcategoryId))
         .length;
   }

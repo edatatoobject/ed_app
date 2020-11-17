@@ -1,5 +1,6 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/models/icon_data.dart';
+import 'package:ed_app/screens/category/category_detail_screen.dart';
 import 'package:ed_app/widgets/category_screen/category_expanded_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,38 +24,29 @@ class CategoryItem extends StatefulWidget {
 }
 
 class _CategoryItemState extends State<CategoryItem> {
-  bool _expanded = false;
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<CategoryDataBlock>(
-      builder: (context, dataBloc, child) {
-        return Card(
-            margin: EdgeInsets.all(10),
-            child: InkWell(
-              onTap: () {
-                print("tapetOnCategory");
-                setState(() {
-                  _expanded = !_expanded;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(children: [
-                  CategoryListTile(
-                    iconInfo: widget.iconInfo,
-                    name: widget.name,
-                    subcategoryCount: dataBloc.getSubcategoryCount(widget.id),
-                    taskCount: dataBloc.getTasksCount(widget.id),
-                  ),
-                  if (_expanded)
-                    CategoryExpandedItem(
-                      categoryId: widget.id,
-                    )
-                ]),
+    var dataBloc = Provider.of<CategoryDataBlock>(context);
+    return Card(
+        margin: EdgeInsets.all(10),
+        child: InkWell(
+          onTap: () {
+            print("tapetOnCategory");
+            Navigator.of(context).pushNamed(CategoryDetailScreen.routeName,
+                arguments: widget.id);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(children: [
+              CategoryListTile(
+                iconInfo: widget.iconInfo,
+                name: widget.name,
+                subcategoryCount: dataBloc.getSubcategoryCount(widget.id),
+                taskCount: dataBloc.getTasksCount(widget.id),
               ),
-            ));
-      },
-    );
+            ]),
+          ),
+        ));
+    ;
   }
 }
