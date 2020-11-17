@@ -35,13 +35,7 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => CategoryProvider(),
-          )
-        ],
-        child: Scaffold(
+    return Scaffold(
           appBar: AppBar(
             title: Text(_titles[_currentIndex]),
           ),
@@ -61,6 +55,6 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
             type: BottomNavigationBarType.fixed,
             onTap: _setPageIndex,
           ),
-        ));
+        );
   }
 }

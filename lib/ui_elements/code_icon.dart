@@ -9,6 +9,6 @@ class CodeIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    return Icon(IconData(code, fontPackage: "font_awesome_flutter", fontFamily: fontFamily));
+    return Icon(IconData(code, fontPackage: "font_awesome_flutter", fontFamily: fontFamily),);
   }
 }

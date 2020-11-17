@@ -19,9 +19,9 @@ class DummyData {
     Subcategory(id: "sc1", name: "DI", categoryId: "c1"),
     Subcategory(id: "sc2", name: "Cryptography", categoryId: "c1"),
     Subcategory(id: "sc3", name: "CreateApp", categoryId: "c2"),
-    Subcategory(id: "sc4", name: "WidgetInspection", categoryId: "c3"),
-    Subcategory(id: "sc5", name: "Learn containers", categoryId: "c4"),
-    Subcategory(id: "sc6", name: "Compose", categoryId: "c4"),
+    Subcategory(id: "sc4", name: "WidgetInspection", categoryId: "c2"),
+    Subcategory(id: "sc5", name: "Learn containers", categoryId: "c3"),
+    Subcategory(id: "sc6", name: "Compose", categoryId: "c3"),
   ];
 
   static List<Task> dummyTasks = [
