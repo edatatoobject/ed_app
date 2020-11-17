@@ -1,4 +1,5 @@
 import 'package:ed_app/models/category.dart';
+import 'package:ed_app/models/icon_data.dart';
 import 'package:ed_app/models/sprint.dart';
 import 'package:ed_app/models/subcategory.dart';
 import 'package:ed_app/models/task.dart';
@@ -9,9 +10,9 @@ import 'package:ed_app/enums/task_status.dart';
 
 class DummyData {
   static List<Category> dummyCategories = [
-    Category(id: "c1", name: "C#", categorySize: CategorySize.Large),
-    Category(id: "c2", name: "Flutter", categorySize: CategorySize.Medium),
-    Category(id: "c3", name: "Docker", categorySize: CategorySize.Small)
+    Category(id: "c1", name: "C#", categorySize: CategorySize.Large, iconInfo: IconInfo(62312, "FontAwesomeBrands")),
+    Category(id: "c2", name: "Flutter", categorySize: CategorySize.Medium, iconInfo: IconInfo(62137, "FontAwesomeRegular") ),
+    Category(id: "c3", name: "Docker", categorySize: CategorySize.Small, iconInfo: IconInfo(62316, "FontAwesomeBrands") )
   ];
 
   static List<Subcategory> dummySubcategories = [
