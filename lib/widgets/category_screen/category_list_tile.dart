@@ -28,11 +28,11 @@ class CategoryListTile extends StatelessWidget {
             Text(name),
             Row(
               children: [
-                Text("Subcategories: ${subcategoryCount}"),
+                Text("Subcategories: $subcategoryCount"),
                 SizedBox(
                   width: 20,
                 ),
-                Text("Tasks: ${taskCount}"),
+                Text("Tasks: $taskCount"),
               ],
             )
           ],

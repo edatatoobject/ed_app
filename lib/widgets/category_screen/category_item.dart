@@ -1,8 +1,5 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/models/icon_data.dart';
-import 'package:ed_app/providers/subcategory_provider.dart';
-import 'package:ed_app/providers/task_provider.dart';
-import 'package:ed_app/ui_elements/code_icon.dart';
 import 'package:ed_app/widgets/category_screen/category_expanded_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +10,6 @@ class CategoryItem extends StatefulWidget {
   final String id;
   final String name;
   final IconInfo iconInfo;
-
-  bool _expanded = false;
 
   CategoryItem(
       {Key key,
