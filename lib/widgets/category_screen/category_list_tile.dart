@@ -25,14 +25,14 @@ class CategoryListTile extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(name),
+            Text(name, style: TextStyle(fontSize: 20),),
             Row(
               children: [
-                Text("Subcategories: $subcategoryCount"),
+                Text("Subcategories: $subcategoryCount", style: TextStyle(color: Colors.blueGrey),),
                 SizedBox(
                   width: 20,
                 ),
-                Text("Tasks: $taskCount"),
+                Text("Tasks: $taskCount", style: TextStyle(color: Colors.blueGrey)),
               ],
             )
           ],

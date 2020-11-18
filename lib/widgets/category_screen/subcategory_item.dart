@@ -31,35 +31,43 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
     return Container(
       child: Column(
         children: [
-          Row(
-            children: [
-              Text(widget.name),
-              SizedBox(width: 10),
-              Text(
-                  "ToDo: ${dataBloc.getToDoTasksBySubcategoryId(widget.id).length}"),
-              SizedBox(width: 10),
-              Text(
-                  "Done: ${dataBloc.getDoneTasksBySubcategoryId(widget.id).length}"),
-              Spacer(),
-              GestureDetector(
-                child: Icon(_expanded
-                    ? Icons.keyboard_arrow_up
-                    : Icons.keyboard_arrow_down),
-                onTap: expand
-              )
-            ],
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                Text(
+                  widget.name,
+                  style: TextStyle(fontSize: 18),
+                ),
+                VerticalDivider(),
+                Text(
+                    "ToDo: ${dataBloc.getToDoTasksBySubcategoryId(widget.id).length}"),
+                SizedBox(width: 10),
+                Text(
+                    "Done: ${dataBloc.getDoneTasksBySubcategoryId(widget.id).length}"),
+                Spacer(),
+                GestureDetector(
+                    child: Icon(_expanded
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down),
+                    onTap: expand)
+              ],
+            ),
           ),
           Divider(
             height: 3,
           ),
           if (_expanded)
-            Column(
-              children: [
-                ...tasks
-                    .map((task) =>
-                        TaskListItem(value: task.value, status: task.status))
-                    .toList()
-              ],
+            Container(
+              decoration: BoxDecoration(border: Border(left: BorderSide(width: 1, color: Colors.grey[200]))),
+              padding: EdgeInsets.only(left: 5, ),
+              child: Column(
+                children: [
+                  ...tasks
+                      .map((task) =>
+                          TaskListItem(value: task.value, status: task.status))
+                      .toList()
+                ],
+              ),
             ),
         ],
       ),

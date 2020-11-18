@@ -28,14 +28,17 @@ class CategoryDetailScreen extends StatelessWidget {
               size: 100,
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
-            Text(category.name),
+            Text(
+              category.name,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
             SizedBox(
               height: 10,
             ),
             Expanded(
-                          child: ListView.builder(
+              child: ListView.builder(
                 itemCount: subcategories.length,
                 itemBuilder: (context, index) {
                   return SubcategoryItem(

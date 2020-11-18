@@ -32,6 +32,9 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        theme: ThemeData(
+            primaryColor: Colors.orange, accentColor: Colors.orangeAccent,
+            ),
         home: BottomTabsScreen(),
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen()
