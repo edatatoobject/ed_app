@@ -41,7 +41,7 @@ class DummyData {
         value: "Try week binding",
         description: "",
         subcategoryId: "sc1",
-        status: TaskStatus.ToDo),
+        status: TaskStatus.Done),
     Task(
         id: "t4",
         value: "Symmetric crypto",

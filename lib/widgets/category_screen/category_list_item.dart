@@ -1,18 +1,17 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/models/icon_data.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
-import 'package:ed_app/widgets/category_screen/category_expanded_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'category_list_tile.dart';
 
-class CategoryItem extends StatefulWidget {
+class CategoryListItem extends StatefulWidget {
   final String id;
   final String name;
   final IconInfo iconInfo;
 
-  CategoryItem(
+  CategoryListItem(
       {Key key,
       @required this.id,
       @required this.name,
@@ -20,10 +19,10 @@ class CategoryItem extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CategoryItemState createState() => _CategoryItemState();
+  _CategoryListItemState createState() => _CategoryListItemState();
 }
 
-class _CategoryItemState extends State<CategoryItem> {
+class _CategoryListItemState extends State<CategoryListItem> {
   @override
   Widget build(BuildContext context) {
     var dataBloc = Provider.of<CategoryDataBlock>(context);
@@ -47,6 +46,5 @@ class _CategoryItemState extends State<CategoryItem> {
             ]),
           ),
         ));
-    ;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/ui_elements/code_icon.dart';
+import 'package:ed_app/widgets/category_screen/subcategory_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,9 +9,10 @@ class CategoryDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dataBlock = Provider.of<CategoryDataBlock>(context);
+    var dataBloc = Provider.of<CategoryDataBlock>(context);
     var categoryId = ModalRoute.of(context).settings.arguments as String;
-    var category = dataBlock.getCategoryById(categoryId);
+    var category = dataBloc.getCategoryById(categoryId);
+    var subcategories = dataBloc.getSubcategoriesByCategoryId(categoryId);
 
     return Scaffold(
       body: Container(
@@ -32,7 +34,16 @@ class CategoryDetailScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-
+            Expanded(
+                          child: ListView.builder(
+                itemCount: subcategories.length,
+                itemBuilder: (context, index) {
+                  return SubcategoryItem(
+                      name: subcategories[index].name,
+                      id: subcategories[index].id);
+                },
+              ),
+            )
           ],
         ),
       ),
