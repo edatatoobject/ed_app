@@ -34,11 +34,12 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          appBar: AppBar(
-            title: Text(_titles[_currentIndex]),
-          ),
+          // appBar: AppBar(
+          //   title: Text(_titles[_currentIndex]),
+          // ),
           body: PageTransitionSwitcher(
             child: _pages[_currentIndex],
+            duration: Duration(milliseconds: 500),
             transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
               return FadeThroughTransition(
                   child: child,

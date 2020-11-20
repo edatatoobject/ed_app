@@ -11,19 +11,38 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<CategoryProvider>(
-      builder: (context, category, child) {
-        return ListView.builder(
-          itemCount: category.items.length,
-          itemBuilder: (context, index) {
-            return CategoryListItem(
-              id: category.items[index].id,
-              name: category.items[index].name,
-              iconInfo: category.items[index].iconInfo,
-            );
-          },
-        );
-      },
+    return Container(
+      child: Column( 
+        children: [
+          AppBar(
+            title: Text("Categories", style: TextStyle(fontSize: 24)),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {},
+              )
+            ],
+          ),
+          Expanded(
+            child: Consumer<CategoryProvider>(
+              builder: (context, category, child) {
+                return ListView.builder(
+                  itemCount: category.items.length,
+                  itemBuilder: (context, index) {
+                    return CategoryListItem(
+                      id: category.items[index].id,
+                      name: category.items[index].name,
+                      iconInfo: category.items[index].iconInfo,
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

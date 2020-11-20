@@ -38,7 +38,7 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
                   widget.name,
                   style: TextStyle(fontSize: 18),
                 ),
-                VerticalDivider(),
+                SizedBox(width: 20),
                 Text(
                     "ToDo: ${dataBloc.getToDoTasksBySubcategoryId(widget.id).length}"),
                 SizedBox(width: 10),
@@ -58,8 +58,12 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
           ),
           if (_expanded)
             Container(
-              decoration: BoxDecoration(border: Border(left: BorderSide(width: 1, color: Colors.grey[200]))),
-              padding: EdgeInsets.only(left: 5, ),
+              decoration: BoxDecoration(
+                  border: Border(
+                      left: BorderSide(width: 1, color: Colors.grey[200]))),
+              padding: EdgeInsets.only(
+                left: 5,
+              ),
               child: Column(
                 children: [
                   ...tasks

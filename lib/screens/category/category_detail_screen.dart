@@ -15,40 +15,43 @@ class CategoryDetailScreen extends StatelessWidget {
     var subcategories = dataBloc.getSubcategoriesByCategoryId(categoryId);
 
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(left: 10, right: 10, top: 50, bottom: 10),
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            CodeIcon(
-              code: category.iconInfo.code,
-              fontFamily: category.iconInfo.fontFamily,
-              size: 100,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              category.name,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: subcategories.length,
-                itemBuilder: (context, index) {
-                  return SubcategoryItem(
-                      name: subcategories[index].name,
-                      id: subcategories[index].id);
-                },
+      body: Stack(
+              children:[ Container(
+          padding: EdgeInsets.only(left: 10, right: 10, top: MediaQuery.of(context).viewPadding.top + 20, bottom: 10),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              CodeIcon(
+                code: category.iconInfo.code,
+                fontFamily: category.iconInfo.fontFamily,
+                size: 100,
               ),
-            )
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                category.name,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: subcategories.length,
+                  itemBuilder: (context, index) {
+                    return SubcategoryItem(
+                        name: subcategories[index].name,
+                        id: subcategories[index].id);
+                  },
+                ),
+              )
+            ],
+          ),
         ),
+        Container(padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top), child: BackButton())]
       ),
     );
   }
