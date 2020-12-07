@@ -23,6 +23,14 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
     });
   }
 
+  void startCreateNewTask(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (bctx) {
+          return;
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var dataBloc = Provider.of<CategoryDataBlock>(context);
@@ -34,6 +42,10 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
           IntrinsicHeight(
             child: Row(
               children: [
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () => startCreateNewTask(context),
+                ),
                 Text(
                   widget.name,
                   style: TextStyle(fontSize: 18),
