@@ -6,4 +6,9 @@ class CategoryProvider extends ChangeNotifier {
   List<Category> _items = DummyData.dummyCategories;
 
   List<Category> get items => [..._items];
+
+  void addCategory(Category category) {
+    _items.add(category);
+    notifyListeners();
+  }
 }

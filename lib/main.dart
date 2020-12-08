@@ -3,6 +3,7 @@ import 'package:ed_app/providers/category_provider.dart';
 import 'package:ed_app/providers/subcategory_provider.dart';
 import 'package:ed_app/providers/task_provider.dart';
 import 'package:ed_app/screens/bottom_tabs_screen.dart';
+import 'package:ed_app/screens/category/category_create_screen.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider3<CategoryProvider, SubcategoryProvider,
             TaskProvider, CategoryDataBlock>(
           update: (context, category, subcategory, task, previous) =>
-              CategoryDataBlock(category.items, subcategory.items, task.items),
+              CategoryDataBlock(category, subcategory, task),
         )
       ],
       child: MaterialApp(
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
             ),
         home: BottomTabsScreen(),
         routes: {
-          CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen()
+          CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),
+          CreateCategoryScreen.routeName: (ctx) => CreateCategoryScreen(),
         },
       ),
     );

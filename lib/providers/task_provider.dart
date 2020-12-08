@@ -6,4 +6,9 @@ class TaskProvider extends ChangeNotifier {
   List<Task> _items = DummyData.dummyTasks;
 
   List<Task> get items => [..._items];
+
+  void addTask(Task newTask) {
+    _items.add(newTask);
+    notifyListeners();
+  }
 }
