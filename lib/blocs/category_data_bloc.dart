@@ -82,4 +82,16 @@ class CategoryDataBlock extends ChangeNotifier {
         iconInfo: iconInfo);
     _categoryProvider.addCategory(category);
   }
+
+  void addTask(String name, String subcategoryId, TaskStatus taskStatus,
+      {String description}) {
+    var task = Task(
+        id: DateTime.now().toString(),
+        subcategoryId: subcategoryId,
+        value: name,
+        status: taskStatus,
+        description: description);
+
+    _taskProvider.addTask(task);
+  }
 }

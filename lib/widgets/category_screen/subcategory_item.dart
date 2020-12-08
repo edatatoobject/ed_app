@@ -1,4 +1,5 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
+import 'package:ed_app/widgets/category_screen/create_task.dart';
 import 'package:ed_app/widgets/category_screen/task_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +7,9 @@ import 'package:provider/provider.dart';
 class SubcategoryItem extends StatefulWidget {
   final String name;
   final String id;
+  final String categoryId;
 
-  const SubcategoryItem({Key key, @required this.name, @required this.id})
+  const SubcategoryItem({Key key, @required this.name, @required this.id, @required this.categoryId})
       : super(key: key);
 
   @override
@@ -27,7 +29,10 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
     showModalBottomSheet(
         context: context,
         builder: (bctx) {
-          return;
+          return CreateTask(
+            categoryId: widget.categoryId,
+            subcategoryId: widget.id,
+          );
         });
   }
 

@@ -44,7 +44,8 @@ class CategoryDetailScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return SubcategoryItem(
                         name: subcategories[index].name,
-                        id: subcategories[index].id);
+                        id: subcategories[index].id,
+                        categoryId: categoryId,);
                   },
                 ),
               )
