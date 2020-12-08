@@ -94,4 +94,10 @@ class CategoryDataBlock extends ChangeNotifier {
 
     _taskProvider.addTask(task);
   }
+
+  void addSubcategory(String name, String categoryId) {
+    var subcategory = Subcategory(
+        id: DateTime.now().toString(), categoryId: categoryId, name: name);
+    _subcategoryProvider.addSubcategory(subcategory);
+  }
 }

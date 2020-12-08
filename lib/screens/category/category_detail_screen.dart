@@ -1,11 +1,23 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/ui_elements/code_icon.dart';
+import 'package:ed_app/widgets/category_screen/create_subcategory.dart';
 import 'package:ed_app/widgets/category_screen/subcategory_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategoryDetailScreen extends StatelessWidget {
   static const String routeName = "/category-detail";
+
+  void createSubcategory(BuildContext context, String categoryId){
+    showModalBottomSheet(
+        context: context,
+        builder: (bctx) {
+          return CreateSubcategory(
+            categoryId: categoryId,
+            
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +27,13 @@ class CategoryDetailScreen extends StatelessWidget {
     var subcategories = dataBloc.getSubcategoriesByCategoryId(categoryId);
 
     return Scaffold(
-      body: Stack(
-              children:[ Container(
-          padding: EdgeInsets.only(left: 10, right: 10, top: MediaQuery.of(context).viewPadding.top + 20, bottom: 10),
+      body: Stack(children: [
+        Container(
+          padding: EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: MediaQuery.of(context).viewPadding.top + 20,
+              bottom: 10),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,17 +59,31 @@ class CategoryDetailScreen extends StatelessWidget {
                   itemCount: subcategories.length,
                   itemBuilder: (context, index) {
                     return SubcategoryItem(
-                        name: subcategories[index].name,
-                        id: subcategories[index].id,
-                        categoryId: categoryId,);
+                      name: subcategories[index].name,
+                      id: subcategories[index].id,
+                      categoryId: categoryId,
+                    );
                   },
                 ),
               )
             ],
           ),
         ),
-        Container(padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top), child: BackButton())]
-      ),
+        Container(
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+            child: BackButton()),
+        Positioned(
+          right: 0,
+                  child: Container(
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+              child: IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => createSubcategory(context, categoryId),
+              )),
+        )
+      ]),
     );
   }
 }

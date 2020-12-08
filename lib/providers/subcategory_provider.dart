@@ -6,4 +6,9 @@ class SubcategoryProvider extends ChangeNotifier {
   List<Subcategory> _items = DummyData.dummySubcategories;
 
   List<Subcategory> get items => [..._items];
+
+  void addSubcategory(Subcategory subcategory) {
+    _items.add(subcategory);
+    notifyListeners();
+  }
 }
