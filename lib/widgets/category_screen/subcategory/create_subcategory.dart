@@ -36,7 +36,7 @@ class CreateSubcategory extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          RaisedButton(child: Text("Save"), onPressed: () => saveSubcategory(context))
+          ElevatedButton(child: Text("Save"), onPressed: () => saveSubcategory(context))
         ],
       ),
     );

@@ -77,7 +77,7 @@ class _CreateTaskState extends State<CreateTask> {
           SizedBox(
             height: 40,
           ),
-          RaisedButton(child: Text("Save"), onPressed: saveTask)
+          ElevatedButton(child: Text("Save"), onPressed: saveTask)
         ],
       ),
     );

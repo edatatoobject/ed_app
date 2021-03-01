@@ -1,6 +1,6 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
-import 'package:ed_app/widgets/category_screen/create_task.dart';
-import 'package:ed_app/widgets/category_screen/task_list_item.dart';
+import 'package:ed_app/widgets/category_screen/task/create_task.dart';
+import 'package:ed_app/widgets/category_screen/task/task_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,6 +62,10 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
                 Text(
                     "Done: ${dataBloc.getDoneTasksBySubcategoryId(widget.id).length}"),
                 Spacer(),
+                IconButton(
+                  icon: Icon(Icons.more_horiz),
+                  onPressed: () => startCreateNewTask(context),
+                ),
                 GestureDetector(
                     child: Icon(_expanded
                         ? Icons.keyboard_arrow_up
