@@ -1,4 +1,5 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
+import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/ui_elements/code_icon.dart';
 import 'package:ed_app/widgets/category_screen/subcategory/create_subcategory.dart';
 import 'package:ed_app/widgets/category_screen/subcategory/subcategory_item.dart';
@@ -12,9 +13,9 @@ class CategoryDetailScreen extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         builder: (bctx) {
-          return CreateSubcategory(
+          return SubcategoryTextModal(
             categoryId: categoryId,
-            
+            actionType: ActionType.Create,
           );
         });
   }

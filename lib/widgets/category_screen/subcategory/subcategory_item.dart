@@ -1,15 +1,22 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
+import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/widgets/category_screen/task/create_task.dart';
 import 'package:ed_app/widgets/category_screen/task/task_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'create_subcategory.dart';
 
 class SubcategoryItem extends StatefulWidget {
   final String name;
   final String id;
   final String categoryId;
 
-  const SubcategoryItem({Key key, @required this.name, @required this.id, @required this.categoryId})
+  const SubcategoryItem(
+      {Key key,
+      @required this.name,
+      @required this.id,
+      @required this.categoryId})
       : super(key: key);
 
   @override
@@ -34,6 +41,37 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
             subcategoryId: widget.id,
           );
         });
+  }
+
+  void editSubcategory() {
+    showModalBottomSheet(
+        context: context,
+        builder: (bctx) {
+          return SubcategoryTextModal(
+            subcategoryId: widget.id,
+            actionType: ActionType.Edit,
+            name: widget.name
+          );
+        });
+  }
+
+  List<PopupMenuEntry<Function>> popupMenu(CategoryDataBlock block) {
+    return [
+      PopupMenuItem(
+        value: () => editSubcategory(),
+          child: ListTile(
+        leading: const Icon(Icons.edit),
+        title: const Text("Edit"),
+      )),
+      const PopupMenuDivider(),
+      PopupMenuItem(
+        value: () =>  block.deleteSubcategory(widget.id),
+          child: ListTile(
+            leading: const Icon(Icons.delete),
+            title: const Text("Delete"),
+        )
+      ),
+    ];
   }
 
   @override
@@ -62,10 +100,9 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
                 Text(
                     "Done: ${dataBloc.getDoneTasksBySubcategoryId(widget.id).length}"),
                 Spacer(),
-                IconButton(
-                  icon: Icon(Icons.more_horiz),
-                  onPressed: () => startCreateNewTask(context),
-                ),
+                PopupMenuButton(
+                  onSelected: (value) => value(), 
+                  itemBuilder: (context) => popupMenu(dataBloc)),
                 GestureDetector(
                     child: Icon(_expanded
                         ? Icons.keyboard_arrow_up

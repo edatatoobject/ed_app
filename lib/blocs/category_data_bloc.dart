@@ -98,6 +98,14 @@ class CategoryDataBlock extends ChangeNotifier {
   void addSubcategory(String name, String categoryId) {
     var subcategory = Subcategory(
         id: DateTime.now().toString(), categoryId: categoryId, name: name);
-    _subcategoryProvider.addSubcategory(subcategory);
+    _subcategoryProvider.add(subcategory);
+  }
+
+  void editSubcategory(String subcategoryId, String name) {
+    _subcategoryProvider.edit(subcategoryId, name);
+  }
+
+  void deleteSubcategory(String subcategoryId) {
+    _subcategoryProvider.delete(subcategoryId);
   }
 }
