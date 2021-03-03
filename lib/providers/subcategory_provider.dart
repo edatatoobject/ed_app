@@ -7,8 +7,25 @@ class SubcategoryProvider extends ChangeNotifier {
 
   List<Subcategory> get items => [..._items];
 
-  void addSubcategory(Subcategory subcategory) {
+  void add(Subcategory subcategory) {
     _items.add(subcategory);
+    notifyListeners();
+  }
+
+  void edit(String subcategoryId, String name) {
+    var index = _items.indexWhere((element) => element.id == subcategoryId);
+
+    var subcategory = _items[index];
+
+    var updatedSubcategory = Subcategory(
+        id: subcategory.id, categoryId: subcategory.categoryId, name: name);
+
+    _items[index] = updatedSubcategory;
+  }
+
+  void delete(String subcategoryId) {
+    var index = _items.indexWhere((element) => element.id == subcategoryId);
+    _items.removeAt(index);
     notifyListeners();
   }
 }

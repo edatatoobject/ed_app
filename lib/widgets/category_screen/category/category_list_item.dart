@@ -4,7 +4,7 @@ import 'package:ed_app/screens/category/category_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'category_list_tile.dart';
+import '../category/category_list_tile.dart';
 
 class CategoryListItem extends StatefulWidget {
   final String id;

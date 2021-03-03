@@ -1,6 +1,6 @@
 import 'package:ed_app/providers/category_provider.dart';
 import 'package:ed_app/screens/category/category_create_screen.dart';
-import 'package:ed_app/widgets/category_screen/category_list_item.dart';
+import 'package:ed_app/widgets/category_screen/category/category_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
