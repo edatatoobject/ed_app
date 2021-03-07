@@ -95,6 +95,19 @@ class CategoryDataBlock extends ChangeNotifier {
     _taskProvider.addTask(task);
   }
 
+  void editTask(String taskId, String name, String subcategoryId,
+      {String description}) {
+    _taskProvider.editTask(
+        taskId: taskId,
+        name: name,
+        subcategoryId: subcategoryId,
+        description: description);
+  }
+
+  void deleteTask(String taskId) {
+    _taskProvider.deleteTask(taskId);
+  }
+
   void addSubcategory(String name, String categoryId) {
     var subcategory = Subcategory(
         id: DateTime.now().toString(), categoryId: categoryId, name: name);

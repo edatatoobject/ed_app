@@ -1,23 +1,37 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
+import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/models/subcategory.dart';
 import 'package:ed_app/models/task.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CreateTask extends StatefulWidget {
+class TaskTextModal extends StatefulWidget {
+  final String taskId;
   final String categoryId;
   final String subcategoryId;
+  final ActionType actionType;
 
-  const CreateTask({Key key, @required this.categoryId, this.subcategoryId})
-      : super(key: key);
+  var controller = TextEditingController();
+
+  TaskTextModal(
+      {Key key,
+      @required this.categoryId,
+      this.taskId,
+      this.subcategoryId,
+      String name,
+      this.actionType})
+      : super(key: key) {
+    if (name != null && name.isNotEmpty) {
+      controller.text = name;
+    }
+  }
 
   @override
-  _CreateTaskState createState() => _CreateTaskState();
+  _TaskTextModalState createState() => _TaskTextModalState();
 }
 
-class _CreateTaskState extends State<CreateTask> {
-  var controller = TextEditingController();
+class _TaskTextModalState extends State<TaskTextModal> {
   var pickedSubcategory;
 
   @override
@@ -40,8 +54,13 @@ class _CreateTaskState extends State<CreateTask> {
   }
 
   void saveTask() {
-    Provider.of<CategoryDataBlock>(context, listen: false)
-        .addTask(controller.text, pickedSubcategory, TaskStatus.ToDo);
+    if (widget.actionType == ActionType.Create) {
+      Provider.of<CategoryDataBlock>(context, listen: false)
+          .addTask(widget.controller.text, pickedSubcategory, TaskStatus.ToDo);
+    } else {
+      Provider.of<CategoryDataBlock>(context, listen: false)
+          .editTask(widget.taskId, widget.controller.text, pickedSubcategory);
+    }
 
     FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -71,7 +90,7 @@ class _CreateTaskState extends State<CreateTask> {
             height: 20,
           ),
           TextField(
-            controller: controller,
+            controller: widget.controller,
             decoration: InputDecoration(hintText: "CategoryName"),
           ),
           SizedBox(
