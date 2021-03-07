@@ -36,9 +36,10 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
     showModalBottomSheet(
         context: context,
         builder: (bctx) {
-          return CreateTask(
+          return TaskTextModal(
             categoryId: widget.categoryId,
             subcategoryId: widget.id,
+            actionType: ActionType.Create
           );
         });
   }
@@ -48,29 +49,27 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
         context: context,
         builder: (bctx) {
           return SubcategoryTextModal(
-            subcategoryId: widget.id,
-            actionType: ActionType.Edit,
-            name: widget.name
-          );
+              subcategoryId: widget.id,
+              actionType: ActionType.Edit,
+              name: widget.name);
         });
   }
 
   List<PopupMenuEntry<Function>> popupMenu(CategoryDataBlock block) {
     return [
       PopupMenuItem(
-        value: () => editSubcategory(),
+          value: () => editSubcategory(),
           child: ListTile(
-        leading: const Icon(Icons.edit),
-        title: const Text("Edit"),
-      )),
+            leading: const Icon(Icons.edit),
+            title: const Text("Edit"),
+          )),
       const PopupMenuDivider(),
       PopupMenuItem(
-        value: () =>  block.deleteSubcategory(widget.id),
+          value: () => block.deleteSubcategory(widget.id),
           child: ListTile(
             leading: const Icon(Icons.delete),
             title: const Text("Delete"),
-        )
-      ),
+          )),
     ];
   }
 
@@ -101,8 +100,8 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
                     "Done: ${dataBloc.getDoneTasksBySubcategoryId(widget.id).length}"),
                 Spacer(),
                 PopupMenuButton(
-                  onSelected: (value) => value(), 
-                  itemBuilder: (context) => popupMenu(dataBloc)),
+                    onSelected: (value) => value(),
+                    itemBuilder: (context) => popupMenu(dataBloc)),
                 GestureDetector(
                     child: Icon(_expanded
                         ? Icons.keyboard_arrow_up
@@ -125,8 +124,12 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
               child: Column(
                 children: [
                   ...tasks
-                      .map((task) =>
-                          TaskListItem(value: task.value, status: task.status))
+                      .map((task) => TaskListItem(
+                          taskId: task.id,
+                          categroryId: widget.categoryId,
+                          subcategoryId: widget.id,
+                          value: task.value,
+                          status: task.status))
                       .toList()
                 ],
               ),
