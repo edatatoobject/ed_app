@@ -38,6 +38,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
             padding: const EdgeInsets.all(10),
             child: Column(children: [
               CategoryListTile(
+                id: widget.id,
                 iconInfo: widget.iconInfo,
                 name: widget.name,
                 subcategoryCount: dataBloc.getSubcategoryCount(widget.id),

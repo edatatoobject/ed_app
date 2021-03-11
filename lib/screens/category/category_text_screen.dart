@@ -1,14 +1,18 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
+import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/enums/category_size.dart';
 import 'package:ed_app/widgets/icon_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-class CreateCategoryScreen extends StatelessWidget {
+class CategoryTextScreen extends StatelessWidget {
   static const String routeName = "/create-category";
 
   IconData _iconData;
+  String categoryId;
+
+  ActionType actionType = ActionType.Create;
 
   int sizeIndex = 0;
   List<CategorySize> categorySizes = [
@@ -28,8 +32,13 @@ class CreateCategoryScreen extends StatelessWidget {
   }
 
   void saveCategory(BuildContext context) {
-    Provider.of<CategoryDataBlock>(context, listen: false)
-        .addCategory(controller.text, categorySizes[sizeIndex], _iconData);
+    if (actionType == ActionType.Create) {
+      Provider.of<CategoryDataBlock>(context, listen: false)
+          .addCategory(controller.text, categorySizes[sizeIndex], _iconData);
+    } else {
+      Provider.of<CategoryDataBlock>(context, listen: false)
+          .editCategory(categoryId ,controller.text, categorySizes[sizeIndex], _iconData);
+    }
 
     FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -42,6 +51,22 @@ class CreateCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var categoryId = ModalRoute.of(context).settings.arguments as String;
+
+    if (categoryId != null) {
+      this.categoryId = categoryId;
+      actionType = ActionType.Edit;
+
+      var product =
+          Provider.of<CategoryDataBlock>(context).getCategoryById(categoryId);
+
+      controller.text = product.name;
+      _iconData = IconData(product.iconInfo.code,
+          fontFamily: product.iconInfo.fontFamily,
+          fontPackage: "font_awesome_flutter");
+      sizeIndex = getSizeIndex(product.categorySize);
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -53,6 +78,7 @@ class CreateCategoryScreen extends StatelessWidget {
             IconPicker(
               iconDataCallback: iconDataCallback,
               iconSize: 50,
+              iconData: _iconData,
             ),
             SizedBox(
               height: 10,
