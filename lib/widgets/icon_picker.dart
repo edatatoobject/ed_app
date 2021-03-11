@@ -5,8 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class IconPicker extends StatefulWidget {
   final double iconSize;
   final Function(IconData) iconDataCallback;
+  final IconData iconData;
 
-  const IconPicker({Key key, @required this.iconDataCallback, this.iconSize})
+  const IconPicker(
+      {Key key, @required this.iconDataCallback, this.iconSize, this.iconData})
       : super(key: key);
 
   @override
@@ -14,6 +16,15 @@ class IconPicker extends StatefulWidget {
 }
 
 class _IconPickerState extends State<IconPicker> {
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.iconData != null) {
+      _icon = Icon(widget.iconData, size: iconSize);
+    }
+  }
+
   Icon _icon;
 
   double get iconSize => widget.iconSize == null ? 24 : widget.iconSize;
@@ -23,7 +34,10 @@ class _IconPickerState extends State<IconPicker> {
 
     widget.iconDataCallback(iconData);
     setState(() {
-      _icon = Icon(iconData, size: iconSize,);
+      _icon = Icon(
+        iconData,
+        size: iconSize,
+      );
     });
     debugPrint('Category Picked Icon:  $iconData');
   }
