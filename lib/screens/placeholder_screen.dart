@@ -10,7 +10,7 @@ class PlaceholderScreen extends StatelessWidget {
         children: [
           Text("Work in progress"),
           CircularProgressIndicator(),
-          FlatButton(
+          TextButton(
             child: Text("Button does nothing"),
             onPressed: () {},
           )

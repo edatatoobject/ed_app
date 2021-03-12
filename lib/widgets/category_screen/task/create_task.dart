@@ -56,10 +56,10 @@ class _TaskTextModalState extends State<TaskTextModal> {
   void saveTask() {
     if (widget.actionType == ActionType.Create) {
       Provider.of<CategoryDataBlock>(context, listen: false)
-          .addTask(widget.controller.text, pickedSubcategory, TaskStatus.ToDo);
+          .taskProvider.add(widget.controller.text, pickedSubcategory, TaskStatus.ToDo);
     } else {
       Provider.of<CategoryDataBlock>(context, listen: false)
-          .editTask(widget.taskId, widget.controller.text, pickedSubcategory);
+          .taskProvider.edit(widget.taskId, widget.controller.text, pickedSubcategory);
     }
 
     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -86,14 +86,14 @@ class _TaskTextModalState extends State<TaskTextModal> {
                   : pickedSubcategory,
               items: getDropdownMenuItems(subcategories),
               onChanged: changeSubcategory),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextField(
             controller: widget.controller,
             decoration: InputDecoration(hintText: "CategoryName"),
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           ElevatedButton(child: Text("Save"), onPressed: saveTask)

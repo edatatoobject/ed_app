@@ -49,7 +49,7 @@ class _TaskListItemState extends State<TaskListItem> {
           )),
       const PopupMenuDivider(),
       PopupMenuItem(
-          value: () => block.deleteTask(widget.taskId),
+          value: () => block.taskProvider.delete(widget.taskId),
           child: ListTile(
             leading: const Icon(Icons.delete),
             title: const Text("Delete"),

@@ -26,6 +26,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
   @override
   Widget build(BuildContext context) {
     var dataBloc = Provider.of<CategoryDataBlock>(context);
+    
     return Card(
         margin: EdgeInsets.all(10),
         child: InkWell(
