@@ -23,7 +23,6 @@ class CategoryListTile extends StatelessWidget {
       : super(key: key);
 
   List<PopupMenuEntry<Function>> popupMenu(BuildContext context) {
-    var block = Provider.of<CategoryDataBlock>(context, listen: false);
     return [
       PopupMenuItem(
           value: () => Navigator.of(context).pushNamed(CategoryTextScreen.routeName, arguments: id),
@@ -33,16 +32,12 @@ class CategoryListTile extends StatelessWidget {
           )),
       const PopupMenuDivider(),
       PopupMenuItem(
-          value: () => block.deleteCategory(id),
+          value: () => Provider.of<CategoryDataBlock>(context, listen: false).categoryProvider.delete(id),
           child: ListTile(
             leading: const Icon(Icons.delete),
             title: const Text("Delete"),
           )),
     ];
-  }
-
-  editCategory(BuildContext context){
-    Navigator.of(context).pushNamed(CategoryTextScreen.routeName, arguments: id);
   }
 
   @override

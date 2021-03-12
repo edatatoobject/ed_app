@@ -27,16 +27,13 @@ class SubcategoryTextModal extends StatelessWidget {
     switch (actionType) {
       case ActionType.Create:
         Provider.of<CategoryDataBlock>(context, listen: false)
-            .addSubcategory(controller.text, categoryId);
+            .subcategoryProvider.add(controller.text, categoryId);
         break;
       case ActionType.Edit:
         Provider.of<CategoryDataBlock>(context, listen: false)
-            .editSubcategory(subcategoryId, controller.text);
+            .subcategoryProvider.edit(subcategoryId, controller.text);
         break;
     }
-
-    Provider.of<CategoryDataBlock>(context, listen: false)
-        .addSubcategory(controller.text, categoryId);
 
     FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -57,7 +54,7 @@ class SubcategoryTextModal extends StatelessWidget {
             controller: controller,
             decoration: InputDecoration(hintText: "CategoryName"),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ElevatedButton(

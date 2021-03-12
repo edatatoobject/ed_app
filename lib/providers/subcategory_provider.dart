@@ -7,13 +7,15 @@ class SubcategoryProvider extends ChangeNotifier {
 
   List<Subcategory> get items => [..._items];
 
-  void add(Subcategory subcategory) {
+  void add(String name, String categoryId) {
+    var subcategory = Subcategory(
+        id: DateTime.now().toString(), categoryId: categoryId, name: name);
     _items.add(subcategory);
     notifyListeners();
   }
 
   void edit(String subcategoryId, String name) {
-    var index = _items.indexWhere((element) => element.id == subcategoryId);
+    var index = _findIndex(subcategoryId);
 
     var subcategory = _items[index];
 
@@ -24,8 +26,12 @@ class SubcategoryProvider extends ChangeNotifier {
   }
 
   void delete(String subcategoryId) {
-    var index = _items.indexWhere((element) => element.id == subcategoryId);
+    var index = _findIndex(subcategoryId);
     _items.removeAt(index);
     notifyListeners();
+  }
+
+  int _findIndex(String subcategoryId) {
+    return _items.indexWhere((element) => element.id == subcategoryId);
   }
 }

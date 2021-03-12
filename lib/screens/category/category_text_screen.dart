@@ -34,10 +34,10 @@ class CategoryTextScreen extends StatelessWidget {
   void saveCategory(BuildContext context) {
     if (actionType == ActionType.Create) {
       Provider.of<CategoryDataBlock>(context, listen: false)
-          .addCategory(controller.text, categorySizes[sizeIndex], _iconData);
+          .categoryProvider.add(controller.text, categorySizes[sizeIndex], _iconData);
     } else {
       Provider.of<CategoryDataBlock>(context, listen: false)
-          .editCategory(categoryId ,controller.text, categorySizes[sizeIndex], _iconData);
+          .categoryProvider.edit(categoryId ,controller.text, categorySizes[sizeIndex], _iconData);
     }
 
     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -100,7 +100,7 @@ class CategoryTextScreen extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () => saveCategory(context),
               child: Text("Save"),
             )

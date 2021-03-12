@@ -9,19 +9,25 @@ class CategoryProvider extends ChangeNotifier {
 
   List<Category> get items => [..._items];
 
-  void addCategory(Category category) {
+  void add(String name, CategorySize size, IconData iconData) {
+    var iconInfo = IconInfo(iconData.codePoint, iconData.fontFamily);
+    var category = Category(
+        id: DateTime.now().toString(),
+        name: name,
+        categorySize: size,
+        iconInfo: iconInfo);
+
     _items.add(category);
     notifyListeners();
   }
 
-  void editCategory(String categoryId, String name, CategorySize categorySize,
+  void edit(String categoryId, String name, CategorySize categorySize,
       IconData iconData) {
-    var index = _items.indexWhere((element) => element.id == categoryId);
+    var index = _findIndex(categoryId);
 
     var category = _items[index];
 
     var iconInfo = IconInfo(iconData.codePoint, iconData.fontFamily);
-
     var newCategory = Category(
         id: category.id,
         name: name,
@@ -33,9 +39,14 @@ class CategoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteCategory(String categoryId) {
-    var index = _items.indexWhere((element) => element.id == categoryId);
+  void delete(String categoryId) {
+    var index = _findIndex(categoryId);
+
     _items.removeAt(index);
     notifyListeners();
+  }
+
+  int _findIndex(String categoryId) {
+    return _items.indexWhere((element) => element.id == categoryId);
   }
 }

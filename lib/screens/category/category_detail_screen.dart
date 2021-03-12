@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class CategoryDetailScreen extends StatelessWidget {
   static const String routeName = "/category-detail";
 
-  void createSubcategory(BuildContext context, String categoryId){
+  void createSubcategory(BuildContext context, String categoryId) {
     showModalBottomSheet(
         context: context,
         builder: (bctx) {
@@ -22,8 +22,9 @@ class CategoryDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dataBloc = Provider.of<CategoryDataBlock>(context);
     var categoryId = ModalRoute.of(context).settings.arguments as String;
+
+    var dataBloc = Provider.of<CategoryDataBlock>(context);
     var category = dataBloc.getCategoryById(categoryId);
     var subcategories = dataBloc.getSubcategoriesByCategoryId(categoryId);
 
@@ -45,15 +46,15 @@ class CategoryDetailScreen extends StatelessWidget {
                 fontFamily: category.iconInfo.fontFamily,
                 size: 100,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
                 category.name,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
-                height: 10,
+              const SizedBox(
+                height: 20,
               ),
               Expanded(
                 child: ListView.builder(
@@ -76,7 +77,7 @@ class CategoryDetailScreen extends StatelessWidget {
             child: BackButton()),
         Positioned(
           right: 0,
-                  child: Container(
+          child: Container(
               padding:
                   EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
               child: IconButton(

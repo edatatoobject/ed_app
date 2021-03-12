@@ -39,7 +39,6 @@ class _IconPickerState extends State<IconPicker> {
         size: iconSize,
       );
     });
-    debugPrint('Category Picked Icon:  $iconData');
   }
 
   @override
@@ -58,7 +57,7 @@ class _IconPickerState extends State<IconPicker> {
                       size: iconSize,
                     )),
           SizedBox(height: 10),
-          RaisedButton(
+          ElevatedButton(
             onPressed: _pickIcon,
             child: Text('Pick icon'),
           ),
