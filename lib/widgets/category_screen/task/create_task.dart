@@ -2,7 +2,6 @@ import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/models/subcategory.dart';
-import 'package:ed_app/models/task.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -71,6 +70,11 @@ class _TaskTextModalState extends State<TaskTextModal> {
     Navigator.of(context).pop();
   }
 
+  void deleteTask(){
+    Provider.of<CategoryDataBlock>(context, listen: false).taskProvider.delete(widget.taskId);
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     var subcategories = Provider.of<CategoryDataBlock>(context, listen: false)
@@ -96,7 +100,8 @@ class _TaskTextModalState extends State<TaskTextModal> {
           const SizedBox(
             height: 40,
           ),
-          ElevatedButton(child: Text("Save"), onPressed: saveTask)
+          ElevatedButton(child: Text("Save"), onPressed: saveTask),
+          widget.actionType == ActionType.Edit ? ElevatedButton(child: Text("Delete"), onPressed: deleteTask) : null
         ],
       ),
     );

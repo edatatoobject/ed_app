@@ -2,6 +2,7 @@ import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/widgets/category_screen/task/create_task.dart';
 import 'package:ed_app/widgets/category_screen/task/task_list_item.dart';
+import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,23 +25,24 @@ class SubcategoryItem extends StatefulWidget {
 }
 
 class _SubcategoryItemState extends State<SubcategoryItem> {
-  bool _expanded = true;
-
-  void expand() {
-    setState(() {
-      _expanded = !_expanded;
-    });
-  }
-
   void startCreateNewTask(BuildContext context) {
     showModalBottomSheet(
         context: context,
         builder: (bctx) {
           return TaskTextModal(
-            categoryId: widget.categoryId,
-            subcategoryId: widget.id,
-            actionType: ActionType.Create
-          );
+              categoryId: widget.categoryId,
+              subcategoryId: widget.id,
+              actionType: ActionType.Create);
+        });
+  }
+
+  void openTasksModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (bctx) {
+          return TasksModal(
+              categoryId: widget.categoryId,
+              subcategoryId: widget.id);
         });
   }
 
@@ -76,65 +78,35 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
   @override
   Widget build(BuildContext context) {
     var dataBloc = Provider.of<CategoryDataBlock>(context);
-    var tasks = dataBloc.getTasksBySubcategoryId(widget.id);
-
-    return Container(
-      child: Column(
-        children: [
-          IntrinsicHeight(
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () => startCreateNewTask(context),
-                ),
-                Text(
-                  widget.name,
-                  style: TextStyle(fontSize: 18),
-                ),
-                const SizedBox(width: 20),
-                Text(
-                    "ToDo: ${dataBloc.getToDoTasksBySubcategoryId(widget.id).length}"),
-                const SizedBox(width: 10),
-                Text(
-                    "Done: ${dataBloc.getDoneTasksBySubcategoryId(widget.id).length}"),
-                Spacer(),
-                PopupMenuButton(
-                    onSelected: (value) => value(),
-                    itemBuilder: (context) => popupMenu(dataBloc)),
-                GestureDetector(
-                    child: Icon(_expanded
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down),
-                    onTap: expand)
-              ],
+    return GestureDetector(
+      onTap: () => openTasksModal(context),
+      child: Container(
+        margin: EdgeInsets.all(2),
+        decoration: BoxDecoration(
+            border: Border.all(width: 2, color: Colors.blueGrey[100]),
+            borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => startCreateNewTask(context),
             ),
-          ),
-          Divider(
-            height: 3,
-          ),
-          if (_expanded)
-            Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      left: BorderSide(width: 1, color: Colors.grey[200]))),
-              padding: EdgeInsets.only(
-                left: 5,
-              ),
-              child: Column(
-                children: [
-                  ...tasks
-                      .map((task) => TaskListItem(
-                          taskId: task.id,
-                          categroryId: widget.categoryId,
-                          subcategoryId: widget.id,
-                          value: task.value,
-                          status: task.status))
-                      .toList()
-                ],
-              ),
+            Text(
+              widget.name,
+              style: TextStyle(fontSize: 18),
             ),
-        ],
+            const SizedBox(width: 20),
+            Text(
+                "ToDo: ${dataBloc.getToDoTasksBySubcategoryId(widget.id).length}"),
+            const SizedBox(width: 10),
+            Text(
+                "Done: ${dataBloc.getDoneTasksBySubcategoryId(widget.id).length}"),
+            Spacer(),
+            PopupMenuButton(
+                onSelected: (value) => value(),
+                itemBuilder: (context) => popupMenu(dataBloc)),
+          ],
+        ),
       ),
     );
   }
