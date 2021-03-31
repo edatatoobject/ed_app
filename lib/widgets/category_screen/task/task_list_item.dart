@@ -27,35 +27,6 @@ class TaskListItem extends StatefulWidget {
 }
 
 class _TaskListItemState extends State<TaskListItem> {
-  showPopupMenu(BuildContext context) async {
-    var block = Provider.of<CategoryDataBlock>(context, listen: false);
-    dynamic selected = await showMenu(
-        context: context,
-        position: RelativeRect.fromLTRB(100, 400, 100, 400),
-        items: popupMenu(block));
-
-    if (selected != null) {
-      selected();
-    }
-  }
-
-  List<PopupMenuEntry<dynamic>> popupMenu(CategoryDataBlock block) {
-    return [
-      PopupMenuItem(
-          value: () => editTask(),
-          child: ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text("Edit"),
-          )),
-      const PopupMenuDivider(),
-      PopupMenuItem(
-          value: () => block.taskProvider.delete(widget.taskId),
-          child: ListTile(
-            leading: const Icon(Icons.delete),
-            title: const Text("Delete"),
-          )),
-    ];
-  }
 
   void editTask() {
     showModalBottomSheet(
@@ -73,7 +44,7 @@ class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showPopupMenu(context),
+      onTap: () => editTask(),
       child: Row(
         children: [
           Text(widget.value),
