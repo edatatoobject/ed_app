@@ -16,7 +16,7 @@ class TaskProvider extends ChangeNotifier {
         value: name,
         status: taskStatus,
         description: description);
-        
+
     _items.add(task);
     notifyListeners();
   }
@@ -34,11 +34,14 @@ class TaskProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void delete(String taskId) {
+  void delete(String taskId, bool notify) {
     var index = _findIndex(taskId);
 
     _items.removeAt(index);
-    notifyListeners();
+
+    if (notify) {
+      notifyListeners();
+    }
   }
 
   int _findIndex(String taskId) {

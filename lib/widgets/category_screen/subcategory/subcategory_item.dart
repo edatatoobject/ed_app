@@ -67,7 +67,7 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
           )),
       const PopupMenuDivider(),
       PopupMenuItem(
-          value: () => block.subcategoryProvider.delete(widget.id),
+          value: () => block.deleteSubcategory(widget.id),
           child: ListTile(
             leading: const Icon(Icons.delete),
             title: const Text("Delete"),

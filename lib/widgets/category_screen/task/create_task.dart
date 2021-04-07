@@ -71,7 +71,7 @@ class _TaskTextModalState extends State<TaskTextModal> {
   }
 
   void deleteTask(){
-    Provider.of<CategoryDataBlock>(context, listen: false).taskProvider.delete(widget.taskId);
+    Provider.of<CategoryDataBlock>(context, listen: false).deleteTask(widget.taskId);
     Navigator.of(context).pop();
   }
 

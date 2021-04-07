@@ -69,4 +69,42 @@ class CategoryDataBlock extends ChangeNotifier {
         .where((task) => subcategoryIds.contains(task.subcategoryId))
         .length;
   }
+
+  void deleteCategory(String categoryId) {
+    categoryProvider.delete(categoryId);
+
+    cascadeDeleteSubcategories(categoryId);
+  }
+
+  void deleteSubcategory(String subcategoryId, {bool notify = true}) {
+    subcategoryProvider.delete(subcategoryId, notify);
+
+    cascadeDeleteTask(subcategoryId);
+  }
+
+  void cascadeDeleteSubcategories(String categoryId) {
+    var subcategoryIds =
+        getSubcategoriesByCategoryId(categoryId).map((e) => e.id).toList();
+
+    for (String subcategoryId in subcategoryIds) {
+      deleteSubcategory(subcategoryId, notify: false);
+    }
+
+    subcategoryProvider.notifyListeners();
+  }
+
+  void deleteTask(String taskId, {bool notify = true}) {
+    taskProvider.delete(taskId, notify);
+  }
+
+  void cascadeDeleteTask(String subcategoryId) {
+    var taskIds =
+        getTasksBySubcategoryId(subcategoryId).map((e) => e.id).toList();
+
+    for (String taskId in taskIds) {
+      deleteTask(taskId, notify: false);
+    }
+
+    taskProvider.notifyListeners();
+  }
 }

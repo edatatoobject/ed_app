@@ -32,7 +32,7 @@ class CategoryListTile extends StatelessWidget {
           )),
       const PopupMenuDivider(),
       PopupMenuItem(
-          value: () => Provider.of<CategoryDataBlock>(context, listen: false).categoryProvider.delete(id),
+          value: () => Provider.of<CategoryDataBlock>(context, listen: false).deleteCategory(id),
           child: ListTile(
             leading: const Icon(Icons.delete),
             title: const Text("Delete"),
