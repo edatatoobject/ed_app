@@ -23,12 +23,18 @@ class SubcategoryProvider extends ChangeNotifier {
         id: subcategory.id, categoryId: subcategory.categoryId, name: name);
 
     _items[index] = updatedSubcategory;
+
+    notifyListeners();
   }
 
-  void delete(String subcategoryId) {
+  void delete(String subcategoryId, bool notify) {
     var index = _findIndex(subcategoryId);
     _items.removeAt(index);
-    notifyListeners();
+
+    if(notify)
+    {
+      notifyListeners();
+    }
   }
 
   int _findIndex(String subcategoryId) {
