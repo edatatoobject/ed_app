@@ -101,7 +101,7 @@ class _TaskTextModalState extends State<TaskTextModal> {
             height: 40,
           ),
           ElevatedButton(child: Text("Save"), onPressed: saveTask),
-          widget.actionType == ActionType.Edit ? ElevatedButton(child: Text("Delete"), onPressed: deleteTask) : null
+          widget.actionType == ActionType.Edit ? ElevatedButton(child: Text("Delete"), onPressed: deleteTask) : SizedBox()
         ],
       ),
     );
