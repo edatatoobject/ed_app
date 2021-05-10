@@ -34,8 +34,56 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-            primaryColor: Colors.orange, accentColor: Colors.orangeAccent,
+            brightness: Brightness.dark,
+            backgroundColor: const Color.fromRGBO(30, 30, 30, 1),
+            cardColor: const Color.fromRGBO(60, 60, 60, 1),
+            scaffoldBackgroundColor: const Color.fromRGBO(30, 30, 30, 1),
+            primaryColor: Colors.orange,
+            accentColor: Colors.orangeAccent,
+            fontFamily: "ProximaNova",
+            appBarTheme: AppBarTheme(
+              backgroundColor: const Color.fromRGBO(60, 60, 60, 1),
+              actionsIconTheme:
+                  IconThemeData(color: const Color.fromRGBO(225, 225, 225, 1)),
             ),
+            primaryTextTheme: const TextTheme(
+              bodyText1:
+                  TextStyle(color: const Color.fromRGBO(188, 188, 188, 1)),
+              headline3: TextStyle(
+                  fontFamily: "Etna",
+                  color: const Color.fromRGBO(225, 225, 225, 1)),
+              headline4: TextStyle(
+                  fontFamily: "Etna",
+                  color: const Color.fromRGBO(225, 225, 225, 1)),
+              headline5: TextStyle(
+                  fontFamily: "Etna",
+                  color: const Color.fromRGBO(225, 225, 225, 1)),
+              headline6: TextStyle(
+                  fontFamily: "Etna",
+                  color: const Color.fromRGBO(225, 225, 225, 1)),
+            ),
+            iconTheme:
+                IconThemeData(color: const Color.fromRGBO(225, 225, 225, 1)),
+            textButtonTheme: TextButtonThemeData(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromRGBO(60, 60, 60, 1)))),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromRGBO(60, 60, 60, 1)))),
+            inputDecorationTheme: InputDecorationTheme(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 0),
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 0),
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                fillColor: const Color.fromRGBO(60, 60, 60, 1),
+                filled: true)
+                ),
+
+          
         home: BottomTabsScreen(),
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),

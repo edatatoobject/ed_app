@@ -10,15 +10,17 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column( 
+      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      child: Column(
         children: [
           AppBar(
-            title: Text("Categories", style: TextStyle(fontSize: 24)),
-            backgroundColor: Colors.white,
+            title: Text(
+              "Categories",
+              style: Theme.of(context).primaryTextTheme.headline5,
+            ),
             elevation: 0,
             actions: [
               IconButton(

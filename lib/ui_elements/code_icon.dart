@@ -22,7 +22,7 @@ class CodeIcon extends StatelessWidget {
         fontPackage: "font_awesome_flutter",
         fontFamily: fontFamily,
       ),
-      color: color == null ? Colors.black : color,
+      color: color == null ? Theme.of(context).iconTheme.color : color,
       size: size == null ? 24 : size,
     );
   }

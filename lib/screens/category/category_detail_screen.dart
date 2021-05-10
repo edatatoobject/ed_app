@@ -31,6 +31,7 @@ class CategoryDetailScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(children: [
         Container(
+          decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
           padding: EdgeInsets.only(
               left: 10,
               right: 10,
@@ -44,14 +45,14 @@ class CategoryDetailScreen extends StatelessWidget {
               CodeIcon(
                 code: category.iconInfo.code,
                 fontFamily: category.iconInfo.fontFamily,
-                size: 100,
+                size: 150,
               ),
               const SizedBox(
                 height: 20,
               ),
               Text(
                 category.name,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: Theme.of(context).primaryTextTheme.headline3,
               ),
               const SizedBox(
                 height: 20,

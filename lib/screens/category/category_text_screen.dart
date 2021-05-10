@@ -77,7 +77,7 @@ class CategoryTextScreen extends StatelessWidget {
           children: [
             IconPicker(
               iconDataCallback: iconDataCallback,
-              iconSize: 50,
+              iconSize: 150,
               iconData: _iconData,
             ),
             SizedBox(
@@ -93,8 +93,11 @@ class CategoryTextScreen extends StatelessWidget {
             ToggleSwitch(
               initialLabelIndex: sizeIndex,
               labels: ['Small', 'Medium', 'Large'],
-              activeBgColor: Theme.of(context).primaryColor,
-              activeFgColor: Colors.white,
+              inactiveBgColor: Theme.of(context).cardColor,
+              activeBgColor: const Color.fromRGBO(90, 90, 90, 1),
+              activeFgColor: Theme.of(context).textTheme.bodyText1.color,
+              // activeBgColor: Theme.of(context).primaryColor,
+              // activeFgColor: Colors.white,
               onToggle: (index) => changeSize(index),
             ),
             SizedBox(
