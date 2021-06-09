@@ -51,19 +51,19 @@ class CategoryListTile extends StatelessWidget {
           children: [
             Text(
               name,
-              style: TextStyle(fontSize: 20),
+              style: Theme.of(context).primaryTextTheme.headline6,
             ),
             Row(
               children: [
                 Text(
                   "Subcategories: $subcategoryCount",
-                  style: TextStyle(color: Colors.blueGrey),
+                  style: Theme.of(context).primaryTextTheme.subtitle2,
                 ),
                 SizedBox(
                   width: 20,
                 ),
                 Text("Tasks: $taskCount",
-                    style: TextStyle(color: Colors.blueGrey)),
+                    style: Theme.of(context).primaryTextTheme.subtitle2),
               ],
             )
           ],
