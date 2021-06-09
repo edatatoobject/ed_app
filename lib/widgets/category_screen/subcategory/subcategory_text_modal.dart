@@ -15,11 +15,11 @@ class SubcategoryTextModal extends StatelessWidget {
       this.categoryId,
       this.subcategoryId,
       this.name})
-      : super(key: key){
-        if(name != null){
-          controller.text = name;
-        }
-      }
+      : super(key: key) {
+    if (name != null) {
+      controller.text = name;
+    }
+  }
 
   final controller = TextEditingController();
 
@@ -27,11 +27,13 @@ class SubcategoryTextModal extends StatelessWidget {
     switch (actionType) {
       case ActionType.Create:
         Provider.of<CategoryDataBlock>(context, listen: false)
-            .subcategoryProvider.add(controller.text, categoryId);
+            .subcategoryProvider
+            .add(controller.text, categoryId);
         break;
       case ActionType.Edit:
         Provider.of<CategoryDataBlock>(context, listen: false)
-            .subcategoryProvider.edit(subcategoryId, controller.text);
+            .subcategoryProvider
+            .edit(subcategoryId, controller.text);
         break;
     }
 
@@ -50,12 +52,17 @@ class SubcategoryTextModal extends StatelessWidget {
       padding: EdgeInsets.all(15),
       child: Column(
         children: [
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(hintText: "CategoryName"),
-          ),
+          Text(actionType == ActionType.Create ? "Create" : "Edit",
+              style: Theme.of(context).primaryTextTheme.bodyText1),
           const SizedBox(
             height: 20,
+          ),
+          TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: "Subcategory Name"),
+          ),
+          const SizedBox(
+            height: 15,
           ),
           ElevatedButton(
               child: Text("Save"), onPressed: () => saveSubcategory(context))

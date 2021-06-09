@@ -2,7 +2,7 @@ import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/ui_elements/task_status_indicator.dart';
-import 'package:ed_app/widgets/category_screen/task/create_task.dart';
+import 'package:ed_app/widgets/category_screen/task/task_text_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,6 @@ class TaskListItem extends StatefulWidget {
 }
 
 class _TaskListItemState extends State<TaskListItem> {
-
   void editTask() {
     showModalBottomSheet(
         context: context,
@@ -43,16 +42,21 @@ class _TaskListItemState extends State<TaskListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => editTask(),
-      child: Row(
-        children: [
-          Text(widget.value),
-          Spacer(),
-          TaskStatusIndicator(
-            taskStatus: widget.status,
-          )
-        ],
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: InkWell(
+          onTap: () => editTask(),
+          child: Row(
+            children: [
+              Text(widget.value, style: Theme.of(context).primaryTextTheme.subtitle2,),
+              Spacer(),
+              TaskStatusIndicator(
+                taskStatus: widget.status,
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

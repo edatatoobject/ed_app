@@ -57,13 +57,13 @@ class CategoryListTile extends StatelessWidget {
               children: [
                 Text(
                   "Subcategories: $subcategoryCount",
-                  style: Theme.of(context).primaryTextTheme.bodyText1,
+                  style: Theme.of(context).primaryTextTheme.subtitle2,
                 ),
                 SizedBox(
                   width: 20,
                 ),
                 Text("Tasks: $taskCount",
-                    style: Theme.of(context).primaryTextTheme.bodyText1),
+                    style: Theme.of(context).primaryTextTheme.subtitle2),
               ],
             )
           ],

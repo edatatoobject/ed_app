@@ -1,20 +1,28 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/enums/category_size.dart';
+import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:ed_app/widgets/icon_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-class CategoryTextScreen extends StatelessWidget {
+class CategoryTextScreen extends StatefulWidget {
   static const String routeName = "/create-category";
 
+  @override
+  _CategoryTextScreenState createState() => _CategoryTextScreenState();
+}
+
+class _CategoryTextScreenState extends State<CategoryTextScreen> {
   IconData _iconData;
+
   String categoryId;
 
   ActionType actionType = ActionType.Create;
 
   int sizeIndex = 0;
+
   List<CategorySize> categorySizes = [
     CategorySize.Small,
     CategorySize.Medium,
@@ -34,10 +42,13 @@ class CategoryTextScreen extends StatelessWidget {
   void saveCategory(BuildContext context) {
     if (actionType == ActionType.Create) {
       Provider.of<CategoryDataBlock>(context, listen: false)
-          .categoryProvider.add(controller.text, categorySizes[sizeIndex], _iconData);
+          .categoryProvider
+          .add(controller.text, categorySizes[sizeIndex], _iconData);
     } else {
       Provider.of<CategoryDataBlock>(context, listen: false)
-          .categoryProvider.edit(categoryId ,controller.text, categorySizes[sizeIndex], _iconData);
+          .categoryProvider
+          .edit(
+              categoryId, controller.text, categorySizes[sizeIndex], _iconData);
     }
 
     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -68,48 +79,47 @@ class CategoryTextScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            IconPicker(
-              iconDataCallback: iconDataCallback,
-              iconSize: 150,
-              iconData: _iconData,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: controller,
-              decoration: InputDecoration(hintText: "CategoryName"),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ToggleSwitch(
-              initialLabelIndex: sizeIndex,
-              labels: ['Small', 'Medium', 'Large'],
-              inactiveBgColor: Theme.of(context).cardColor,
-              activeBgColor: const Color.fromRGBO(90, 90, 90, 1),
-              activeFgColor: Theme.of(context).textTheme.bodyText1.color,
-              // activeBgColor: Theme.of(context).primaryColor,
-              // activeFgColor: Colors.white,
-              onToggle: (index) => changeSize(index),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-              onPressed: () => saveCategory(context),
-              child: Text("Save"),
-            )
-          ],
-        ),
+        body: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          IconPicker(
+            iconDataCallback: iconDataCallback,
+            iconSize: 150,
+            iconData: _iconData,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: "CategoryName"),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ToggleSwitch(
+            initialLabelIndex: sizeIndex,
+            labels: ['Small', 'Medium', 'Large'],
+            inactiveBgColor: Theme.of(context).cardColor,
+            activeBgColor: const Color.fromRGBO(90, 90, 90, 1),
+            activeFgColor: Theme.of(context).textTheme.subtitle2.color,
+            // activeBgColor: Theme.of(context).primaryColor,
+            // activeFgColor: Colors.white,
+            onToggle: (index) => changeSize(index),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          ElevatedButton(
+            onPressed: () => saveCategory(context),
+            child: Text("Save"),
+          )
+        ],
       ),
-    );
+    ));
   }
 }

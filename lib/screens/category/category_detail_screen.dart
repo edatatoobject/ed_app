@@ -1,14 +1,20 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/ui_elements/code_icon.dart';
-import 'package:ed_app/widgets/category_screen/subcategory/create_subcategory.dart';
+import 'package:ed_app/widgets/category_screen/subcategory/subcategory_text_modal.dart';
 import 'package:ed_app/widgets/category_screen/subcategory/subcategory_item.dart';
+import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryDetailScreen extends StatelessWidget {
+class CategoryDetailScreen extends StatefulWidget {
   static const String routeName = "/category-detail";
 
+  @override
+  _CategoryDetailScreenState createState() => _CategoryDetailScreenState();
+}
+
+class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
   void createSubcategory(BuildContext context, String categoryId) {
     showModalBottomSheet(
         context: context,
@@ -18,6 +24,19 @@ class CategoryDetailScreen extends StatelessWidget {
             actionType: ActionType.Create,
           );
         });
+  }
+
+  bool taskSheetIsOpen = false;
+  bool rebuildModalSheet = false;
+
+  String taskModalSubcategoryId;
+
+  void openTaskSheet(String subcategoryId) {
+    setState(() {
+      rebuildModalSheet = true;
+      taskModalSubcategoryId = subcategoryId;
+      taskSheetIsOpen = true;
+    });
   }
 
   @override
@@ -65,6 +84,7 @@ class CategoryDetailScreen extends StatelessWidget {
                       name: subcategories[index].name,
                       id: subcategories[index].id,
                       categoryId: categoryId,
+                      taskSheetCallFunction: openTaskSheet,
                     );
                   },
                 ),
@@ -76,17 +96,22 @@ class CategoryDetailScreen extends StatelessWidget {
             padding:
                 EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
             child: BackButton()),
-        Positioned(
-          right: 0,
-          child: Container(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
-              child: IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => createSubcategory(context, categoryId),
-              )),
-        )
+        taskSheetIsOpen
+            ? TasksModal(
+                key: UniqueKey(),
+                categoryId: categoryId,
+                subcategoryId: taskModalSubcategoryId,
+                rebuildTaskModal: rebuildModalSheet,
+              )
+            : SizedBox(
+                width: 0,
+              )
       ]),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => createSubcategory(context, categoryId),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

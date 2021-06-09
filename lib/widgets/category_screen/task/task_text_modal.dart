@@ -55,10 +55,12 @@ class _TaskTextModalState extends State<TaskTextModal> {
   void saveTask() {
     if (widget.actionType == ActionType.Create) {
       Provider.of<CategoryDataBlock>(context, listen: false)
-          .taskProvider.add(widget.controller.text, pickedSubcategory, TaskStatus.ToDo);
+          .taskProvider
+          .add(widget.controller.text, pickedSubcategory, TaskStatus.ToDo);
     } else {
       Provider.of<CategoryDataBlock>(context, listen: false)
-          .taskProvider.edit(widget.taskId, widget.controller.text, pickedSubcategory);
+          .taskProvider
+          .edit(widget.taskId, widget.controller.text, pickedSubcategory);
     }
 
     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -70,8 +72,9 @@ class _TaskTextModalState extends State<TaskTextModal> {
     Navigator.of(context).pop();
   }
 
-  void deleteTask(){
-    Provider.of<CategoryDataBlock>(context, listen: false).deleteTask(widget.taskId);
+  void deleteTask() {
+    Provider.of<CategoryDataBlock>(context, listen: false)
+        .deleteTask(widget.taskId);
     Navigator.of(context).pop();
   }
 
@@ -84,6 +87,7 @@ class _TaskTextModalState extends State<TaskTextModal> {
       padding: EdgeInsets.all(15),
       child: Column(
         children: [
+          Text(widget.actionType == ActionType.Create ? "Create" : "Edit", style: Theme.of(context).primaryTextTheme.bodyText1),
           DropdownButton<String>(
               value: pickedSubcategory == null
                   ? subcategories.first.id
@@ -95,13 +99,15 @@ class _TaskTextModalState extends State<TaskTextModal> {
           ),
           TextField(
             controller: widget.controller,
-            decoration: InputDecoration(hintText: "CategoryName"),
+            decoration: InputDecoration(hintText: "Task Name"),
           ),
           const SizedBox(
             height: 40,
           ),
           ElevatedButton(child: Text("Save"), onPressed: saveTask),
-          widget.actionType == ActionType.Edit ? ElevatedButton(child: Text("Delete"), onPressed: deleteTask) : SizedBox()
+          widget.actionType == ActionType.Edit
+              ? ElevatedButton(child: Text("Delete"), onPressed: deleteTask)
+              : SizedBox()
         ],
       ),
     );
