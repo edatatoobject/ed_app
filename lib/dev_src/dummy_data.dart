@@ -82,6 +82,7 @@ class DummyData {
 
   static Sprint sprint = Sprint(
       id: "spr1",
+      name: "Sprint #1",
       number: 1,
       startDate: DateTime.now(),
       finishDate: DateTime.now().add(Duration(days: 7)),
