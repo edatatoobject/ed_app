@@ -10,9 +10,21 @@ import 'package:ed_app/enums/task_status.dart';
 
 class DummyData {
   static List<Category> dummyCategories = [
-    Category(id: "c1", name: "C#", categorySize: CategorySize.Large, iconInfo: IconInfo(62312, "FontAwesomeBrands")),
-    Category(id: "c2", name: "Flutter", categorySize: CategorySize.Medium, iconInfo: IconInfo(62137, "FontAwesomeRegular") ),
-    Category(id: "c3", name: "Docker", categorySize: CategorySize.Small, iconInfo: IconInfo(62316, "FontAwesomeBrands") )
+    Category(
+        id: "c1",
+        name: "C#",
+        categorySize: CategorySize.Large,
+        iconInfo: IconInfo(62312, "FontAwesomeBrands")),
+    Category(
+        id: "c2",
+        name: "Flutter",
+        categorySize: CategorySize.Medium,
+        iconInfo: IconInfo(62137, "FontAwesomeRegular")),
+    Category(
+        id: "c3",
+        name: "Docker",
+        categorySize: CategorySize.Small,
+        iconInfo: IconInfo(62316, "FontAwesomeBrands"))
   ];
 
   static List<Subcategory> dummySubcategories = [
@@ -80,13 +92,22 @@ class DummyData {
         status: TaskStatus.ToDo),
   ];
 
-  static Sprint sprint = Sprint(
-      id: "spr1",
-      name: "Sprint #1",
-      number: 1,
-      startDate: DateTime.now(),
-      finishDate: DateTime.now().add(Duration(days: 7)),
-      duration: 7);
+  static List<Sprint> sprints = [
+    Sprint(
+        id: "spr1",
+        name: "Sprint #1",
+        number: 1,
+        startDate: DateTime.now().subtract(Duration(days: 1)),
+        finishDate: DateTime.now().add(Duration(days: 7)),
+        duration: 7),
+    Sprint(
+        id: "spr0 ",
+        name: "Sprint #0",
+        number: 1,
+        startDate: DateTime.now().subtract(Duration(days: 8)),
+        finishDate: DateTime.now().subtract(Duration(days: 2)),
+        duration: 7)
+  ];
 
   static List<TaskInSprint> taskInSprint = [
     TaskInSprint(
