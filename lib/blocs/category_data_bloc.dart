@@ -5,22 +5,26 @@ import 'package:ed_app/models/task.dart';
 import 'package:ed_app/providers/category_provider.dart';
 import 'package:ed_app/providers/subcategory_provider.dart';
 import 'package:ed_app/providers/task_provider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CategoryDataBlock extends ChangeNotifier {
-  final CategoryProvider categoryProvider;
-  final SubcategoryProvider subcategoryProvider;
-  final TaskProvider taskProvider;
+  CategoryProvider categoryProvider;
+  SubcategoryProvider subcategoryProvider;
+  TaskProvider taskProvider;
 
   List<Category> _categories;
   List<Subcategory> _subcategories;
   List<Task> _tasks;
 
-  CategoryDataBlock(
-      this.categoryProvider, this.subcategoryProvider, this.taskProvider) {
-    _categories = categoryProvider.items;
-    _subcategories = subcategoryProvider.items;
-    _tasks = taskProvider.items;
+  void update(CategoryProvider categoryProvider,
+      SubcategoryProvider subcategoryProvider, TaskProvider taskProvider) {
+    this.categoryProvider = categoryProvider;
+    this.subcategoryProvider = subcategoryProvider;
+    this.taskProvider = taskProvider;
+
+    _categories = this.categoryProvider.items;
+    _subcategories = this.subcategoryProvider.items;
+    _tasks = this.taskProvider.items;
   }
 
   Category getCategoryById(String categoryId) {

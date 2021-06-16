@@ -1,5 +1,8 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
+import 'package:ed_app/blocs/sprint_data_block.dart';
+import 'package:ed_app/models/sprint.dart';
 import 'package:ed_app/providers/category_provider.dart';
+import 'package:ed_app/providers/sprint_provider.dart';
 import 'package:ed_app/providers/subcategory_provider.dart';
 import 'package:ed_app/providers/task_provider.dart';
 import 'package:ed_app/screens/bottom_tabs_screen.dart';
@@ -18,6 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //categories providers
         ChangeNotifierProvider(
           create: (context) => CategoryProvider(),
         ),
@@ -29,8 +33,19 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider3<CategoryProvider, SubcategoryProvider,
             TaskProvider, CategoryDataBlock>(
+          create: (context) => CategoryDataBlock(),
           update: (context, category, subcategory, task, previous) =>
-              CategoryDataBlock(category, subcategory, task),
+              previous..update(category, subcategory, task),
+        ),
+
+        //sprint provider
+        ChangeNotifierProvider(
+          create: (context) => SprintProvider(),
+        ),
+        ChangeNotifierProxyProvider<SprintProvider, SprintDataBlock>(
+          create: (context) => SprintDataBlock(),
+          update: (context, sprintProvider, sprintDataBlock) =>
+              sprintDataBlock..update(sprintProvider),
         )
       ],
       child: MaterialApp(
@@ -56,6 +71,8 @@ class MyApp extends StatelessWidget {
                   fontSize: 16),
               subtitle2:
                   TextStyle(color: const Color.fromRGBO(188, 188, 188, 1)),
+              subtitle1: TextStyle(
+                  color: const Color.fromRGBO(188, 188, 188, 1), fontSize: 18),
               headline3: TextStyle(
                   fontFamily: "Etna",
                   color: const Color.fromRGBO(225, 225, 225, 1)),

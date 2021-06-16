@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:ed_app/screens/category/category_screen.dart';
+import 'package:ed_app/screens/main_screen/main_screen.dart';
 import 'package:ed_app/screens/placeholder_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +12,13 @@ class BottomTabsScreen extends StatefulWidget {
 class _BottomTabsScreenState extends State<BottomTabsScreen> {
   int _currentIndex = 0;
 
-  List<Widget> _pages = [PlaceholderScreen(), CategoryScreen()];
-  List<String> _titles = ["Placeholder", "Categories"];
+  List<Widget> _pages = [MainScreen(), CategoryScreen()];
+  List<String> _titles = ["Main", "Categories"];
 
   var bottomNavigationBarItems = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: const Icon(Icons.home),
-      label: "Home",
+      label: "Home",  
     ),
     BottomNavigationBarItem(
       icon: const Icon(Icons.category),
