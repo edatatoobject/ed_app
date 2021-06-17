@@ -114,16 +114,11 @@ class DummyData {
         id: "ts1",
         sprintId: "spr1",
         taskId: "t1",
-        status: TaskInSprintStatus.Current),
+        status: TaskInSprintStatus.Done),
     TaskInSprint(
         id: "ts2",
         sprintId: "spr1",
         taskId: "t2",
-        status: TaskInSprintStatus.Current),
-    TaskInSprint(
-        id: "ts3",
-        sprintId: "spr1",
-        taskId: "t3",
         status: TaskInSprintStatus.Current),
     TaskInSprint(
         id: "ts4",
@@ -136,19 +131,9 @@ class DummyData {
         taskId: "t5",
         status: TaskInSprintStatus.Current),
     TaskInSprint(
-        id: "ts6",
-        sprintId: "spr1",
-        taskId: "t6",
-        status: TaskInSprintStatus.Current),
-    TaskInSprint(
         id: "ts7",
         sprintId: "spr1",
         taskId: "t7",
-        status: TaskInSprintStatus.Current),
-    TaskInSprint(
-        id: "ts8",
-        sprintId: "spr1",
-        taskId: "t8",
         status: TaskInSprintStatus.Current),
     TaskInSprint(
         id: "ts9",
