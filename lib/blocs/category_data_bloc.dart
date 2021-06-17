@@ -1,3 +1,4 @@
+import 'package:ed_app/dto/category_in_sprint_dto.dart';
 import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/models/category.dart';
 import 'package:ed_app/models/subcategory.dart';
@@ -25,6 +26,22 @@ class CategoryDataBlock extends ChangeNotifier {
     _categories = this.categoryProvider.items;
     _subcategories = this.subcategoryProvider.items;
     _tasks = this.taskProvider.items;
+  }
+
+  List<Category> GetCategoriesByIds(List<String> categoryIds) {
+    return _categories
+        .where((category) => categoryIds.contains(category.id))
+        .toList();
+  }
+
+  List<Subcategory> getSubcategoriesByIds(List<String> subcategoryIds) {
+    return _subcategories
+        .where((subcategory) => subcategoryIds.contains(subcategory.id))
+        .toList();
+  }
+
+  List<Task> getTasksByIds(List<String> taskIds) {
+    return _tasks.where((element) => taskIds.contains(element.id)).toList();
   }
 
   Category getCategoryById(String categoryId) {

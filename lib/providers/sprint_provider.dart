@@ -8,6 +8,6 @@ class SprintProvider extends ChangeNotifier {
   List<Sprint> get items => [..._items];
 
   Sprint getCurrentSprint() {
-    return _items.firstWhere((element) => DateTime.now().isBefore(element.finishDate));
+    return _items.firstWhere((element) => DateTime.now().isBefore(element.finishDate), orElse: null);
   }
 }

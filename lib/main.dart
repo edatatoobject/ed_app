@@ -4,11 +4,12 @@ import 'package:ed_app/models/sprint.dart';
 import 'package:ed_app/providers/category_provider.dart';
 import 'package:ed_app/providers/sprint_provider.dart';
 import 'package:ed_app/providers/subcategory_provider.dart';
+import 'package:ed_app/providers/task_in_sprint_provider.dart';
 import 'package:ed_app/providers/task_provider.dart';
 import 'package:ed_app/screens/bottom_tabs_screen.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
-import 'package:ed_app/theme/theme_data.dart';
+import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,10 +44,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => SprintProvider(),
         ),
-        ChangeNotifierProxyProvider<SprintProvider, SprintDataBlock>(
+        ChangeNotifierProvider(
+          create: (context) => TaskInSprintProvider(),
+        ),
+        ChangeNotifierProxyProvider2<SprintProvider, TaskInSprintProvider, SprintDataBlock>(
           create: (context) => SprintDataBlock(),
-          update: (context, sprintProvider, sprintDataBlock) =>
-              sprintDataBlock..update(sprintProvider),
+          update: (context, sprintProvider, taskInSprintProvider, sprintDataBlock) =>
+              sprintDataBlock..update(sprintProvider, taskInSprintProvider),
         )
       ],
       child: MaterialApp(

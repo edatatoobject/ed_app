@@ -1,3 +1,4 @@
+import 'package:ed_app/widgets/main_screen/categories/category_main_list.dart';
 import 'package:ed_app/widgets/main_screen/sprint/sprint_headline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,7 +16,8 @@ class _MainScreenState extends State<MainScreen> {
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
       child: Column(children: [
-        SprintHeadline()
+        SprintHeadline(),
+        CategoryMainList()
       ],),
     );
   }
