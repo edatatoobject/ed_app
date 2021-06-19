@@ -13,8 +13,8 @@ class CustomThemeData {
       backgroundColor: subBackgoundColor,
       cardColor: backgoundColor,
       scaffoldBackgroundColor: subBackgoundColor,
-      primaryColor: Colors.orange,
-      accentColor: Colors.orangeAccent,
+      primaryColor: Colors.cyan,
+      accentColor: Colors.cyanAccent,
       fontFamily: "ProximaNova",
       appBarTheme: AppBarTheme(
         backgroundColor: backgoundColor,
@@ -35,6 +35,7 @@ class CustomThemeData {
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(backgoundColor),
+              textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(color: subForegroundColor)),
               elevation: MaterialStateProperty.all<double>(0))),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
