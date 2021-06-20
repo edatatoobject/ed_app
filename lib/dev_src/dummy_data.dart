@@ -92,53 +92,53 @@ class DummyData {
         status: TaskStatus.ToDo),
   ];
 
-  static List<Sprint> sprints = [
-    Sprint(
-        id: "spr1",
-        name: "Sprint #1",
-        number: 1,
-        startDate: DateTime.now().subtract(Duration(days: 1)),
-        finishDate: DateTime.now().add(Duration(days: 7)),
-        duration: 7),
-    Sprint(
-        id: "spr0 ",
-        name: "Sprint #0",
-        number: 1,
-        startDate: DateTime.now().subtract(Duration(days: 8)),
-        finishDate: DateTime.now().subtract(Duration(days: 2)),
-        duration: 7)
-  ];
+  // static List<Sprint> sprints = [
+  //   Sprint(
+  //       id: "spr1",
+  //       name: "Sprint #1",
+  //       number: 1,
+  //       startDate: DateTime.now().subtract(Duration(days: 1)),
+  //       finishDate: DateTime.now().add(Duration(days: 7)),
+  //       duration: 7),
+  //   Sprint(
+  //       id: "spr0 ",
+  //       name: "Sprint #0",
+  //       number: 1,
+  //       startDate: DateTime.now().subtract(Duration(days: 8)),
+  //       finishDate: DateTime.now().subtract(Duration(days: 2)),
+  //       duration: 7)
+  // ];
 
-  static List<TaskInSprint> taskInSprint = [
-    TaskInSprint(
-        id: "ts1",
-        sprintId: "spr1",
-        taskId: "t1",
-        status: TaskInSprintStatus.Done),
-    TaskInSprint(
-        id: "ts2",
-        sprintId: "spr1",
-        taskId: "t2",
-        status: TaskInSprintStatus.Current),
-    TaskInSprint(
-        id: "ts4",
-        sprintId: "spr1",
-        taskId: "t4",
-        status: TaskInSprintStatus.Current),
-    TaskInSprint(
-        id: "ts5",
-        sprintId: "spr1",
-        taskId: "t5",
-        status: TaskInSprintStatus.Current),
-    TaskInSprint(
-        id: "ts7",
-        sprintId: "spr1",
-        taskId: "t7",
-        status: TaskInSprintStatus.Current),
-    TaskInSprint(
-        id: "ts9",
-        sprintId: "spr1",
-        taskId: "t9",
-        status: TaskInSprintStatus.Current)
-  ];
+  // static List<TaskInSprint> taskInSprint = [
+  //   TaskInSprint(
+  //       id: "ts1",
+  //       sprintId: "spr1",
+  //       taskId: "t1",
+  //       status: TaskInSprintStatus.Done),
+  //   TaskInSprint(
+  //       id: "ts2",
+  //       sprintId: "spr1",
+  //       taskId: "t2",
+  //       status: TaskInSprintStatus.Current),
+  //   TaskInSprint(
+  //       id: "ts4",
+  //       sprintId: "spr1",
+  //       taskId: "t4",
+  //       status: TaskInSprintStatus.Current),
+  //   TaskInSprint(
+  //       id: "ts5",
+  //       sprintId: "spr1",
+  //       taskId: "t5",
+  //       status: TaskInSprintStatus.Current),
+  //   TaskInSprint(
+  //       id: "ts7",
+  //       sprintId: "spr1",
+  //       taskId: "t7",
+  //       status: TaskInSprintStatus.Current),
+  //   TaskInSprint(
+  //       id: "ts9",
+  //       sprintId: "spr1",
+  //       taskId: "t9",
+  //       status: TaskInSprintStatus.Current)
+  // ];
 }

@@ -9,6 +9,7 @@ import 'package:ed_app/providers/task_provider.dart';
 import 'package:ed_app/screens/bottom_tabs_screen.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
+import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
 import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),
           CategoryTextScreen.routeName: (ctx) => CategoryTextScreen(),
-          TasksModal.routeName: (ctx) => TasksModal()
+          SprintDetailScreen.routeName : (ctx) => SprintDetailScreen()
         },
       ),
     );

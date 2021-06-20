@@ -8,6 +8,10 @@ class CustomThemeData {
   static const Color backgoundColor = const Color.fromRGBO(60, 60, 60, 1);
   static const Color subBackgoundColor = const Color.fromRGBO(30, 30, 30, 1);
 
+  static InputDecoration BorderlessInputDecoreation(String hintText) {
+    return InputDecoration(filled: false, border: InputBorder.none, hintText: hintText);
+  }
+
   static ThemeData themedata = ThemeData(
       brightness: Brightness.dark,
       backgroundColor: subBackgoundColor,
@@ -35,7 +39,8 @@ class CustomThemeData {
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(backgoundColor),
-              textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(color: subForegroundColor)),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                  TextStyle(color: subForegroundColor)),
               elevation: MaterialStateProperty.all<double>(0))),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -50,10 +55,11 @@ class CustomThemeData {
               borderSide: new BorderSide(style: BorderStyle.none)),
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(style: BorderStyle.none),
-              borderRadius: BorderRadius.all(Radius.circular(15))),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(style: BorderStyle.none),
-              borderRadius: BorderRadius.all(Radius.circular(15))),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
           fillColor: backgoundColor,
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           filled: true));
 }

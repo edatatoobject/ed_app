@@ -4,7 +4,7 @@ import 'package:ed_app/models/taskInSprint.dart';
 import 'package:flutter/material.dart';
 
 class TaskInSprintProvider extends ChangeNotifier {
-  List<TaskInSprint> _items = DummyData.taskInSprint;
+  List<TaskInSprint> _items = null;
 
   List<TaskInSprint> get items => [..._items];
 

@@ -3,11 +3,16 @@ import 'package:ed_app/models/sprint.dart';
 import 'package:flutter/material.dart';
 
 class SprintProvider extends ChangeNotifier {
-  List<Sprint> _items = DummyData.sprints;
+  List<Sprint> _items = null;
 
   List<Sprint> get items => [..._items];
 
   Sprint getCurrentSprint() {
-    return _items.firstWhere((element) => DateTime.now().isBefore(element.finishDate), orElse: null);
+    if (_items == null) {
+      return null;
+    }
+    return _items.firstWhere(
+        (element) => DateTime.now().isBefore(element.finishDate),
+        orElse: null);
   }
 }
