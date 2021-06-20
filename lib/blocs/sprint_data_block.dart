@@ -1,3 +1,4 @@
+import 'package:ed_app/enums/task_in_sprint_status.dart';
 import 'package:ed_app/models/sprint.dart';
 import 'package:ed_app/models/taskInSprint.dart';
 import 'package:ed_app/providers/sprint_provider.dart';
@@ -21,6 +22,8 @@ class SprintDataBlock extends ChangeNotifier {
     if (_sprint != null) {
       _tasksInSprint = this.taskInSprintProvider.getTasksBySprintId(_sprint.id);
     }
+    
+    notifyListeners();
   }
 
   Sprint getCurrentSprint() {
@@ -29,5 +32,9 @@ class SprintDataBlock extends ChangeNotifier {
 
   List<TaskInSprint> getCurrentSprintTasks() {
     return _tasksInSprint;
+  }
+
+  void changeTaskStatus(String taskId, TaskInSprintStatus status) {
+    taskInSprintProvider.changeTaskStatus(taskId, status);
   }
 }

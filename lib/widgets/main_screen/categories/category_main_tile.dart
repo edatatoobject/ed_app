@@ -1,6 +1,5 @@
 import 'package:ed_app/dto/category_in_sprint_dto.dart';
 import 'package:ed_app/enums/task_in_sprint_status.dart';
-import 'package:ed_app/models/task.dart';
 import 'package:ed_app/models/taskInSprint.dart';
 import 'package:ed_app/ui_elements/code_icon.dart';
 import 'package:flutter/material.dart';
