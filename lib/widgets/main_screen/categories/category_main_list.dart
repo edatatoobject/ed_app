@@ -1,18 +1,21 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/blocs/sprint_data_block.dart';
 import 'package:ed_app/dto/category_in_sprint_dto.dart';
-import 'package:ed_app/models/subcategory.dart';
 import 'package:ed_app/models/taskInSprint.dart';
 import 'package:ed_app/widgets/main_screen/categories/category_main_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryMainList extends StatelessWidget {
+class CategoryMainList extends StatefulWidget {
   const CategoryMainList({Key key}) : super(key: key);
 
-  List<CategoryInSprintDto> getCategoriesDto(BuildContext context) {
-    var tasksInSprint = Provider.of<SprintDataBlock>(context, listen: false)
-        .getCurrentSprintTasks();
+  @override
+  _CategoryMainListState createState() => _CategoryMainListState();
+}
+
+class _CategoryMainListState extends State<CategoryMainList> {
+  List<CategoryInSprintDto> getCategoriesDto(BuildContext context, List<TaskInSprint> tasksInSprint) {
+
 
     var categoryDataBlock = Provider.of<CategoryDataBlock>(context);
 
@@ -52,7 +55,11 @@ class CategoryMainList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var currentSprintCategories = getCategoriesDto(context);
+
+    var tasksInSprint = Provider.of<SprintDataBlock>(context)
+        .getCurrentSprintTasks();
+
+    var currentSprintCategories = getCategoriesDto(context, tasksInSprint);
 
     return Container(
       child: Column(
