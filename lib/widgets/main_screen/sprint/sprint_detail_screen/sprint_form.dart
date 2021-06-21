@@ -1,8 +1,9 @@
-import 'package:ed_app/theme/custom_theme_data.dart';
+import 'package:ed_app/blocs/sprint_data_block.dart';
 import 'package:ed_app/tools/dateTimeTool.dart';
 import 'package:ed_app/tools/formTool.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SprintForm extends StatefulWidget {
   const SprintForm({Key key}) : super(key: key);
@@ -14,127 +15,38 @@ class SprintForm extends StatefulWidget {
 class _SprintFormState extends State<SprintForm> {
   final _formKey = GlobalKey<FormState>();
 
-  bool startDateValidationWarning = false;
-  bool finishDateValidationWarning = false;
+  bool dateValidation = true;
 
-  DateTime startDate;
-  DateTime finishDate;
+  DateTimeRange dateTimeRange;
 
-  List<Widget> _getStartDateWidgetSequence(BuildContext context) {
-    List<Widget> widgetList = [];
+  void pickDateRange(BuildContext context) async {
+    var lastSprint =
+        Provider.of<SprintDataBlock>(context, listen: false).getLastSprint();
 
-    if (startDateValidationWarning) {
-      widgetList.add(Text("Select date", style: TextStyle(color: Colors.red)));
-    } else {
-      widgetList.add(Text(startDate == null
-          ? "Select date"
-          : DateFormat('dd.MM.yyyy').format(startDate)));
-    }
+    var pickedRange = await DateTimeTools.showRangedDateTimePicker(
+        context,
+        dateTimeRange == null ? null : dateTimeRange.start,
+        dateTimeRange == null ? null : dateTimeRange.end,
+        borderDate: lastSprint == null ? null : lastSprint.finishDate);
 
-    widgetList.add(Spacer());
-
-    if (DateTimeTools.getDate(DateTime.now()) != startDate) {
-      widgetList.add(
-        ElevatedButton(
-            onPressed: () => _pickTodayForStartDate(),
-            child: Text(
-              "Today",
-              style: Theme.of(context).primaryTextTheme.subtitle2,
-            )),
-      );
-    }
-
-    widgetList.add(IconButton(
-        onPressed: () => _pickStartDate(context),
-        icon: Icon(Icons.calendar_today)));
-
-    return widgetList;
-  }
-
-  List<Widget> _getFinishDateWidgetSequence(BuildContext context) {
-    List<Widget> widgetList = [];
-
-    if (finishDateValidationWarning) {
-      widgetList.add(Text("Select date", style: TextStyle(color: Colors.red)));
-    } else {
-      widgetList.add(Text(finishDate == null
-          ? "Select date"
-          : DateFormat('dd.MM.yyyy').format(finishDate)));
-    }
-
-    widgetList.add(Spacer());
-
-    if (startDate != null &&
-        DateTimeTools.getDate(startDate.add(Duration(days: 7))) != finishDate) {
-      widgetList.add(
-        ElevatedButton(
-            onPressed: () => _pickWeekForFinishDate(),
-            child: Text(
-              "1 Week",
-              style: Theme.of(context).primaryTextTheme.subtitle2,
-            )),
-      );
-    }
-
-    widgetList.add(IconButton(
-        onPressed: () => _pickFinishDate(context),
-        icon: Icon(Icons.calendar_today)));
-
-    return widgetList;
-  }
-
-  //date staff
-
-  void _pickStartDate(BuildContext context) async {
-    var newStartDate =
-        await DateTimeTools.showDateTimePicker(context, startDate);
-
-    if (newStartDate != null && newStartDate != startDate)
-      setState(() {
-        startDate = newStartDate;
-        startDateValidationWarning = false;
-      });
-  }
-
-  void _pickFinishDate(BuildContext context) async {
-    var newFinishDate =
-        await DateTimeTools.showDateTimePicker(context, finishDate);
-
-    if (newFinishDate != null && newFinishDate != startDate)
-      setState(() {
-        finishDate = newFinishDate;
-        finishDateValidationWarning = false;
-      });
-  }
-
-  void _pickTodayForStartDate() {
-    setState(() {
-      startDate = DateTimeTools.getDate(DateTime.now());
-      startDateValidationWarning = false;
-    });
-  }
-
-  void _pickWeekForFinishDate() {
-    if (startDate == null) return;
+    if (pickedRange == null) return;
 
     setState(() {
-      finishDate = startDate.add(Duration(days: 7));
-      finishDateValidationWarning = false;
+      dateTimeRange = pickedRange;
     });
   }
 
   bool validateForm() {
     var formValidation = _formKey.currentState.validate();
 
-    if (startDate == null && finishDate == null) {
+    if (dateTimeRange == null) {
       setState(() {
-        if (startDate == null) startDateValidationWarning = true;
-        if (finishDate == null) finishDateValidationWarning = true;
+        dateValidation = false;
       });
       return false;
     }
 
-    return true && formValidation;
+    return formValidation;
   }
 
   void confinm() {}
@@ -156,12 +68,27 @@ class _SprintFormState extends State<SprintForm> {
             SizedBox(
               height: 20,
             ),
-            Text("Start date",
+            Text("Sprint date",
                 style: Theme.of(context).primaryTextTheme.subtitle1),
-            Row(children: _getStartDateWidgetSequence(context)),
-            Text("Finish date",
-                style: Theme.of(context).primaryTextTheme.subtitle1),
-            Row(children: _getFinishDateWidgetSequence(context)),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                children: [
+                  dateValidation
+                      ? Text(dateTimeRange != null
+                          ? "${DateTimeTools.dateFormat(dateTimeRange.start)} - ${DateTimeTools.dateFormat(dateTimeRange.end)}"
+                          : "Select date")
+                      : Text(
+                          "Select date",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                  Spacer(),
+                  IconButton(
+                      onPressed: () => pickDateRange(context),
+                      icon: Icon(Icons.calendar_today))
+                ],
+              ),
+            ),
             ElevatedButton(
                 onPressed: () {
                   if (validateForm()) {

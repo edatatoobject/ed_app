@@ -92,22 +92,22 @@ class DummyData {
         status: TaskStatus.ToDo),
   ];
 
-  // static List<Sprint> sprints = [
-  //   Sprint(
-  //       id: "spr1",
-  //       name: "Sprint #1",
-  //       number: 1,
-  //       startDate: DateTime.now().subtract(Duration(days: 1)),
-  //       finishDate: DateTime.now().add(Duration(days: 7)),
-  //       duration: 7),
-  //   Sprint(
-  //       id: "spr0 ",
-  //       name: "Sprint #0",
-  //       number: 1,
-  //       startDate: DateTime.now().subtract(Duration(days: 8)),
-  //       finishDate: DateTime.now().subtract(Duration(days: 2)),
-  //       duration: 7)
-  // ];
+  static List<Sprint> sprints = [
+    // Sprint(
+    //     id: "spr1",
+    //     name: "Sprint #1",
+    //     number: 1,
+    //     startDate: DateTime.now().subtract(Duration(days: 1)),
+    //     finishDate: DateTime.now().add(Duration(days: 7)),
+    //     duration: 7),
+    Sprint(
+        id: "spr0 ",
+        name: "Sprint #0",
+        number: 1,
+        startDate: DateTime.now().subtract(Duration(days: 8)),
+        finishDate: DateTime.now().subtract(Duration(days: 2)),
+        duration: 7)
+  ];
 
   // static List<TaskInSprint> taskInSprint = [
   //   TaskInSprint(

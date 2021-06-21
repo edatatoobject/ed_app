@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 class TaskInSprintProvider extends ChangeNotifier {
   List<TaskInSprint> _items = null;
 
-  List<TaskInSprint> get items => [..._items];
+  List<TaskInSprint> get items {
+    if (_items == null) return null;
+
+    return [..._items];
+  }
 
   List<TaskInSprint> getTasksBySprintId(String sprintId) {
     return _items.where((element) => element.sprintId == sprintId).toList();

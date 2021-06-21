@@ -22,12 +22,23 @@ class SprintDataBlock extends ChangeNotifier {
     if (_sprint != null) {
       _tasksInSprint = this.taskInSprintProvider.getTasksBySprintId(_sprint.id);
     }
-    
+
     notifyListeners();
   }
 
   Sprint getCurrentSprint() {
     return _sprint;
+  }
+
+  Sprint getLastSprint() {
+    var sprints = sprintProvider.items;
+
+    if (sprints == null) {
+      return null;
+    }
+
+    sprints.sort((u1, u2) => u1.toString().compareTo(u2.toString()));
+    return sprints.first;
   }
 
   List<TaskInSprint> getCurrentSprintTasks() {
