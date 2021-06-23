@@ -1,5 +1,6 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
+import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:ed_app/ui_elements/code_icon.dart';
 import 'package:ed_app/widgets/category_screen/subcategory/subcategory_text_modal.dart';
 import 'package:ed_app/widgets/category_screen/subcategory/subcategory_item.dart';
@@ -108,7 +109,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               )
       ]),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: CustomThemeData.accentColor,),
         onPressed: () => createSubcategory(context, categoryId),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

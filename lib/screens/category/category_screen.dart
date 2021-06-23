@@ -1,5 +1,6 @@
 import 'package:ed_app/providers/category_provider.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
+import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:ed_app/widgets/category_screen/category/category_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             elevation: 0,
             actions: [
               IconButton(
-                icon: Icon(Icons.add),
+                icon: Icon(Icons.add, color: CustomThemeData.accentColor,),
                 onPressed: () {
                   Navigator.of(context).pushNamed(CategoryTextScreen.routeName);
                 },

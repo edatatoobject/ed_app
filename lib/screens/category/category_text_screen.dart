@@ -1,7 +1,6 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/enums/category_size.dart';
-import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:ed_app/widgets/icon_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

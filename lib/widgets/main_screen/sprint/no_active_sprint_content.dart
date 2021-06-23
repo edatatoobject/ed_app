@@ -1,4 +1,3 @@
-import 'package:ed_app/screens/category/category_detail_screen.dart';
 import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +21,6 @@ class NoActiveSprint extends StatelessWidget {
               onPressed: () => Navigator.of(context).pushNamed(SprintDetailScreen.routeName),
               child: Text(
                 "CREATE NEW SPRINT!",
-                style: Theme.of(context).primaryTextTheme.subtitle1,
               ))
         ],
       ),
