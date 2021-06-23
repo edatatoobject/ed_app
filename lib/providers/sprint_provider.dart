@@ -5,9 +5,24 @@ import 'package:flutter/material.dart';
 class SprintProvider extends ChangeNotifier {
   List<Sprint> _items = DummyData.sprints;
 
-  List<Sprint> get items => [..._items];
+  List<Sprint> get items {
+    if (_items == null) return null;
+
+    return [..._items];
+  }
 
   Sprint getCurrentSprint() {
-    return _items.firstWhere((element) => DateTime.now().isBefore(element.finishDate), orElse: null);
+    if (_items == null) {
+      return null;
+    }
+    return _items.firstWhere(
+        (element) => DateTime.now().isBefore(element.finishDate),
+        orElse: () => null);
+  }
+
+  void addSprint(Sprint sprint) {
+    _items.add(sprint);
+
+    notifyListeners();
   }
 }

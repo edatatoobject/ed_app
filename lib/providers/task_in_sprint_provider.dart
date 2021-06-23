@@ -4,9 +4,13 @@ import 'package:ed_app/models/taskInSprint.dart';
 import 'package:flutter/material.dart';
 
 class TaskInSprintProvider extends ChangeNotifier {
-  List<TaskInSprint> _items = DummyData.taskInSprint;
+  List<TaskInSprint> _items = [];
 
-  List<TaskInSprint> get items => [..._items];
+  List<TaskInSprint> get items {
+    if (_items == null) return null;
+
+    return [..._items];
+  }
 
   List<TaskInSprint> getTasksBySprintId(String sprintId) {
     return _items.where((element) => element.sprintId == sprintId).toList();
@@ -30,5 +34,11 @@ class TaskInSprintProvider extends ChangeNotifier {
 
   int _findIndex(String taskId) {
     return _items.indexWhere((element) => element.id == taskId);
+  }
+
+  void addTasksInSprint(List<TaskInSprint> tasks) {
+    _items.addAll(tasks);
+
+    notifyListeners();
   }
 }

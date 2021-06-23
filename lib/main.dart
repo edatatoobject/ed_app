@@ -1,6 +1,5 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/blocs/sprint_data_block.dart';
-import 'package:ed_app/models/sprint.dart';
 import 'package:ed_app/providers/category_provider.dart';
 import 'package:ed_app/providers/sprint_provider.dart';
 import 'package:ed_app/providers/subcategory_provider.dart';
@@ -9,8 +8,9 @@ import 'package:ed_app/providers/task_provider.dart';
 import 'package:ed_app/screens/bottom_tabs_screen.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
+import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
+import 'package:ed_app/screens/main_screen/tasks_picker_screen.dart';
 import 'package:ed_app/theme/custom_theme_data.dart';
-import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +59,8 @@ class MyApp extends StatelessWidget {
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),
           CategoryTextScreen.routeName: (ctx) => CategoryTextScreen(),
-          TasksModal.routeName: (ctx) => TasksModal()
+          SprintDetailScreen.routeName : (ctx) => SprintDetailScreen(),
+          TasksPickerScreen.routeName : (ctx) => TasksPickerScreen()
         },
       ),
     );

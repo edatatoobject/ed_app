@@ -28,6 +28,10 @@ class CategoryDataBlock extends ChangeNotifier {
     _tasks = this.taskProvider.items;
   }
 
+  List<Category> getCategories() {
+    return _categories;
+  }
+
   List<Category> GetCategoriesByIds(List<String> categoryIds) {
     return _categories
         .where((category) => categoryIds.contains(category.id))
@@ -38,6 +42,10 @@ class CategoryDataBlock extends ChangeNotifier {
     return _subcategories
         .where((subcategory) => subcategoryIds.contains(subcategory.id))
         .toList();
+  }
+
+  Task getTaskById(String taskId) {
+    return _tasks.firstWhere((task) => task.id == taskId);
   }
 
   List<Task> getTasksByIds(List<String> taskIds) {
