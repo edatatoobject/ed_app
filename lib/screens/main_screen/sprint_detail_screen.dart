@@ -1,8 +1,5 @@
-import 'package:ed_app/tools/dateTimeTool.dart';
 import 'package:ed_app/widgets/main_screen/sprint/sprint_detail_screen/sprint_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconpicker/IconPicker/icons.dart';
-import 'package:intl/intl.dart';
 
 class SprintDetailScreen extends StatefulWidget {
   static const String routeName = "/sprint-detail";

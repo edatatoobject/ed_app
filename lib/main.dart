@@ -10,8 +10,10 @@ import 'package:ed_app/screens/bottom_tabs_screen.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
 import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
+import 'package:ed_app/screens/main_screen/tasks_picker_screen.dart';
 import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
+import 'package:ed_app/widgets/main_screen/sprint/sprint_detail_screen/tasks/tasks_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +62,8 @@ class MyApp extends StatelessWidget {
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),
           CategoryTextScreen.routeName: (ctx) => CategoryTextScreen(),
-          SprintDetailScreen.routeName : (ctx) => SprintDetailScreen()
+          SprintDetailScreen.routeName : (ctx) => SprintDetailScreen(),
+          TasksPickerScreen.routeName : (ctx) => TasksPickerScreen()
         },
       ),
     );
