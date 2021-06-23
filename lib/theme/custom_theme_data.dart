@@ -8,8 +8,11 @@ class CustomThemeData {
   static const Color backgoundColor = const Color.fromRGBO(60, 60, 60, 1);
   static const Color subBackgoundColor = const Color.fromRGBO(30, 30, 30, 1);
 
+  static const Color accentColor = Colors.cyanAccent;
+
   static InputDecoration BorderlessInputDecoreation(String hintText) {
-    return InputDecoration(filled: false, border: InputBorder.none, hintText: hintText);
+    return InputDecoration(
+        filled: false, border: InputBorder.none, hintText: hintText);
   }
 
   static ThemeData themedata = ThemeData(
@@ -35,16 +38,11 @@ class CustomThemeData {
         headline5: TextStyle(fontFamily: "Etna", color: foregrounColor),
         headline6: TextStyle(fontFamily: "Etna", color: foregrounColor),
       ),
-      iconTheme: IconThemeData(color: foregrounColor),
-      textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(backgoundColor),
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                  TextStyle(color: subForegroundColor)),
-              elevation: MaterialStateProperty.all<double>(0))),
+      iconTheme: IconThemeData(color: accentColor),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(backgoundColor),
+              foregroundColor: MaterialStateProperty.all<Color>(accentColor),
               elevation: MaterialStateProperty.all<double>(0))),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: backgoundColor,
