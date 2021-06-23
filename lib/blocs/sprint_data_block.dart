@@ -26,6 +26,10 @@ class SprintDataBlock extends ChangeNotifier {
     notifyListeners();
   }
 
+  void createSprint(Sprint sprint) {
+    sprintProvider.addSprint(sprint);
+  }
+
   Sprint getCurrentSprint() {
     return _sprint;
   }
@@ -39,6 +43,10 @@ class SprintDataBlock extends ChangeNotifier {
 
     sprints.sort((u1, u2) => u1.toString().compareTo(u2.toString()));
     return sprints.first;
+  }
+
+  void createTasks(List<TaskInSprint> tasks) {
+    taskInSprintProvider.addTasksInSprint(tasks);
   }
 
   List<TaskInSprint> getCurrentSprintTasks() {

@@ -1,10 +1,14 @@
 import 'package:ed_app/blocs/sprint_data_block.dart';
+import 'package:ed_app/enums/task_in_sprint_status.dart';
+import 'package:ed_app/models/sprint.dart';
+import 'package:ed_app/models/taskInSprint.dart';
 import 'package:ed_app/screens/main_screen/tasks_picker_screen.dart';
+import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:ed_app/tools/dateTimeTool.dart';
 import 'package:ed_app/tools/formTool.dart';
-import 'package:ed_app/widgets/main_screen/sprint/sprint_detail_screen/tasks/tasks_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class SprintForm extends StatefulWidget {
   const SprintForm({Key key}) : super(key: key);
@@ -16,49 +20,65 @@ class SprintForm extends StatefulWidget {
 class _SprintFormState extends State<SprintForm> {
   final _formKey = GlobalKey<FormState>();
 
-  List<String> pickedTasks;
+  List<String> _pickedTasks;
 
-  void setTasks(List<String> tasksIds) {
-    pickedTasks = tasksIds;
-  }
+  TextEditingController _nameController = TextEditingController();
 
-  bool dateValidation = true;
+  bool _tasksValidation = true;
+  bool _dateValidation = true;
 
-  DateTimeRange dateTimeRange;
+  DateTimeRange _dateTimeRange;
 
-  void pickDateRange(BuildContext context) async {
+  void _pickDateRange() async {
     var lastSprint =
         Provider.of<SprintDataBlock>(context, listen: false).getLastSprint();
 
     var pickedRange = await DateTimeTools.showRangedDateTimePicker(
         context,
-        dateTimeRange == null ? null : dateTimeRange.start,
-        dateTimeRange == null ? null : dateTimeRange.end,
+        _dateTimeRange == null ? null : _dateTimeRange.start,
+        _dateTimeRange == null ? null : _dateTimeRange.end,
         borderDate: lastSprint == null ? null : lastSprint.finishDate);
 
     if (pickedRange == null) return;
 
     setState(() {
-      dateTimeRange = pickedRange;
+      _dateTimeRange = pickedRange;
     });
   }
 
-  void pickTasksForSprint(BuildContext context) async {
-    final tasks =
-        await Navigator.pushNamed(context, TasksPickerScreen.routeName, arguments: pickedTasks);
+  void _pickTasksForSprint() async {
+    final tasks = await Navigator.pushNamed(
+        context, TasksPickerScreen.routeName,
+        arguments: _pickedTasks);
 
-    if (tasks == null) 
-      return;
-    
-    pickedTasks = tasks;
+    if ((tasks as List<String>).isEmpty) {
+      setState(() {
+        _tasksValidation = false;
+      });
+    } else {
+      setState(() {
+        _tasksValidation = true;
+      });
+    }
+
+    setState(() {
+      _pickedTasks = tasks;
+    });
   }
 
-  bool validateForm() {
+  bool _validateForm() {
     var formValidation = _formKey.currentState.validate();
 
-    if (dateTimeRange == null) {
+    if (_dateTimeRange == null) {
       setState(() {
-        dateValidation = false;
+        _dateValidation = false;
+      });
+      return false;
+    }
+
+    if (_pickedTasks == null || _pickedTasks.isEmpty) {
+      setState(() {
+        _tasksValidation = false;
       });
       return false;
     }
@@ -66,7 +86,30 @@ class _SprintFormState extends State<SprintForm> {
     return formValidation;
   }
 
-  void confinm() {}
+  void _confinm() {
+    var sprint = new Sprint(
+        name: _nameController.text,
+        startDate: _dateTimeRange.start,
+        finishDate: _dateTimeRange.end,
+        duration: _dateTimeRange.duration.inDays,
+        number: 1,
+        id: Uuid().v4());
+
+    List<TaskInSprint> tasksInSprint = _pickedTasks
+        .map((task) => TaskInSprint(
+            id: Uuid().v4(),
+            sprintId: sprint.id,
+            taskId: task,
+            status: TaskInSprintStatus.Current))
+        .toList();
+
+    var sprintDataBlock = Provider.of<SprintDataBlock>(context, listen: false);
+
+    sprintDataBlock.createSprint(sprint);
+    sprintDataBlock.createTasks(tasksInSprint);
+
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +123,7 @@ class _SprintFormState extends State<SprintForm> {
                 style: Theme.of(context).primaryTextTheme.subtitle1,
               ),
               TextFormField(
+                controller: _nameController,
                 decoration: InputDecoration(hintText: "Sprint Name"),
                 validator: FormTool.emptyFieldValidator,
               ),
@@ -92,9 +136,9 @@ class _SprintFormState extends State<SprintForm> {
                 padding: const EdgeInsets.only(left: 10),
                 child: Row(
                   children: [
-                    dateValidation
-                        ? Text(dateTimeRange != null
-                            ? "${DateTimeTools.dateFormat(dateTimeRange.start)} - ${DateTimeTools.dateFormat(dateTimeRange.end)}"
+                    _dateValidation
+                        ? Text(_dateTimeRange != null
+                            ? "${DateTimeTools.dateFormat(_dateTimeRange.start)} - ${DateTimeTools.dateFormat(_dateTimeRange.end)}"
                             : "Select date")
                         : Text(
                             "Select date",
@@ -102,21 +146,30 @@ class _SprintFormState extends State<SprintForm> {
                           ),
                     Spacer(),
                     IconButton(
-                        onPressed: () => pickDateRange(context),
+                        onPressed: () => _pickDateRange(),
                         icon: Icon(Icons.calendar_today))
                   ],
                 ),
               ),
+              Text(
+                "Tasks in sprint",
+                style: Theme.of(context).primaryTextTheme.subtitle1,
+              ),
               ElevatedButton(
-                  onPressed: () => pickTasksForSprint(context),
-                  child: Text("Pick Categories")),
+                  onPressed: () => _pickTasksForSprint(),
+                  child: Text("Pick Tasks")),
+              Text(
+                "${_pickedTasks == null ? "0" : _pickedTasks.length} Tasks picked",
+                style: TextStyle(
+                    color: _tasksValidation
+                        ? CustomThemeData.subForegroundColor
+                        : Colors.red),
+              ),
+              Spacer(),
               ElevatedButton(
                   onPressed: () {
-                    if (validateForm()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Processing Data')));
+                    if (_validateForm()) {
+                      _confinm();
                     }
                   },
                   child: Text('Submit'))

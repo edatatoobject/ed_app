@@ -19,4 +19,10 @@ class SprintProvider extends ChangeNotifier {
         (element) => DateTime.now().isBefore(element.finishDate),
         orElse: () => null);
   }
+
+  void addSprint(Sprint sprint) {
+    _items.add(sprint);
+
+    notifyListeners();
+  }
 }
