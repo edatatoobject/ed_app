@@ -11,14 +11,12 @@ class SubcategoryItem extends StatefulWidget {
   final String name;
   final String id;
   final String categoryId;
-  final Function(String) taskSheetCallFunction;
 
   const SubcategoryItem(
       {Key key,
       @required this.name,
       @required this.id,
-      @required this.categoryId,
-      this.taskSheetCallFunction})
+      @required this.categoryId})
       : super(key: key);
 
   @override
@@ -37,10 +35,6 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
         });
   }
 
-  void openTasksModal(BuildContext context) {
-    widget.taskSheetCallFunction(widget.id);
-  }
-
   void editSubcategory() {
     showModalBottomSheet(
         context: context,
@@ -49,6 +43,15 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
               subcategoryId: widget.id,
               actionType: ActionType.Edit,
               name: widget.name);
+        });
+  }
+
+  void openTasksModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (bctx) {
+          return TasksModal(
+              categoryId: widget.categoryId, subcategoryId: widget.id);
         });
   }
 

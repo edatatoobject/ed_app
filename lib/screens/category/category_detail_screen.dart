@@ -4,7 +4,6 @@ import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:ed_app/ui_elements/code_icon.dart';
 import 'package:ed_app/widgets/category_screen/subcategory/subcategory_text_modal.dart';
 import 'package:ed_app/widgets/category_screen/subcategory/subcategory_item.dart';
-import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,19 +24,6 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             actionType: ActionType.Create,
           );
         });
-  }
-
-  bool taskSheetIsOpen = false;
-  bool rebuildModalSheet = false;
-
-  String taskModalSubcategoryId;
-
-  void openTaskSheet(String subcategoryId) {
-    setState(() {
-      rebuildModalSheet = true;
-      taskModalSubcategoryId = subcategoryId;
-      taskSheetIsOpen = true;
-    });
   }
 
   @override
@@ -84,8 +70,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                     return SubcategoryItem(
                       name: subcategories[index].name,
                       id: subcategories[index].id,
-                      categoryId: categoryId,
-                      taskSheetCallFunction: openTaskSheet,
+                      categoryId: categoryId
                     );
                   },
                 ),
@@ -96,17 +81,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         Container(
             padding:
                 EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
-            child: BackButton()),
-        taskSheetIsOpen
-            ? TasksModal(
-                key: UniqueKey(),
-                categoryId: categoryId,
-                subcategoryId: taskModalSubcategoryId,
-                rebuildTaskModal: rebuildModalSheet,
-              )
-            : SizedBox(
-                width: 0,
-              )
+            child: BackButton())
       ]),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add, color: CustomThemeData.accentColor,),
