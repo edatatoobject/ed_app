@@ -8,13 +8,11 @@ class TasksModal extends StatefulWidget {
 
   final String categoryId;
   final String subcategoryId;
-  final bool rebuildTaskModal;
 
   const TasksModal(
       {Key key,
       @required this.categoryId,
-      @required this.subcategoryId,
-      @required this.rebuildTaskModal})
+      @required this.subcategoryId})
       : super(key: key);
 
   @override
@@ -24,26 +22,14 @@ class TasksModal extends StatefulWidget {
 class _TasksModalState extends State<TasksModal> {
   @override
   Widget build(BuildContext context) {
-    if (widget.rebuildTaskModal) {
-      setState(() {});
-    }
-
     var dataBloc = Provider.of<CategoryDataBlock>(context);
     var tasks = dataBloc.getTasksBySubcategoryId(widget.subcategoryId);
-    return Stack(
-      children: [
-        DraggableScrollableSheet(
-          maxChildSize: 0.6,
-          initialChildSize: 0.6,
-          minChildSize: 0,
-          builder: (BuildContext context, ScrollController scrollController) {
-            return Container(
+    return Container(
               padding: EdgeInsets.all(15),
               decoration: BoxDecoration(border: Border(top: BorderSide(color: Color.fromRGBO(225, 225, 225, 1))), color: Theme.of(context).backgroundColor),
               // color: Theme.of(context).backgroundColor,
               width: MediaQuery.of(context).size.width * 0.8,
               child: ListView.builder(
-                  controller: scrollController,
                   itemCount: tasks.length,
                   itemBuilder: (BuildContext context, int index) {
                     return TaskListItem(
@@ -54,10 +40,6 @@ class _TasksModalState extends State<TasksModal> {
                         status: tasks[index].status);
                   }),
             );
-          },
-        ),
 
-      ],
-    );
   }
 }
