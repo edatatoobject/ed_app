@@ -1,5 +1,6 @@
 import 'package:ed_app/blocs/sprint_data_block.dart';
 import 'package:ed_app/models/sprint.dart';
+import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -70,6 +71,10 @@ class SprintHeadline extends StatelessWidget {
         "${currentSprint.finishDate.difference(DateTime.now()).inDays} days left",
         style: Theme.of(context).primaryTextTheme.subtitle1,
       ));
+      sprintAppBar.add(IconButton(
+          onPressed: () =>
+              Navigator.of(context).pushNamed(SprintDetailScreen.routeName, arguments: currentSprint.id),
+          icon: Icon(Icons.settings)));
     } else {
       sprintAppBar.add(ElevatedButton(
           onPressed: () {},

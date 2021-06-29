@@ -33,7 +33,7 @@ class _SprintDetailScreenState extends State<SprintDetailScreen> {
               style: Theme.of(context).primaryTextTheme.headline6,
             ),
             SizedBox(height: 40),
-            SprintForm()
+            SprintForm(sprintId: sprintId,)
           ],
         ),
       ),
