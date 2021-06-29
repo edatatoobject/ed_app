@@ -35,54 +35,50 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     var subcategories = dataBloc.getSubcategoriesByCategoryId(categoryId);
 
     return Scaffold(
-      body: Stack(children: [
-        Container(
-          decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-          padding: EdgeInsets.only(
-              left: 10,
-              right: 10,
-              top: MediaQuery.of(context).viewPadding.top + 20,
-              bottom: 10),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              CodeIcon(
-                code: category.iconInfo.code,
-                fontFamily: category.iconInfo.fontFamily,
-                size: 150,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                category.name,
-                style: Theme.of(context).primaryTextTheme.headline3,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: subcategories.length,
-                  itemBuilder: (context, index) {
-                    return SubcategoryItem(
-                      name: subcategories[index].name,
-                      id: subcategories[index].id,
-                      categoryId: categoryId
-                    );
-                  },
+      body: SafeArea(
+        child: Stack(children: [
+          Container(
+            decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+            padding: EdgeInsets.all(10),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                CodeIcon(
+                  code: category.iconInfo.code,
+                  fontFamily: category.iconInfo.fontFamily,
+                  size: 150,
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  category.name,
+                  style: Theme.of(context).primaryTextTheme.headline3,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: subcategories.length,
+                    itemBuilder: (context, index) {
+                      return SubcategoryItem(
+                        name: subcategories[index].name,
+                        id: subcategories[index].id,
+                        categoryId: categoryId
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        Container(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
-            child: BackButton())
-      ]),
+          Container(
+              child: BackButton())
+        ]),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add, color: CustomThemeData.accentColor,),
         onPressed: () => createSubcategory(context, categoryId),
