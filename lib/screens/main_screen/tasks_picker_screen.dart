@@ -14,7 +14,7 @@ class TasksPickerScreen extends StatefulWidget {
 
 class _TasksPickerScreenState extends State<TasksPickerScreen> {
   List<String> initialyActiveTasks = [];
-  List<String> pickedTasks = [];
+  List<String> pickedTasks;
 
   void addTask(String taskId) {
     pickedTasks.add(taskId);
@@ -30,7 +30,12 @@ class _TasksPickerScreenState extends State<TasksPickerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    initialyActiveTasks = ModalRoute.of(context).settings.arguments as List<String>;
+    initialyActiveTasks =
+        ModalRoute.of(context).settings.arguments as List<String>;
+
+    if (initialyActiveTasks != null) {
+      pickedTasks = [...initialyActiveTasks];
+    }
 
     var categories = Provider.of<CategoryDataBlock>(context).getCategories();
 

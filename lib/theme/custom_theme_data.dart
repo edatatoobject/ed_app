@@ -39,6 +39,8 @@ class CustomThemeData {
         headline6: TextStyle(fontFamily: "Etna", color: foregrounColor),
       ),
       iconTheme: IconThemeData(color: accentColor),
+      accentIconTheme: IconThemeData(color: accentColor),
+      primaryIconTheme: IconThemeData(color: accentColor),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(backgoundColor),

@@ -11,7 +11,9 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class SprintForm extends StatefulWidget {
-  const SprintForm({Key key}) : super(key: key);
+  const SprintForm({Key key, this.sprintId}) : super(key: key);
+
+  final String sprintId;
 
   @override
   _SprintFormState createState() => _SprintFormState();
@@ -19,6 +21,8 @@ class SprintForm extends StatefulWidget {
 
 class _SprintFormState extends State<SprintForm> {
   final _formKey = GlobalKey<FormState>();
+
+  bool _initialized = false;
 
   List<String> _pickedTasks;
 
@@ -30,8 +34,15 @@ class _SprintFormState extends State<SprintForm> {
   DateTimeRange _dateTimeRange;
 
   void _pickDateRange() async {
-    var lastSprint =
-        Provider.of<SprintDataBlock>(context, listen: false).getLastSprint();
+    Sprint lastSprint;
+
+    if (widget.sprintId == null) {
+      lastSprint =
+          Provider.of<SprintDataBlock>(context, listen: false).getLastSprint();
+    } else {
+      lastSprint = Provider.of<SprintDataBlock>(context, listen: false)
+          .getPreviosSprint();
+    }
 
     var pickedRange = await DateTimeTools.showRangedDateTimePicker(
         context,
@@ -43,6 +54,22 @@ class _SprintFormState extends State<SprintForm> {
 
     setState(() {
       _dateTimeRange = pickedRange;
+    });
+  }
+
+  void fillSprintData(BuildContext context) {
+    var sprintDataBlock = Provider.of<SprintDataBlock>(context, listen: false);
+
+    var sprint = sprintDataBlock.getSprintById(widget.sprintId);
+
+    var tasksInSprint = sprintDataBlock.getSprintTasks(sprint.id);
+
+    setState(() {
+      _nameController.text = sprint.name;
+      _dateTimeRange =
+          DateTimeRange(start: sprint.startDate, end: sprint.finishDate);
+      _pickedTasks = tasksInSprint.map((e) => e.taskId).toList();
+      _initialized = true;
     });
   }
 
@@ -93,7 +120,7 @@ class _SprintFormState extends State<SprintForm> {
         finishDate: _dateTimeRange.end,
         duration: _dateTimeRange.duration.inDays,
         number: 1,
-        id: Uuid().v4());
+        id: widget.sprintId == null ? Uuid().v4() : widget.sprintId);
 
     List<TaskInSprint> tasksInSprint = _pickedTasks
         .map((task) => TaskInSprint(
@@ -105,14 +132,23 @@ class _SprintFormState extends State<SprintForm> {
 
     var sprintDataBlock = Provider.of<SprintDataBlock>(context, listen: false);
 
-    sprintDataBlock.createSprint(sprint);
-    sprintDataBlock.createTasks(tasksInSprint);
+    if (widget.sprintId == null) {
+      sprintDataBlock.createSprint(sprint);
+      sprintDataBlock.createTasks(tasksInSprint);
+    } else {
+      sprintDataBlock.updateSprint(sprint);
+      sprintDataBlock.updateTasks(tasksInSprint, widget.sprintId);
+    }
 
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.sprintId != null && !_initialized) {
+      fillSprintData(context);
+    }
+
     return Form(
         key: _formKey,
         child: Expanded(

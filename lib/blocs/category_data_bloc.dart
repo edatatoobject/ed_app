@@ -62,6 +62,11 @@ class CategoryDataBlock extends ChangeNotifier {
         .toList();
   }
 
+  Subcategory getSubcategoryById(String subcategoryId) {
+    return _subcategories
+        .firstWhere((subcategory) => subcategory.id == subcategoryId);
+  }
+
   int getSubcategoryCount(String categoryId) {
     return _subcategories
         .where((subcategory) => subcategory.categoryId == categoryId)

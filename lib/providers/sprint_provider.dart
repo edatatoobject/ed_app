@@ -25,4 +25,12 @@ class SprintProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void updateSprint(Sprint sprint) {
+    var index = _items.indexWhere((oldSprint) => oldSprint.id == sprint.id);
+
+    _items[index] = sprint;
+
+    notifyListeners();
+  }
 }

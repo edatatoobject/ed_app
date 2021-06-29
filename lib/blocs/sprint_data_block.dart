@@ -30,11 +30,35 @@ class SprintDataBlock extends ChangeNotifier {
     sprintProvider.addSprint(sprint);
   }
 
+  void updateSprint(Sprint sprint) {
+    sprintProvider.updateSprint(sprint);
+  }
+
+  Sprint getSprintById(String sprintId) {
+    var sprints = sprintProvider.items;
+
+    return sprints.firstWhere((sprint) => sprint.id == sprintId);
+  }
+
   Sprint getCurrentSprint() {
     return _sprint;
   }
 
   Sprint getLastSprint() {
+    return getSortedSprints().first;
+  }
+
+  Sprint getPreviosSprint() {
+    var sortedSprints = getSortedSprints();
+
+    if (sortedSprints == null && sortedSprints.length == 1) {
+      return null;
+    }
+
+    return getSortedSprints()[1];
+  }
+
+  List<Sprint> getSortedSprints() {
     var sprints = sprintProvider.items;
 
     if (sprints == null) {
@@ -42,11 +66,20 @@ class SprintDataBlock extends ChangeNotifier {
     }
 
     sprints.sort((u1, u2) => u1.toString().compareTo(u2.toString()));
-    return sprints.first;
+
+    return sprints;
   }
 
   void createTasks(List<TaskInSprint> tasks) {
     taskInSprintProvider.addTasksInSprint(tasks);
+  }
+
+  void updateTasks(List<TaskInSprint> tasks, String sprintId) {
+    taskInSprintProvider.updateTasksInSprint(tasks, sprintId);
+  }
+
+  List<TaskInSprint> getSprintTasks(String sprintId) {
+    return taskInSprintProvider.getTasksBySprintId(sprintId);
   }
 
   List<TaskInSprint> getCurrentSprintTasks() {
