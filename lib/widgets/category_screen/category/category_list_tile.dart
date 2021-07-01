@@ -1,5 +1,4 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
-import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/models/icon_data.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
 import 'package:ed_app/ui_elements/code_icon.dart';

@@ -1,10 +1,8 @@
-import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/ui_elements/task_status_indicator.dart';
 import 'package:ed_app/widgets/category_screen/task/task_text_modal.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TaskListItem extends StatefulWidget {
   final String taskId;

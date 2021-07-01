@@ -1,4 +1,3 @@
-import 'package:ed_app/dto/category_in_sprint_dto.dart';
 import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/models/category.dart';
 import 'package:ed_app/models/subcategory.dart';

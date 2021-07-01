@@ -11,7 +11,7 @@ class TaskTextModal extends StatefulWidget {
   final String subcategoryId;
   final ActionType actionType;
 
-  var controller = TextEditingController();
+  final controller = TextEditingController();
 
   TaskTextModal(
       {Key key,
