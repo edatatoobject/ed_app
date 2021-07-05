@@ -31,7 +31,7 @@ class CategoryDataBlock extends ChangeNotifier {
     return _categories;
   }
 
-  List<Category> GetCategoriesByIds(List<String> categoryIds) {
+  List<Category> getCategoriesByIds(List<String> categoryIds) {
     return _categories
         .where((category) => categoryIds.contains(category.id))
         .toList();

@@ -25,7 +25,7 @@ class _CategoryMainListState extends State<CategoryMainList> {
     var subcategories = categoryDataBlock
         .getSubcategoriesByIds(tasks.map((e) => e.subcategoryId).toList());
 
-    var categories = categoryDataBlock.GetCategoriesByIds(
+    var categories = categoryDataBlock.getCategoriesByIds(
         subcategories.map((e) => e.categoryId).toList());
 
     return categories.map((category) {
