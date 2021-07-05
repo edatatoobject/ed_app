@@ -8,19 +8,27 @@ import 'package:ed_app/providers/task_provider.dart';
 import 'package:ed_app/screens/bottom_tabs_screen.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
+import 'package:ed_app/screens/login/login_screen.dart';
 import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
 import 'package:ed_app/screens/main_screen/tasks_picker_screen.dart';
 import 'package:ed_app/theme/custom_theme_data.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+
+
     return MultiProvider(
       providers: [
         //categories providers
@@ -55,7 +63,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: CustomThemeData.themedata,
-        home: BottomTabsScreen(),
+        home: LoginScreen(),
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),
           CategoryTextScreen.routeName: (ctx) => CategoryTextScreen(),
