@@ -50,6 +50,10 @@ class CustomThemeData {
           backgroundColor: backgoundColor,
           foregroundColor: foregrounColor,
           elevation: 0),
+      textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+              foregroundColor:
+                  MaterialStateProperty.all<Color>(accentColor))),
       inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
               borderSide: new BorderSide(style: BorderStyle.none)),

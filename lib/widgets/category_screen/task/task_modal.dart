@@ -30,18 +30,16 @@ class _TasksModalState extends State<TasksModal> {
           color: Theme.of(context).backgroundColor),
       // color: Theme.of(context).backgroundColor,
       width: MediaQuery.of(context).size.width * 0.8,
-      child: Column(children: [
-        ListView.builder(
-            itemCount: tasks.length,
-            itemBuilder: (BuildContext context, int index) {
-              return TaskListItem(
-                  taskId: tasks[index].id,
-                  categroryId: widget.categoryId,
-                  subcategoryId: widget.subcategoryId,
-                  value: tasks[index].value,
-                  status: tasks[index].status);
-            }),
-      ]),
+      child: ListView.builder(
+          itemCount: tasks.length,
+          itemBuilder: (BuildContext context, int index) {
+            return TaskListItem(
+                taskId: tasks[index].id,
+                categroryId: widget.categoryId,
+                subcategoryId: widget.subcategoryId,
+                value: tasks[index].value,
+                status: tasks[index].status);
+          }),
     );
   }
 }
