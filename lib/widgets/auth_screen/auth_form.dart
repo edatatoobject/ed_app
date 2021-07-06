@@ -49,6 +49,12 @@ class _LoginFormState extends State<LoginForm> {
 
     formContent.addAll(_actionButtons());
 
+    formContent.add(SizedBox(
+      height: 20,
+    ));
+
+    formContent.add(_googleButton());
+
     return formContent;
   }
 
@@ -93,6 +99,10 @@ class _LoginFormState extends State<LoginForm> {
     return actionButtons;
   }
 
+  Widget _googleButton() {
+    return ElevatedButton(onPressed: signInWithGoogle, child: Text("Sign in with Google"));
+  }
+
   void submit() async {
     if (!_formKey.currentState.validate()) {
       return;
@@ -114,6 +124,14 @@ class _LoginFormState extends State<LoginForm> {
     if (authorizedUser == null) {
       print("login error");
       return;
+    }
+  }
+
+  void signInWithGoogle() async {
+    var user = await _authManager.signInWithGoogle();
+
+    if (user == null) {
+      print("Google auth error");
     }
   }
 
