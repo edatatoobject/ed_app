@@ -1,11 +1,10 @@
 import 'package:ed_app/enums/auth/auth_mode.dart';
 import 'package:ed_app/shared/firebase/firebase_authentication.dart';
 import 'package:ed_app/tools/form_tool.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key key}) : super(key: key);
+  const LoginForm();
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -79,7 +78,8 @@ class _LoginFormState extends State<LoginForm> {
     List<Widget> actionButtons = [];
 
     if (_authMode == AuthMode.Login) {
-      actionButtons.add(ElevatedButton(onPressed: submit, child: Text("Login")));
+      actionButtons
+          .add(ElevatedButton(onPressed: submit, child: Text("Login")));
       actionButtons.add(TextButton(
           onPressed: changeAuthMode, child: Text("Create new account!")));
     } else {
@@ -101,17 +101,19 @@ class _LoginFormState extends State<LoginForm> {
     if (_authMode == AuthMode.Register) {
       var registratedUser = await _authManager.createUser(
           _emailFieldController.text, _passwordFieldController.text);
-      
-      if(registratedUser == null){
+
+      if (registratedUser == null) {
         print("registration error");
+        return;
       }
     }
 
     var authorizedUser = await _authManager.login(
         _emailFieldController.text, _passwordFieldController.text);
 
-    if(authorizedUser == null){
-        print("login error");
+    if (authorizedUser == null) {
+      print("login error");
+      return;
     }
   }
 

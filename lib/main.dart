@@ -12,6 +12,7 @@ import 'package:ed_app/screens/login/login_screen.dart';
 import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
 import 'package:ed_app/screens/main_screen/tasks_picker_screen.dart';
 import 'package:ed_app/theme/custom_theme_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,11 +25,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-
-
-
     return MultiProvider(
       providers: [
         //categories providers
@@ -63,7 +62,14 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: CustomThemeData.themedata,
-        home: LoginScreen(),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return BottomTabsScreen();
+            }
+            return LoginScreen();
+          }),
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),
           CategoryTextScreen.routeName: (ctx) => CategoryTextScreen(),

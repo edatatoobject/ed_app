@@ -2,7 +2,7 @@ import 'package:ed_app/widgets/auth_screen/auth_form.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen();
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
