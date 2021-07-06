@@ -1,14 +1,14 @@
 import 'package:ed_app/widgets/auth_screen/auth_form.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen();
+class AuthScreen extends StatefulWidget {
+  const AuthScreen();
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _AuthScreenState createState() => _AuthScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: LoginForm());

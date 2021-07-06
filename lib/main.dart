@@ -5,10 +5,10 @@ import 'package:ed_app/providers/sprint_provider.dart';
 import 'package:ed_app/providers/subcategory_provider.dart';
 import 'package:ed_app/providers/task_in_sprint_provider.dart';
 import 'package:ed_app/providers/task_provider.dart';
+import 'package:ed_app/screens/auth/auth_screen.dart';
 import 'package:ed_app/screens/bottom_tabs_screen.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
-import 'package:ed_app/screens/login/login_screen.dart';
 import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
 import 'package:ed_app/screens/main_screen/tasks_picker_screen.dart';
 import 'package:ed_app/theme/custom_theme_data.dart';
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return BottomTabsScreen();
             }
-            return LoginScreen();
+            return AuthScreen();
           }),
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),

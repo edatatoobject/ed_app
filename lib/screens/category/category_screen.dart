@@ -18,6 +18,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: Column(
         children: [
           AppBar(
+            automaticallyImplyLeading: false,
             title: Text(
               "Categories",
               style: Theme.of(context).primaryTextTheme.headline5,
