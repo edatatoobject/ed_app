@@ -14,6 +14,15 @@ class Category {
       @required this.categorySize,
       @required this.iconInfo});
 
+  Map<String, dynamic> toMap() {
+    return {
+      "name": name,
+      "categorySize": categorySize,
+      "iconCode": iconInfo.code,
+      "iconFontFamily": iconInfo.fontFamily,
+    };
+  }
+
   static Category fromMap(String id, Map<String, dynamic> mapData) {
     return Category(
         id: id,

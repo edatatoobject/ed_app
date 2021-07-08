@@ -1,7 +1,7 @@
 import 'package:ed_app/blocs/sprint_data_block.dart';
 import 'package:ed_app/models/sprint.dart';
 import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
-import 'package:ed_app/shared/firebase/data/category_provider.dart';
+import 'package:ed_app/shared/firebase/data/providers/category_provider.dart';
 import 'package:ed_app/shared/firebase/data/firestore_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

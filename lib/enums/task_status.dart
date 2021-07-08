@@ -1,3 +1,4 @@
+import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:flutter/material.dart';
 
 enum TaskStatus { ToDo, Done }
@@ -10,10 +11,26 @@ MaterialColor getStatusColor(TaskStatus status) {
   }
 }
 
-String getStatusName(TaskStatus status){
-    if (status == TaskStatus.ToDo) {
+String getStatusName(TaskStatus status) {
+  if (status == TaskStatus.ToDo) {
     return "ToDo";
   } else {
     return "Done";
   }
 }
+
+int getStatusIndex(TaskStatus status) {
+    if (status == TaskStatus.ToDo) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
+  TaskStatus getStatusFromIndex(int index) {
+    if (index == 0) {
+      return TaskStatus.ToDo;
+    } else {
+      return TaskStatus.ToDo;
+    }
+  }

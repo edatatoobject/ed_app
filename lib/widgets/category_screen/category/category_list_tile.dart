@@ -10,15 +10,13 @@ class CategoryListTile extends StatelessWidget {
   final String id;
   final String name;
   final int subcategoryCount;
-  final int taskCount;
 
   CategoryListTile(
       {Key key,
       @required this.id,
       @required this.iconInfo,
       @required this.name,
-      @required this.subcategoryCount,
-      @required this.taskCount})
+      @required this.subcategoryCount})
       : super(key: key);
 
   List<PopupMenuEntry<Function>> popupMenu(BuildContext context) {
@@ -58,11 +56,6 @@ class CategoryListTile extends StatelessWidget {
                   "Subcategories: $subcategoryCount",
                   style: Theme.of(context).primaryTextTheme.subtitle2,
                 ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text("Tasks: $taskCount",
-                    style: Theme.of(context).primaryTextTheme.subtitle2),
               ],
             )
           ],

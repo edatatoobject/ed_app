@@ -43,7 +43,6 @@ class _CategoryListItemState extends State<CategoryListItem> {
                 iconInfo: widget.iconInfo,
                 name: widget.name,
                 subcategoryCount: dataBloc.getSubcategoryCount(widget.id),
-                taskCount: dataBloc.getTasksCount(widget.id),
               ),
             ]),
           ),
