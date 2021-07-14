@@ -74,10 +74,10 @@ class SprintHeadline extends StatelessWidget {
         style: Theme.of(context).primaryTextTheme.subtitle1,
       ));
       sprintAppBar.add(IconButton(
-          onPressed: () => firebaseTest(),
-          // Navigator.of(context).pushNamed(
-          //     SprintDetailScreen.routeName,
-          //     arguments: currentSprint.id),
+          onPressed: () => 
+          Navigator.of(context).pushNamed(
+              SprintDetailScreen.routeName,
+              arguments: currentSprint.id),
           icon: Icon(Icons.settings)));
     } else {
       sprintAppBar.add(ElevatedButton(
@@ -89,17 +89,6 @@ class SprintHeadline extends StatelessWidget {
     }
 
     return sprintAppBar;
-  }
-
-  void firebaseTest() async {
-    var fire = CategoryProviderFire();
-
-    var categories = await fire.getCategories();
-    var idCategories = await fire
-        .getCategoriesByIds(["f93pk7u95WDmWH5mc1uq", "qJOGfMWNj36tgLgSC6vV"]);
-    var category = await fire.getCategoryById("ze5mall7xLWEedYEXtCM");
-
-    print('stop');
   }
 
   @override

@@ -1,43 +1,82 @@
-import 'package:ed_app/dev_src/dummy_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ed_app/models/subcategory.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ed_app/shared/firebase/data/firestore_manager.dart';
+import 'package:flutter/material.dart';
 
 class SubcategoryProvider extends ChangeNotifier {
-  List<Subcategory> _items = DummyData.dummySubcategories;
+  final collectionName = "subcategory";
+  final firestoreManager = FirestoreManager();
 
-  List<Subcategory> get items => [..._items];
+  //get all
+  Future<List<Subcategory>> getAll() async {
+    var subcategoriesData = await firestoreManager.getAll(collectionName);
 
-  void add(String name, String categoryId) {
-    var subcategory = Subcategory(
-        id: DateTime.now().toString(), categoryId: categoryId, name: name);
-    _items.add(subcategory);
+    var subcategories = _mapSubcategoryList(subcategoriesData);
+
+    return subcategories;
+  }
+
+  //get by id
+  Future<Subcategory> getById(String subcategoryId) async {
+    var subcategoryData =
+        await firestoreManager.getById(collectionName, subcategoryId);
+
+    var subcategory = Subcategory.fromMap(subcategoryData.id, subcategoryData.data());
+
+    return subcategory;
+  }
+
+  //get range by list ids
+  Future<List<Subcategory>> getByIds(List<String> subcategoryIds) async {
+    var subcategoriesData =
+        await firestoreManager.getByIds(collectionName, subcategoryIds);
+
+    var subcategories = _mapSubcategoryList(subcategoriesData);
+
+    return subcategories;
+  }
+
+  // get range by category id
+  Future<List<Subcategory>> getByCategoryId(String categoryId) async {
+    var subcategoriesData = await firestoreManager.getByEqualFilter(collectionName, "categoryId", categoryId);
+
+    var subcategories = _mapSubcategoryList(subcategoriesData);
+
+    return subcategories;
+  }
+
+  // get count by category id
+  Future<int> getSubcategoryCount(String categoryId) async {
+    return await firestoreManager.getSizeByEqualFilter(collectionName, "categoryId", categoryId);
+  }
+
+  //add 
+  Future add(Subcategory subcategory) async {
+    await firestoreManager.add(collectionName, subcategory.toMap());
+
     notifyListeners();
   }
 
-  void edit(String subcategoryId, String name) {
-    var index = _findIndex(subcategoryId);
-
-    var subcategory = _items[index];
-
-    var updatedSubcategory = Subcategory(
-        id: subcategory.id, categoryId: subcategory.categoryId, name: name);
-
-    _items[index] = updatedSubcategory;
+  //update
+  Future update(Subcategory subcategory) async {
+    await firestoreManager.update(
+        collectionName, subcategory.id, subcategory.toMap());
 
     notifyListeners();
   }
 
-  void delete(String subcategoryId, bool notify) {
-    var index = _findIndex(subcategoryId);
-    _items.removeAt(index);
+  //delete
+  Future delete(String id) async {
+    await firestoreManager.delete(collectionName, id);
 
-    if(notify)
-    {
-      notifyListeners();
-    }
+    notifyListeners();
   }
 
-  int _findIndex(String subcategoryId) {
-    return _items.indexWhere((element) => element.id == subcategoryId);
+  List<Subcategory> _mapSubcategoryList(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshot) {
+    return snapshot
+        .map((categoryData) =>
+            Subcategory.fromMap(categoryData.id, categoryData.data()))
+        .toList();
   }
 }

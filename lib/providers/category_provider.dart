@@ -1,52 +1,68 @@
-import 'package:ed_app/dev_src/dummy_data.dart';
-import 'package:ed_app/enums/category_size.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ed_app/models/category.dart';
-import 'package:ed_app/models/icon_data.dart';
+import 'package:ed_app/shared/firebase/data/firestore_manager.dart';
 import 'package:flutter/material.dart';
 
 class CategoryProvider extends ChangeNotifier {
-  List<Category> _items = DummyData.dummyCategories;
+  final collectionName = "category";
+  final firestoreManager = FirestoreManager();
 
-  List<Category> get items => [..._items];
+  //get all
+  Future<List<Category>> getAll() async {
+    var categoriesData = await firestoreManager.getAll(collectionName);
 
-  void add(String name, CategorySize size, IconData iconData) {
-    var iconInfo = IconInfo(iconData.codePoint, iconData.fontFamily);
-    var category = Category(
-        id: DateTime.now().toString(),
-        name: name,
-        categorySize: size,
-        iconInfo: iconInfo);
+    var categories = _mapCategoryList(categoriesData);
 
-    _items.add(category);
+    return categories;
+  }
+
+  //get by id
+  Future<Category> getById(String categoryId) async {
+    var categoryData =
+        await firestoreManager.getById(collectionName, categoryId);
+
+    var category = Category.fromMap(categoryData.id, categoryData.data());
+
+    return category;
+  }
+
+  //get range by list ids
+  Future<List<Category>> getByIds(List<String> categoryIds) async {
+    var categoriesData =
+        await firestoreManager.getByIds(collectionName, categoryIds);
+
+    var categories = _mapCategoryList(categoriesData);
+
+    return categories;
+  }
+
+  //add 
+  Future add(Category category) async {
+    await firestoreManager.add(collectionName, category.toMap());
+
     notifyListeners();
   }
 
-  void edit(String categoryId, String name, CategorySize categorySize,
-      IconData iconData) {
-    var index = _findIndex(categoryId);
-
-    var category = _items[index];
-
-    var iconInfo = IconInfo(iconData.codePoint, iconData.fontFamily);
-    var newCategory = Category(
-        id: category.id,
-        name: name,
-        categorySize: categorySize,
-        iconInfo: iconInfo);
-
-    _items[index] = newCategory;
+  //update
+  Future update(Category category) async {
+    await firestoreManager.update(
+        collectionName, category.id, category.toMap());
 
     notifyListeners();
   }
 
-  void delete(String categoryId) {
-    var index = _findIndex(categoryId);
+  //delete
+  Future delete(String id) async {
+    await firestoreManager.delete(collectionName, id);
 
-    _items.removeAt(index);
     notifyListeners();
   }
 
-  int _findIndex(String categoryId) {
-    return _items.indexWhere((element) => element.id == categoryId);
+  List<Category> _mapCategoryList(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshot) {
+    return snapshot
+        .map((categoryData) =>
+            Category.fromMap(categoryData.id, categoryData.data()))
+        .toList();
   }
 }

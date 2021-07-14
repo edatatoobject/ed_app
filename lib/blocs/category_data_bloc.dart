@@ -110,7 +110,7 @@ class CategoryDataBlock extends ChangeNotifier {
   }
 
   void deleteSubcategory(String subcategoryId, {bool notify = true}) {
-    subcategoryProvider.delete(subcategoryId, notify);
+    subcategoryProvider.delete(subcategoryId);
 
     cascadeDeleteTask(subcategoryId);
   }
@@ -127,7 +127,7 @@ class CategoryDataBlock extends ChangeNotifier {
   }
 
   void deleteTask(String taskId, {bool notify = true}) {
-    taskProvider.delete(taskId, notify);
+    taskProvider.delete(taskId);
   }
 
   void cascadeDeleteTask(String subcategoryId) {
