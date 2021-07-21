@@ -9,7 +9,7 @@ class Category {
   final IconInfo iconInfo;
 
   Category(
-      {@required this.id,
+      {this.id,
       @required this.name,
       @required this.categorySize,
       @required this.iconInfo});

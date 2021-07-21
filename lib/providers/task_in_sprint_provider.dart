@@ -9,7 +9,7 @@ class TaskInSprintProvider extends ChangeNotifier {
 
   List<TaskInSprint> _items = [];
 
-  Future uploadData() async {
+  Future initData() async {
     var tasksInSprintData = await firestoreManager.getAll(collectionName);
     _items.addAll(_mapTaskInSprintList(tasksInSprintData));
   }

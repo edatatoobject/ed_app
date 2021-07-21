@@ -1,7 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:ed_app/screens/category/category_screen.dart';
 import 'package:ed_app/screens/main_screen/main_screen.dart';
+import 'package:ed_app/shared/firebase/data/firebase_data_initializer.dart';
 import 'package:ed_app/widgets/app_drawer.dart';
+import 'package:ed_app/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
 class BottomTabsScreen extends StatefulWidget {
@@ -36,16 +38,25 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AppDrawer(),
-      body: PageTransitionSwitcher(
-        child: _pages[_currentIndex],
-        duration: Duration(milliseconds: 500),
-        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
-          return FadeThroughTransition(
-              child: child,
-              animation: primaryAnimation,
-              secondaryAnimation: secondaryAnimation);
-        },
-      ),
+      body: FutureBuilder(
+          future: FirebaseDataInitializer.InitData(context),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return PageTransitionSwitcher(
+                child: _pages[_currentIndex],
+                duration: Duration(milliseconds: 500),
+                transitionBuilder:
+                    (child, primaryAnimation, secondaryAnimation) {
+                  return FadeThroughTransition(
+                      child: child,
+                      animation: primaryAnimation,
+                      secondaryAnimation: secondaryAnimation);
+                },
+              );
+            } else {
+              return Loading();
+            }
+          }),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
         items: bottomNavigationBarItems,

@@ -10,7 +10,7 @@ class TaskProvider extends ChangeNotifier {
 
   final List<Task> _items = [];
 
-  Future uploadData() async {
+  Future initData() async {
     var categoriesData = await firestoreManager.getAll(collectionName);
     _items.addAll(_mapTaskList(categoriesData));
   }
@@ -58,7 +58,7 @@ class TaskProvider extends ChangeNotifier {
   }
 
   //update
-  Future update(Task task) async {
+  Future update(String taskId, Task task) async {
     await firestoreManager.update(collectionName, task.id, task.toMap());
 
     notifyListeners();

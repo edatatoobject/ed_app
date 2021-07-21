@@ -1,6 +1,9 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
+import 'package:ed_app/models/subcategory.dart';
+import 'package:ed_app/tools/focus_scope_tool.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 class SubcategoryTextModal extends StatelessWidget {
@@ -24,24 +27,24 @@ class SubcategoryTextModal extends StatelessWidget {
   final controller = TextEditingController();
 
   void saveSubcategory(BuildContext context) {
-    switch (actionType) {
-      case ActionType.Create:
-        Provider.of<CategoryDataBlock>(context, listen: false)
-            .subcategoryProvider
-            .add(controller.text, categoryId);
-        break;
-      case ActionType.Edit:
-        Provider.of<CategoryDataBlock>(context, listen: false)
-            .subcategoryProvider
-            .edit(subcategoryId, controller.text);
-        break;
+    DismissFocusScope(context);
+
+    EasyLoading.show(status: 'loading...');
+
+    var subcategory =
+        Subcategory(categoryId: categoryId, name: controller.text);
+
+    if (actionType == ActionType.Create) {
+      Provider.of<CategoryDataBlock>(context, listen: false)
+          .subcategoryProvider
+          .add(subcategory);
+    } else {
+      Provider.of<CategoryDataBlock>(context, listen: false)
+          .subcategoryProvider
+          .update(subcategoryId, subcategory);
     }
 
-    FocusScopeNode currentFocus = FocusScope.of(context);
-
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
+    EasyLoading.dismiss();
 
     Navigator.of(context).pop();
   }

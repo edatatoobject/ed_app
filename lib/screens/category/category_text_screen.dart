@@ -1,8 +1,12 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
 import 'package:ed_app/enums/category_size.dart';
+import 'package:ed_app/models/category.dart';
+import 'package:ed_app/models/icon_data.dart';
+import 'package:ed_app/tools/focus_scope_tool.dart';
 import 'package:ed_app/widgets/icon_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -38,23 +42,26 @@ class _CategoryTextScreenState extends State<CategoryTextScreen> {
     sizeIndex = index;
   }
 
-  void saveCategory(BuildContext context) {
+  Future saveCategory(BuildContext context) async {
+    DismissFocusScope(context);
+
+    EasyLoading.show(status: 'loading...');
+
+    var category = Category(
+        name: controller.text,
+        iconInfo: IconInfo(_iconData.codePoint, _iconData.fontFamily),
+        categorySize: categorySizes[sizeIndex]);
+
     if (actionType == ActionType.Create) {
       Provider.of<CategoryDataBlock>(context, listen: false)
           .categoryProvider
-          .add(controller.text, categorySizes[sizeIndex], _iconData);
+          .add(category);
     } else {
       Provider.of<CategoryDataBlock>(context, listen: false)
           .categoryProvider
-          .edit(
-              categoryId, controller.text, categorySizes[sizeIndex], _iconData);
+          .update(categoryId, category);
     }
-
-    FocusScopeNode currentFocus = FocusScope.of(context);
-
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
+    EasyLoading.dismiss();
 
     Navigator.of(context).pop();
   }

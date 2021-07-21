@@ -9,15 +9,15 @@ class SprintProvider extends ChangeNotifier {
 
   final List<Sprint> _items = [];
 
+  Future initData() async {
+    var categoriesData = await firestoreManager.getAll(collectionName);
+    _items.addAll(_mapSprintList(categoriesData));
+  }
+
   List<Sprint> getAll() {
     if (_items == null) return null;
 
     return [..._items];
-  }
-
-  Future uploadData() async {
-    var categoriesData = await firestoreManager.getAll(collectionName);
-    _items.addAll(_mapSprintList(categoriesData));
   }
 
   Sprint getCurrentSprint() {

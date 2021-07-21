@@ -9,7 +9,7 @@ class CategoryProvider extends ChangeNotifier {
 
   final List<Category> _items = [];
 
-  Future uploadData() async {
+  Future initData() async {
     var categoriesData = await firestoreManager.getAll(collectionName);
     _items.addAll(_mapCategoryList(categoriesData));
   }
@@ -37,9 +37,9 @@ class CategoryProvider extends ChangeNotifier {
   }
 
   //update
-  Future update(Category category) async {
+  Future update(String categoryId, Category category) async {
     await firestoreManager.update(
-        collectionName, category.id, category.toMap());
+        collectionName, categoryId, category.toMap());
 
     notifyListeners();
   }

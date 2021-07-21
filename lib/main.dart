@@ -15,6 +15,7 @@ import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
             }
             return AuthScreen();
           }),
+        builder: EasyLoading.init(),
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),
           CategoryTextScreen.routeName: (ctx) => CategoryTextScreen(),

@@ -9,7 +9,7 @@ class SubcategoryProvider extends ChangeNotifier {
 
   final List<Subcategory> _items = [];
 
-  Future uploadData() async {
+  Future initData() async {
     var categoriesData = await firestoreManager.getAll(collectionName);
     _items.addAll(_mapSubcategoryList(categoriesData));
   }
@@ -53,9 +53,9 @@ class SubcategoryProvider extends ChangeNotifier {
   }
 
   //update
-  Future update(Subcategory subcategory) async {
+  Future update(String subcategoryId, Subcategory subcategory) async {
     await firestoreManager.update(
-        collectionName, subcategory.id, subcategory.toMap());
+        collectionName, subcategoryId, subcategory.toMap());
 
     notifyListeners();
   }
