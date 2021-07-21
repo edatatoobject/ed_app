@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Sprint {
   final String name;
   final String id;
@@ -29,8 +31,8 @@ class Sprint {
         id: id,
         name: mapData["name"],
         duration: mapData["duration"],
-        startDate: mapData["startDate"],
-        finishDate: mapData["finishDate"],
+        startDate:  (mapData["startDate"] as Timestamp).toDate(),
+        finishDate: (mapData["finishDate"] as Timestamp).toDate(),
         number: mapData["number"]);
   }
 }

@@ -16,6 +16,18 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
 
   List<Widget> _pages = [MainScreen(), CategoryScreen()];
 
+  bool initialized = false;
+
+  void initData(BuildContext context) async {
+    if (!initialized) {
+      await FirebaseDataInitializer.initData(context);
+    }
+
+    setState(() {
+      initialized = true;
+    });
+  }
+
   var bottomNavigationBarItems = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: const Icon(Icons.home),
@@ -35,27 +47,22 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    initData(context);
+
     return Scaffold(
       drawer: AppDrawer(),
-      body: FutureBuilder(
-          future: FirebaseDataInitializer.initData(context),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return PageTransitionSwitcher(
-                child: _pages[_currentIndex],
-                duration: Duration(milliseconds: 500),
-                transitionBuilder:
-                    (child, primaryAnimation, secondaryAnimation) {
-                  return FadeThroughTransition(
-                      child: child,
-                      animation: primaryAnimation,
-                      secondaryAnimation: secondaryAnimation);
-                },
-              );
-            } else {
-              return Loading();
-            }
-          }),
+      body: initialized
+          ? PageTransitionSwitcher(
+              child: _pages[_currentIndex],
+              duration: Duration(milliseconds: 500),
+              transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+                return FadeThroughTransition(
+                    child: child,
+                    animation: primaryAnimation,
+                    secondaryAnimation: secondaryAnimation);
+              },
+            )
+          : Loading(),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
         items: bottomNavigationBarItems,
