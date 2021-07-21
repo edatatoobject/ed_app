@@ -1,4 +1,3 @@
-import 'package:ed_app/widgets/category_screen/task/task_modal.dart';
 import 'package:flutter/material.dart';
 
 enum TaskStatus { ToDo, Done }

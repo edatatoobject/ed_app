@@ -1,60 +1,67 @@
-import 'package:ed_app/dev_src/dummy_data.dart';
-import 'package:ed_app/enums/task_in_sprint_status.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ed_app/models/taskInSprint.dart';
+import 'package:ed_app/shared/firebase/data/firestore_manager.dart';
 import 'package:flutter/material.dart';
 
 class TaskInSprintProvider extends ChangeNotifier {
-  List<TaskInSprint> _items = DummyData.taskInSprint;
+  final collectionName = "taskInSprint";
+  final firestoreManager = FirestoreManager();
 
-  List<TaskInSprint> get items {
-    if (_items == null) return null;
+  List<TaskInSprint> _items = [];
 
-    return [..._items];
+  Future uploadData() async {
+    var tasksInSprintData = await firestoreManager.getAll(collectionName);
+    _items.addAll(_mapTaskInSprintList(tasksInSprintData));
   }
 
-  List<TaskInSprint> getTasksBySprintId(String sprintId) {
-    return _items.where((element) => element.sprintId == sprintId).toList();
+  TaskInSprint getById(String id) {
+    return _items.firstWhere((taskInSprint) => taskInSprint.id == id);
   }
 
-  void changeTaskStatus(String taskId, TaskInSprintStatus status) {
-    var index = _findIndex(taskId);
-
-    var task = _items[index];
-
-    var newTask = TaskInSprint(
-        id: task.id,
-        sprintId: task.sprintId,
-        status: status,
-        taskId: task.taskId);
-
-    _items[index] = newTask;
-
-    notifyListeners();
-  }
-
-  int _findIndex(String taskId) {
-    return _items.indexWhere((element) => element.id == taskId);
-  }
-
-  void addTasksInSprint(List<TaskInSprint> tasks) {
-    _items.addAll(tasks);
-
-    notifyListeners();
-  }
-
-  void updateTasksInSprint(List<TaskInSprint> tasks, String sprintId) {
-    _items.removeWhere((taskInSprint) =>
-        taskInSprint.sprintId == sprintId &&
-        !tasks.contains(taskInSprint.taskId));
-
-    var sprintTasks = _items
-        .where((task) => task.sprintId == sprintId)
-        .map((task) => task.taskId)
+  List<TaskInSprint> getBySprintId(String sprintId) {
+    return _items
+        .where((taskInSprint) => taskInSprint.sprintId == sprintId)
         .toList();
-    tasks.removeWhere((newTask) => sprintTasks.contains(newTask.taskId));
+  }
 
-    _items.addAll(tasks);
+  Future add(TaskInSprint taskInSprint) async {
+    await firestoreManager.add(collectionName, taskInSprint.toMap());
 
     notifyListeners();
+  }
+
+  Future update(String taskId, TaskInSprint taskInSprint) async {
+    await firestoreManager.update(collectionName, taskId, taskInSprint.toMap());
+
+    notifyListeners();
+  }
+
+  Future removeRange(List<String> taskIds) async {
+    for (var taskId in taskIds) {
+      await firestoreManager.delete(collectionName, taskId);
+    }
+
+    notifyListeners();
+  }
+
+  Future updateTasksInSprint(
+      List<TaskInSprint> newTasks, List<String> deleteTaskIds) async {
+    for (var deleteTaskId in deleteTaskIds) {
+      await firestoreManager.delete(collectionName, deleteTaskId);
+    }
+
+    for (var newTask in newTasks) {
+      await firestoreManager.add(collectionName, newTask.toMap());
+    }
+
+    notifyListeners();
+  }
+
+  List<TaskInSprint> _mapTaskInSprintList(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshot) {
+    return snapshot
+        .map((categoryData) =>
+            TaskInSprint.fromMap(categoryData.id, categoryData.data()))
+        .toList();
   }
 }

@@ -8,52 +8,46 @@ class TaskProvider extends ChangeNotifier {
   final collectionName = "tasks";
   final firestoreManager = FirestoreManager();
 
+  final List<Task> _items = [];
+
+  Future uploadData() async {
+    var categoriesData = await firestoreManager.getAll(collectionName);
+    _items.addAll(_mapTaskList(categoriesData));
+  }
+
   //get all
-  Future<List<Task>> getAll() async {
-    var taskData = await firestoreManager.getAll(collectionName);
-
-    var tasks = _mapTaskList(taskData);
-
-    return tasks;
+  List<Task> getAll() {
+    return [..._items];
   }
 
   //get by id
-  Future<Task> getById(String taskId) async {
-    var taskData = await firestoreManager.getById(collectionName, taskId);
-
-    var task = Task.fromMap(taskData.id, taskData.data());
-
-    return task;
+  Task getById(String taskId) {
+    return _items.firstWhere((task) => task.id == taskId);
   }
 
   //get range by list ids
-  Future<List<Task>> getByIds(List<String> taskIds) async {
-    var tasksData = await firestoreManager.getByIds(collectionName, taskIds);
-
-    var tasks = _mapTaskList(tasksData);
-
-    return tasks;
+  List<Task> getByIds(List<String> taskIds) {
+    return _items.where((task) => taskIds.contains(task.id));
   }
 
-  Future<List<Task>> getBySubcategoryId(String subcategoryId) async {
-    var tasksData = await firestoreManager.getByEqualFilter(
-        collectionName, "subcategoryId", subcategoryId);
-
-    var tasks = _mapTaskList(tasksData);
-
-    return tasks;
+  List<Task> getBySubcategoryId(String subcategoryId) {
+    return _items.where((task) => task.subcategoryId == subcategoryId).toList();
   }
 
-  Future<List<Task>> getToDoTasksBySubcategoryId(String subcategoryId) async {
-    var tasks = await getBySubcategoryId(subcategoryId);
+  List<Task> getToDoTasksBySubcategoryId(String subcategoryId) {
+    var tasks = getBySubcategoryId(subcategoryId);
 
     return tasks.where((task) => task.status == TaskStatus.ToDo);
   }
 
-  Future<List<Task>> getDoneTasksBySubcategoryId(String subcategoryId) async {
-    var tasks = await getBySubcategoryId(subcategoryId);
+  List<Task> getDoneTasksBySubcategoryId(String subcategoryId) {
+    var tasks = getBySubcategoryId(subcategoryId);
 
     return tasks.where((task) => task.status == TaskStatus.Done);
+  }
+
+  int getCountByList(List<String> subcategoryIds) {
+    return _items.where((task) => subcategoryIds.contains(task.subcategoryId)).length;
   }
 
   //add

@@ -20,46 +20,40 @@ class SprintDataBlock extends ChangeNotifier {
     _sprint = this.sprintProvider.getCurrentSprint();
 
     if (_sprint != null) {
-      _tasksInSprint = this.taskInSprintProvider.getTasksBySprintId(_sprint.id);
+      _tasksInSprint = this.taskInSprintProvider.getBySprintId(_sprint.id);
     }
 
     notifyListeners();
   }
 
-  void createSprint(Sprint sprint) {
-    sprintProvider.addSprint(sprint);
-  }
-
-  void updateSprint(Sprint sprint) {
-    sprintProvider.updateSprint(sprint);
-  }
-
-  Sprint getSprintById(String sprintId) {
-    var sprints = sprintProvider.items;
-
-    return sprints.firstWhere((sprint) => sprint.id == sprintId);
-  }
+  // ----- Sprints -----
 
   Sprint getCurrentSprint() {
     return _sprint;
   }
 
+  Sprint getSprintById(String sprintId) {
+    var sprints = sprintProvider.getAll();
+
+    return sprints.firstWhere((sprint) => sprint.id == sprintId);
+  }
+
   Sprint getLastSprint() {
-    return getSortedSprints().first;
+    return _getSortedSprints().first;
   }
 
   Sprint getPreviosSprint() {
-    var sortedSprints = getSortedSprints();
+    var sortedSprints = _getSortedSprints();
 
     if (sortedSprints == null && sortedSprints.length == 1) {
       return null;
     }
 
-    return getSortedSprints()[1];
+    return sortedSprints[1];
   }
 
-  List<Sprint> getSortedSprints() {
-    var sprints = sprintProvider.items;
+  List<Sprint> _getSortedSprints() {
+    var sprints = sprintProvider.getAll();
 
     if (sprints == null) {
       return null;
@@ -70,23 +64,58 @@ class SprintDataBlock extends ChangeNotifier {
     return sprints;
   }
 
-  void createTasks(List<TaskInSprint> tasks) {
-    taskInSprintProvider.addTasksInSprint(tasks);
+  void createSprint(Sprint sprint) {
+    sprintProvider.add(sprint);
   }
 
-  void updateTasks(List<TaskInSprint> tasks, String sprintId) {
-    taskInSprintProvider.updateTasksInSprint(tasks, sprintId);
+  void updateSprint(Sprint sprint) {
+    sprintProvider.update(sprint);
   }
 
-  List<TaskInSprint> getSprintTasks(String sprintId) {
-    return taskInSprintProvider.getTasksBySprintId(sprintId);
-  }
+  // ----- Tasks -----
 
   List<TaskInSprint> getCurrentSprintTasks() {
     return _tasksInSprint;
   }
 
-  void changeTaskStatus(String taskId, TaskInSprintStatus status) {
-    taskInSprintProvider.changeTaskStatus(taskId, status);
+  List<TaskInSprint> getSprintTasks(String sprintId) {
+    return taskInSprintProvider.getBySprintId(sprintId);
+  }
+
+  Future createTasks(List<TaskInSprint> tasksInSprint) async {
+    for (var taskInSprint in tasksInSprint) {
+      await taskInSprintProvider.add(taskInSprint);
+    }
+
+    notifyListeners();
+  }
+
+  Future changeTaskStatus(String taskId, TaskInSprintStatus status) async {
+    var oldTask = taskInSprintProvider.getById(taskId);
+
+    var newTask = TaskInSprint(
+        id: taskId,
+        sprintId: oldTask.sprintId,
+        taskId: oldTask.taskId,
+        status: status);
+
+    await taskInSprintProvider.update(taskId, newTask);
+  }
+
+  Future updateTasks(List<TaskInSprint> tasksInSprint, String sprintId) async {
+    var tasks = taskInSprintProvider.getBySprintId(sprintId);
+
+    var removedTasks = tasks
+        .where((taskInSprint) =>
+            taskInSprint.sprintId == sprintId &&
+            !tasksInSprint.contains(taskInSprint.id))
+        .map((taskInSprint) => taskInSprint.id);
+
+    var notChangedTasks = tasks.where((task) => !removedTasks.contains(task.id));
+
+    var addedTasks = tasksInSprint
+        .where((taskInSprint) => notChangedTasks.contains(taskInSprint.id)).toList();
+
+    await taskInSprintProvider.updateTasksInSprint(addedTasks, removedTasks);
   }
 }

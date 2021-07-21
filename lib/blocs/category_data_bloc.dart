@@ -12,96 +12,77 @@ class CategoryDataBlock extends ChangeNotifier {
   SubcategoryProvider subcategoryProvider;
   TaskProvider taskProvider;
 
-  List<Category> _categories;
-  List<Subcategory> _subcategories;
-  List<Task> _tasks;
-
   void update(CategoryProvider categoryProvider,
       SubcategoryProvider subcategoryProvider, TaskProvider taskProvider) {
     this.categoryProvider = categoryProvider;
     this.subcategoryProvider = subcategoryProvider;
     this.taskProvider = taskProvider;
-
-    _categories = this.categoryProvider.items;
-    _subcategories = this.subcategoryProvider.items;
-    _tasks = this.taskProvider.items;
   }
+
+  // ----- Categories -----
 
   List<Category> getCategories() {
-    return _categories;
-  }
-
-  List<Category> getCategoriesByIds(List<String> categoryIds) {
-    return _categories
-        .where((category) => categoryIds.contains(category.id))
-        .toList();
-  }
-
-  List<Subcategory> getSubcategoriesByIds(List<String> subcategoryIds) {
-    return _subcategories
-        .where((subcategory) => subcategoryIds.contains(subcategory.id))
-        .toList();
-  }
-
-  Task getTaskById(String taskId) {
-    return _tasks.firstWhere((task) => task.id == taskId);
-  }
-
-  List<Task> getTasksByIds(List<String> taskIds) {
-    return _tasks.where((element) => taskIds.contains(element.id)).toList();
+    return categoryProvider.getAll();
   }
 
   Category getCategoryById(String categoryId) {
-    return _categories.firstWhere((category) => category.id == categoryId);
+    return categoryProvider.getById(categoryId);
+  }
+
+  List<Category> getCategoriesByIds(List<String> categoryIds) {
+    return categoryProvider.getByIds(categoryIds);
+  }
+
+  // ----- Subcategories -----
+
+  Subcategory getSubcategoryById(String subcategoryId) {
+    return subcategoryProvider.getById(subcategoryId);
+  }
+
+  List<Subcategory> getSubcategoriesByIds(List<String> subcategoryIds) {
+    return subcategoryProvider.getByIds(subcategoryIds);
   }
 
   List<Subcategory> getSubcategoriesByCategoryId(String categoryId) {
-    return _subcategories
-        .where((subcategory) => subcategory.categoryId == categoryId)
-        .toList();
-  }
-
-  Subcategory getSubcategoryById(String subcategoryId) {
-    return _subcategories
-        .firstWhere((subcategory) => subcategory.id == subcategoryId);
+    return subcategoryProvider.getByCategoryId(categoryId);
   }
 
   int getSubcategoryCount(String categoryId) {
-    return _subcategories
-        .where((subcategory) => subcategory.categoryId == categoryId)
-        .length;
+    return subcategoryProvider.getSubcategoryCount(categoryId);
+  }
+
+  // ----- Tasks -----
+
+  Task getTaskById(String taskId) {
+    return taskProvider.getById(taskId);
+  }
+
+  List<Task> getTasksByIds(List<String> taskIds) {
+    return taskProvider.getByIds(taskIds);
   }
 
   List<Task> getTasksBySubcategoryId(String subcategoryId) {
-    return _tasks.where((task) => task.subcategoryId == subcategoryId).toList();
+    return taskProvider.getBySubcategoryId(subcategoryId);
   }
 
   List<Task> getToDoTasksBySubcategoryId(String subcategoryId) {
-    return _tasks
-        .where((task) =>
-            task.subcategoryId == subcategoryId &&
-            task.status == TaskStatus.ToDo)
-        .toList();
+    return taskProvider.getToDoTasksBySubcategoryId(subcategoryId);
   }
 
   List<Task> getDoneTasksBySubcategoryId(String subcategoryId) {
-    return _tasks
-        .where((task) =>
-            task.subcategoryId == subcategoryId &&
-            task.status == TaskStatus.Done)
-        .toList();
+    return taskProvider.getDoneTasksBySubcategoryId(subcategoryId);
   }
 
   int getTasksCount(String categoryId) {
-    var subcategoryIds = _subcategories
-        .where((subcategory) => subcategory.categoryId == categoryId)
+    var subcategoryIds = subcategoryProvider
+        .getByCategoryId(categoryId)
         .map((subcategory) => subcategory.id)
         .toList();
 
-    return _tasks
-        .where((task) => subcategoryIds.contains(task.subcategoryId))
-        .length;
+    return taskProvider.getCountByList(subcategoryIds);
   }
+
+  // ----- Cascade deletion -----
 
   void deleteCategory(String categoryId) {
     categoryProvider.delete(categoryId);

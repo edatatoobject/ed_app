@@ -7,50 +7,45 @@ class SubcategoryProvider extends ChangeNotifier {
   final collectionName = "subcategory";
   final firestoreManager = FirestoreManager();
 
+  final List<Subcategory> _items = [];
+
+  Future uploadData() async {
+    var categoriesData = await firestoreManager.getAll(collectionName);
+    _items.addAll(_mapSubcategoryList(categoriesData));
+  }
+
   //get all
-  Future<List<Subcategory>> getAll() async {
-    var subcategoriesData = await firestoreManager.getAll(collectionName);
-
-    var subcategories = _mapSubcategoryList(subcategoriesData);
-
-    return subcategories;
+  List<Subcategory> getAll() {
+    return [..._items];
   }
 
   //get by id
-  Future<Subcategory> getById(String subcategoryId) async {
-    var subcategoryData =
-        await firestoreManager.getById(collectionName, subcategoryId);
-
-    var subcategory = Subcategory.fromMap(subcategoryData.id, subcategoryData.data());
-
-    return subcategory;
+  Subcategory getById(String subcategoryId) {
+    return _items.firstWhere((subcategory) => subcategory.id == subcategoryId);
   }
 
   //get range by list ids
-  Future<List<Subcategory>> getByIds(List<String> subcategoryIds) async {
-    var subcategoriesData =
-        await firestoreManager.getByIds(collectionName, subcategoryIds);
-
-    var subcategories = _mapSubcategoryList(subcategoriesData);
-
-    return subcategories;
+  List<Subcategory> getByIds(List<String> subcategoryIds) {
+    return _items
+        .where((subcategory) => subcategoryIds.contains(subcategory.id))
+        .toList();
   }
 
   // get range by category id
-  Future<List<Subcategory>> getByCategoryId(String categoryId) async {
-    var subcategoriesData = await firestoreManager.getByEqualFilter(collectionName, "categoryId", categoryId);
-
-    var subcategories = _mapSubcategoryList(subcategoriesData);
-
-    return subcategories;
+  List<Subcategory> getByCategoryId(String categoryId) {
+    return _items
+        .where((subcategory) => subcategory.categoryId == categoryId)
+        .toList();
   }
 
   // get count by category id
-  Future<int> getSubcategoryCount(String categoryId) async {
-    return await firestoreManager.getSizeByEqualFilter(collectionName, "categoryId", categoryId);
+  int getSubcategoryCount(String categoryId) {
+    return _items
+        .where((subcategory) => subcategory.categoryId == categoryId)
+        .length;
   }
 
-  //add 
+  //add
   Future add(Subcategory subcategory) async {
     await firestoreManager.add(collectionName, subcategory.toMap());
 

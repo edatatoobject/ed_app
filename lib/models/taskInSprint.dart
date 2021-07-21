@@ -7,4 +7,20 @@ class TaskInSprint {
   final TaskInSprintStatus status;
 
   TaskInSprint({this.id, this.sprintId, this.taskId, this.status});
+
+  Map<String, dynamic> toMap() {
+    return {
+      "sprintId": sprintId,
+      "taskId": taskId,
+      "status": getFromStatus(status),
+    };
+  }
+
+  static TaskInSprint fromMap(String id, Map<String, dynamic> mapData) {
+    return TaskInSprint(
+        id: id,
+        sprintId: mapData["sprintId"],
+        taskId: mapData["taskId"],
+        status: getFromIndex(mapData["status"]));
+  }
 }

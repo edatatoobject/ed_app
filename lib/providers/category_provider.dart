@@ -7,36 +7,29 @@ class CategoryProvider extends ChangeNotifier {
   final collectionName = "category";
   final firestoreManager = FirestoreManager();
 
-  //get all
-  Future<List<Category>> getAll() async {
+  final List<Category> _items = [];
+
+  Future uploadData() async {
     var categoriesData = await firestoreManager.getAll(collectionName);
+    _items.addAll(_mapCategoryList(categoriesData));
+  }
 
-    var categories = _mapCategoryList(categoriesData);
-
-    return categories;
+  //get all
+  List<Category> getAll() {
+    return [..._items];
   }
 
   //get by id
-  Future<Category> getById(String categoryId) async {
-    var categoryData =
-        await firestoreManager.getById(collectionName, categoryId);
-
-    var category = Category.fromMap(categoryData.id, categoryData.data());
-
-    return category;
+  Category getById(String categoryId) {
+    return _items.firstWhere((category) => category.id == categoryId);
   }
 
   //get range by list ids
-  Future<List<Category>> getByIds(List<String> categoryIds) async {
-    var categoriesData =
-        await firestoreManager.getByIds(collectionName, categoryIds);
-
-    var categories = _mapCategoryList(categoriesData);
-
-    return categories;
+  List<Category> getByIds(List<String> categoryIds){
+    return _items.where((category) => categoryIds.contains(category.id)).toList();
   }
 
-  //add 
+  //add
   Future add(Category category) async {
     await firestoreManager.add(collectionName, category.toMap());
 

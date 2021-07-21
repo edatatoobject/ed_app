@@ -1,14 +1,23 @@
-import 'package:ed_app/dev_src/dummy_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ed_app/models/sprint.dart';
+import 'package:ed_app/shared/firebase/data/firestore_manager.dart';
 import 'package:flutter/material.dart';
 
 class SprintProvider extends ChangeNotifier {
-  List<Sprint> _items = DummyData.sprints;
+  final collectionName = "sprint";
+  final firestoreManager = FirestoreManager();
 
-  List<Sprint> get items {
+  final List<Sprint> _items = [];
+
+  List<Sprint> getAll() {
     if (_items == null) return null;
 
     return [..._items];
+  }
+
+  Future uploadData() async {
+    var categoriesData = await firestoreManager.getAll(collectionName);
+    _items.addAll(_mapSprintList(categoriesData));
   }
 
   Sprint getCurrentSprint() {
@@ -20,17 +29,24 @@ class SprintProvider extends ChangeNotifier {
         orElse: () => null);
   }
 
-  void addSprint(Sprint sprint) {
-    _items.add(sprint);
+  void add(Sprint sprint) async {
+    await firestoreManager.add(collectionName, sprint.toMap());
 
     notifyListeners();
   }
 
-  void updateSprint(Sprint sprint) {
-    var index = _items.indexWhere((oldSprint) => oldSprint.id == sprint.id);
-
-    _items[index] = sprint;
+  void update(Sprint sprint) async {
+    await firestoreManager.update(
+        collectionName, sprint.id, sprint.toMap());
 
     notifyListeners();
+  }
+
+  List<Sprint> _mapSprintList(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshot) {
+    return snapshot
+        .map((categoryData) =>
+            Sprint.fromMap(categoryData.id, categoryData.data()))
+        .toList();
   }
 }
