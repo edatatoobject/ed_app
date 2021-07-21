@@ -15,7 +15,6 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
   int _currentIndex = 0;
 
   List<Widget> _pages = [MainScreen(), CategoryScreen()];
-  List<String> _titles = ["Main", "Categories"];
 
   var bottomNavigationBarItems = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
@@ -39,7 +38,7 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
     return Scaffold(
       drawer: AppDrawer(),
       body: FutureBuilder(
-          future: FirebaseDataInitializer.InitData(context),
+          future: FirebaseDataInitializer.initData(context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return PageTransitionSwitcher(

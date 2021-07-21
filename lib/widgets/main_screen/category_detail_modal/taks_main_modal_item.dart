@@ -47,14 +47,17 @@ class _TaskMainModalItemState extends State<TaskMainModalItem> {
             style: TextStyle(color: Colors.cyan),
           ),
         );
+      default:
+        throw new Exception(
+            "TaskMainModal.getMainActionButton: Status error");
     }
   }
 
   void showTaskDialog(BuildContext context, String taskId) async {
     var task = widget.tasks.firstWhere((task) => task.id == taskId);
 
-    var tasksInSrint =
-        Provider.of<SprintDataBlock>(context, listen: false).getCurrentSprintTasks();
+    var tasksInSrint = Provider.of<SprintDataBlock>(context, listen: false)
+        .getCurrentSprintTasks();
 
     var taskInSprint = tasksInSrint
         .firstWhere((taskInSprint) => taskInSprint.taskId == taskId);

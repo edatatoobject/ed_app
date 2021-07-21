@@ -27,7 +27,7 @@ class SubcategoryTextModal extends StatelessWidget {
   final controller = TextEditingController();
 
   void saveSubcategory(BuildContext context) {
-    DismissFocusScope(context);
+    FocusScopeTool().dismissFocusScope(context);
 
     EasyLoading.show(status: 'loading...');
 

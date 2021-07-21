@@ -43,7 +43,8 @@ class _CategoryTextScreenState extends State<CategoryTextScreen> {
   }
 
   Future saveCategory(BuildContext context) async {
-    DismissFocusScope(context);
+    FocusScopeTool().dismissFocusScope(context);
+
 
     EasyLoading.show(status: 'loading...');
 

@@ -21,7 +21,7 @@ class TaskTextModal extends StatefulWidget {
       this.subcategoryId,
       this.name,
       this.actionType})
-      : super(key: key) {}
+      : super(key: key);
 
   @override
   _TaskTextModalState createState() => _TaskTextModalState();
@@ -54,7 +54,7 @@ class _TaskTextModalState extends State<TaskTextModal> {
   }
 
   void saveTask() {
-    DismissFocusScope(context);
+    FocusScopeTool().dismissFocusScope(context);
 
     EasyLoading.show(status: 'loading...');
 

@@ -4,17 +4,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class FirebaseDataInitializer {
-  static Future InitData(BuildContext context) {
+  static Future initData(BuildContext context) async {
     var categoryDataBlock =
         Provider.of<CategoryDataBlock>(context, listen: false);
 
-    categoryDataBlock.categoryProvider.initData();
-    categoryDataBlock.subcategoryProvider.initData();
-    categoryDataBlock.taskProvider.initData();
+    await categoryDataBlock.categoryProvider.initData();
+    await categoryDataBlock.subcategoryProvider.initData();
+    await categoryDataBlock.taskProvider.initData();
 
     var sprintDataBlock = Provider.of<SprintDataBlock>(context, listen: false);
 
-    sprintDataBlock.sprintProvider.initData();
-    sprintDataBlock.taskInSprintProvider.initData();
+    await sprintDataBlock.sprintProvider.initData();
+    await sprintDataBlock.taskInSprintProvider.initData();
   }
 }

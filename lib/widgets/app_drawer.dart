@@ -1,4 +1,3 @@
-import 'package:ed_app/screens/auth/auth_screen.dart';
 import 'package:ed_app/shared/firebase/firebase_authentication.dart';
 import 'package:flutter/material.dart';
 
