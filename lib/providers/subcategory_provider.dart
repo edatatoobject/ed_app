@@ -10,8 +10,10 @@ class SubcategoryProvider extends ChangeNotifier {
   final List<Subcategory> _items = [];
 
   Future initData() async {
-    var categoriesData = await firestoreManager.getAll(collectionName);
-    _items.addAll(_mapSubcategoryList(categoriesData));
+    if (_items.length == 0) {
+      var data = await firestoreManager.getAll(collectionName);
+      _items.addAll(_mapSubcategoryList(data));
+    }
   }
 
   //get all

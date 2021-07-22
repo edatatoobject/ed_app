@@ -11,8 +11,10 @@ class TaskProvider extends ChangeNotifier {
   final List<Task> _items = [];
 
   Future initData() async {
-    var categoriesData = await firestoreManager.getAll(collectionName);
-    _items.addAll(_mapTaskList(categoriesData));
+    if (_items.length == 0) {
+      var data = await firestoreManager.getAll(collectionName);
+      _items.addAll(_mapTaskList(data));
+    }
   }
 
   //get all
@@ -27,7 +29,7 @@ class TaskProvider extends ChangeNotifier {
 
   //get range by list ids
   List<Task> getByIds(List<String> taskIds) {
-    return _items.where((task) => taskIds.contains(task.id));
+    return _items.where((task) => taskIds.contains(task.id)).toList();
   }
 
   List<Task> getBySubcategoryId(String subcategoryId) {
@@ -37,13 +39,13 @@ class TaskProvider extends ChangeNotifier {
   List<Task> getToDoTasksBySubcategoryId(String subcategoryId) {
     var tasks = getBySubcategoryId(subcategoryId);
 
-    return tasks.where((task) => task.status == TaskStatus.ToDo);
+    return tasks.where((task) => task.status == TaskStatus.ToDo).toList();
   }
 
   List<Task> getDoneTasksBySubcategoryId(String subcategoryId) {
     var tasks = getBySubcategoryId(subcategoryId);
 
-    return tasks.where((task) => task.status == TaskStatus.Done);
+    return tasks.where((task) => task.status == TaskStatus.Done).toList();
   }
 
   int getCountByList(List<String> subcategoryIds) {

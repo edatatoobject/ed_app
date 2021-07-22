@@ -65,7 +65,7 @@ class FirestoreManager {
 
     await collection
         .add(data)
-        .then((value) => print("Added"))
+        .then((value) => print("Added $value"))
         .catchError((error) => print("Add error: $error"));
   }
 

@@ -16,18 +16,6 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
 
   List<Widget> _pages = [MainScreen(), CategoryScreen()];
 
-  bool initialized = false;
-
-  void initData(BuildContext context) async {
-    if (!initialized) {
-      await FirebaseDataInitializer.initData(context);
-    }
-
-    setState(() {
-      initialized = true;
-    });
-  }
-
   var bottomNavigationBarItems = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: const Icon(Icons.home),
@@ -47,12 +35,9 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    initData(context);
-
     return Scaffold(
       drawer: AppDrawer(),
-      body: initialized
-          ? PageTransitionSwitcher(
+      body: PageTransitionSwitcher(
               child: _pages[_currentIndex],
               duration: Duration(milliseconds: 500),
               transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
@@ -61,8 +46,7 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
                     animation: primaryAnimation,
                     secondaryAnimation: secondaryAnimation);
               },
-            )
-          : Loading(),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
         items: bottomNavigationBarItems,

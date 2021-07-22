@@ -10,8 +10,10 @@ class CategoryProvider extends ChangeNotifier {
   final List<Category> _items = [];
 
   Future initData() async {
-    var categoriesData = await firestoreManager.getAll(collectionName);
-    _items.addAll(_mapCategoryList(categoriesData));
+    if (_items.length == 0) {
+      var data = await firestoreManager.getAll(collectionName);
+      _items.addAll(_mapCategoryList(data));
+    }
   }
 
   //get all
@@ -25,8 +27,10 @@ class CategoryProvider extends ChangeNotifier {
   }
 
   //get range by list ids
-  List<Category> getByIds(List<String> categoryIds){
-    return _items.where((category) => categoryIds.contains(category.id)).toList();
+  List<Category> getByIds(List<String> categoryIds) {
+    return _items
+        .where((category) => categoryIds.contains(category.id))
+        .toList();
   }
 
   //add
@@ -38,8 +42,7 @@ class CategoryProvider extends ChangeNotifier {
 
   //update
   Future update(String categoryId, Category category) async {
-    await firestoreManager.update(
-        collectionName, categoryId, category.toMap());
+    await firestoreManager.update(collectionName, categoryId, category.toMap());
 
     notifyListeners();
   }
