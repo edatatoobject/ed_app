@@ -5,6 +5,7 @@ import 'package:ed_app/providers/sprint_provider.dart';
 import 'package:ed_app/providers/subcategory_provider.dart';
 import 'package:ed_app/providers/task_in_sprint_provider.dart';
 import 'package:ed_app/providers/task_provider.dart';
+import 'package:ed_app/shared/firebase/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -40,6 +41,9 @@ List<SingleChildWidget> initializeProviders() {
       update:
           (context, sprintProvider, taskInSprintProvider, sprintDataBlock) =>
               sprintDataBlock..update(sprintProvider, taskInSprintProvider),
-    )
+    ),
+
+    //auth provider
+    ChangeNotifierProvider(create: (context) => AuthProvider())
   ];
 }

@@ -1,13 +1,11 @@
-import 'package:ed_app/screens/auth/auth_screen.dart';
 import 'package:ed_app/screens/category/category_text_screen.dart';
 import 'package:ed_app/screens/category/category_detail_screen.dart';
-import 'package:ed_app/screens/initializing_screen.dart';
 import 'package:ed_app/screens/main_screen/sprint_detail_screen.dart';
 import 'package:ed_app/screens/main_screen/tasks_picker_screen.dart';
 import 'package:ed_app/theme/custom_theme_data.dart';
 import 'package:ed_app/theme/setup_easy_loading.dart';
 import 'package:ed_app/tools/provider_initialization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ed_app/widgets/provider_initializator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -29,14 +27,7 @@ class MyApp extends StatelessWidget {
       providers: initializeProviders(),
       child: MaterialApp(
         theme: CustomThemeData.themedata,
-        home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return InitializingScreen();
-              }
-              return AuthScreen();
-            }),
+        home: ProviderInitialization(),
         builder: EasyLoading.init(),
         routes: {
           CategoryDetailScreen.routeName: (ctx) => CategoryDetailScreen(),
