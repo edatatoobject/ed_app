@@ -54,14 +54,24 @@ class TaskProvider extends ChangeNotifier {
 
   //add
   Future add(Task task) async {
-    await firestoreManager.add(collectionName, task.toMap());
+    var id = await firestoreManager.add(collectionName, task.toMap());
+
+    var newTask = Task.fromTask(id, task);
+
+    _items.add(newTask);
 
     notifyListeners();
   }
 
   //update
-  Future update(String taskId, Task task) async {
+  Future update(String id, Task task) async {
     await firestoreManager.update(collectionName, task.id, task.toMap());
+
+    var taskIndex = _items.indexWhere((task) => id == task.id);
+
+    var newTask = Task.fromTask(id, task);
+
+    _items[taskIndex] = newTask;
 
     notifyListeners();
   }
@@ -69,6 +79,10 @@ class TaskProvider extends ChangeNotifier {
   //delete
   Future delete(String id) async {
     await firestoreManager.delete(collectionName, id);
+
+    var taskIndex = _items.indexWhere((task) => id == task.id);
+
+    _items.removeAt(taskIndex);
 
     notifyListeners();
   }

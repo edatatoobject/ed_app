@@ -31,8 +31,18 @@ class Sprint {
         id: id,
         name: mapData["name"],
         duration: mapData["duration"],
-        startDate:  (mapData["startDate"] as Timestamp).toDate(),
+        startDate: (mapData["startDate"] as Timestamp).toDate(),
         finishDate: (mapData["finishDate"] as Timestamp).toDate(),
         number: mapData["number"]);
+  }
+
+  static Sprint fromSprint(String id, Sprint sprint) {
+    return Sprint(
+        id: id,
+        duration: sprint.duration,
+        finishDate: sprint.finishDate,
+        name: sprint.name,
+        number: sprint.number,
+        startDate: sprint.startDate);
   }
 }

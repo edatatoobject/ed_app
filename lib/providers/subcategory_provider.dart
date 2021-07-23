@@ -47,15 +47,24 @@ class SubcategoryProvider extends ChangeNotifier {
 
   //add
   Future add(Subcategory subcategory) async {
-    await firestoreManager.add(collectionName, subcategory.toMap());
+    var id = await firestoreManager.add(collectionName, subcategory.toMap());
+
+    var newSubcategory = Subcategory.fromSubcategory(id, subcategory);
+
+    _items.add(newSubcategory);
 
     notifyListeners();
   }
 
   //update
-  Future update(String subcategoryId, Subcategory subcategory) async {
-    await firestoreManager.update(
-        collectionName, subcategoryId, subcategory.toMap());
+  Future update(String id, Subcategory subcategory) async {
+    await firestoreManager.update(collectionName, id, subcategory.toMap());
+
+    var subcategoryIndex = _items.indexWhere((category) => id == category.id);
+
+    var newSubcategory = Subcategory.fromSubcategory(id, subcategory);
+
+    _items[subcategoryIndex] = newSubcategory;
 
     notifyListeners();
   }
@@ -63,6 +72,10 @@ class SubcategoryProvider extends ChangeNotifier {
   //delete
   Future delete(String id) async {
     await firestoreManager.delete(collectionName, id);
+
+    var subcategoryIndex = _items.indexWhere((category) => id == category.id);
+
+    _items.removeAt(subcategoryIndex);
 
     notifyListeners();
   }

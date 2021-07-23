@@ -53,7 +53,7 @@ class _TaskTextModalState extends State<TaskTextModal> {
         .toList();
   }
 
-  void saveTask() {
+  void saveTask() async {
     FocusScopeTool().dismissFocusScope(context);
 
     EasyLoading.show(status: 'loading...');
@@ -61,11 +61,11 @@ class _TaskTextModalState extends State<TaskTextModal> {
     var task = Task(value: controller.text, subcategoryId: pickedSubcategoryId);
 
     if (widget.actionType == ActionType.Create) {
-      Provider.of<CategoryDataBlock>(context, listen: false)
+      await Provider.of<CategoryDataBlock>(context, listen: false)
           .taskProvider
           .add(task);
     } else {
-      Provider.of<CategoryDataBlock>(context, listen: false)
+      await Provider.of<CategoryDataBlock>(context, listen: false)
           .taskProvider
           .update(widget.taskId, task);
     }

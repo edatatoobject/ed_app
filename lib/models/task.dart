@@ -32,4 +32,13 @@ class Task {
         subcategoryId: mapData["subcategoryId"],
         status: getStatusFromIndex(mapData["status"]));
   }
+
+  static Task fromTask(String id, Task task) {
+    return Task(
+        id: id,
+        subcategoryId: task.subcategoryId,
+        value: task.value,
+        description: task.description,
+        status: task.status);
+  }
 }

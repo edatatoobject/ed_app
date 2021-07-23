@@ -23,4 +23,12 @@ class TaskInSprint {
         taskId: mapData["taskId"],
         status: getFromIndex(mapData["status"]));
   }
+
+  static TaskInSprint fromTaskInSprint(String id, TaskInSprint taskInSprint) {
+    return TaskInSprint(
+        id: id,
+        sprintId: taskInSprint.sprintId,
+        taskId: taskInSprint.taskId,
+        status: taskInSprint.status);
+  }
 }

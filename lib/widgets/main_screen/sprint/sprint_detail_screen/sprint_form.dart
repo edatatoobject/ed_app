@@ -78,6 +78,10 @@ class _SprintFormState extends State<SprintForm> {
         context, TasksPickerScreen.routeName,
         arguments: _pickedTasks);
 
+    if (tasks == "cancel") {
+      return;
+    }
+
     if ((tasks as List<String>).isEmpty) {
       setState(() {
         _tasksValidation = false;
@@ -124,7 +128,6 @@ class _SprintFormState extends State<SprintForm> {
 
     List<TaskInSprint> tasksInSprint = _pickedTasks
         .map((task) => TaskInSprint(
-            id: Uuid().v4(),
             sprintId: sprint.id,
             taskId: task,
             status: TaskInSprintStatus.Current))
@@ -133,10 +136,10 @@ class _SprintFormState extends State<SprintForm> {
     var sprintDataBlock = Provider.of<SprintDataBlock>(context, listen: false);
 
     if (widget.sprintId == null) {
-      sprintDataBlock.createSprint(sprint);
+      sprintDataBlock.sprintProvider.add(sprint);
       sprintDataBlock.createTasks(tasksInSprint);
     } else {
-      sprintDataBlock.updateSprint(sprint);
+      sprintDataBlock.sprintProvider.update(widget.sprintId, sprint);
       sprintDataBlock.updateTasks(tasksInSprint, widget.sprintId);
     }
 

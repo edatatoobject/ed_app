@@ -17,7 +17,7 @@ class Category {
   Map<String, dynamic> toMap() {
     return {
       "name": name,
-      "categorySize": categorySize,
+      "categorySize": getSizeIndex(categorySize),
       "iconCode": iconInfo.code,
       "iconFontFamily": iconInfo.fontFamily,
     };
@@ -29,5 +29,13 @@ class Category {
         name: mapData["name"],
         categorySize: getSizeByIndex(mapData["categorySize"]),
         iconInfo: IconInfo(mapData["iconCode"], mapData["iconFontFamily"]));
+  }
+
+  static Category fromCategory(String id, Category category) {
+    return Category(
+        id: id,
+        categorySize: category.categorySize,
+        iconInfo: category.iconInfo,
+        name: category.name);
   }
 }

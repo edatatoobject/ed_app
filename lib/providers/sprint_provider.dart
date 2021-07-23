@@ -30,13 +30,23 @@ class SprintProvider extends ChangeNotifier {
   }
 
   void add(Sprint sprint) async {
-    await firestoreManager.add(collectionName, sprint.toMap());
+    var id = await firestoreManager.add(collectionName, sprint.toMap());
+
+    var newSprint = Sprint.fromSprint(id, sprint);
+
+    _items.add(newSprint);
 
     notifyListeners();
   }
 
-  void update(Sprint sprint) async {
+  void update(String id, Sprint sprint) async {
     await firestoreManager.update(collectionName, sprint.id, sprint.toMap());
+
+    var sprintIndex = _items.indexWhere((sprint) => id == sprint.id);
+
+    var newSprint = Sprint.fromSprint(id, sprint);
+
+    _items[sprintIndex] = newSprint;
 
     notifyListeners();
   }

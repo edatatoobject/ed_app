@@ -16,6 +16,8 @@ class CategoryDataBlock extends ChangeNotifier {
     this.categoryProvider = categoryProvider;
     this.subcategoryProvider = subcategoryProvider;
     this.taskProvider = taskProvider;
+
+    notifyListeners();
   }
 
   // ----- Categories -----
@@ -83,10 +85,10 @@ class CategoryDataBlock extends ChangeNotifier {
 
   // ----- Cascade deletion -----
 
-  void deleteCategory(String categoryId) {
-    categoryProvider.delete(categoryId);
+  void deleteCategory(String categoryId) async {
+    await categoryProvider.delete(categoryId);
 
-    cascadeDeleteSubcategories(categoryId);
+    // cascadeDeleteSubcategories(categoryId);
   }
 
   void deleteSubcategory(String subcategoryId, {bool notify = true}) {

@@ -24,21 +24,38 @@ class TaskInSprintProvider extends ChangeNotifier {
         .toList();
   }
 
+  Future update(String id, TaskInSprint taskInSprint) async {
+    await firestoreManager.update(collectionName, id, taskInSprint.toMap());
+
+    var taskInSprintIndex = _items.indexWhere((category) => id == category.id);
+
+    var newTaskInSprin = TaskInSprint.fromTaskInSprint(id, taskInSprint);
+
+    _items[taskInSprintIndex] = newTaskInSprin;
+
+    notifyListeners();
+  }
+
   Future add(TaskInSprint taskInSprint) async {
-    await firestoreManager.add(collectionName, taskInSprint.toMap());
+    var id = await firestoreManager.add(collectionName, taskInSprint.toMap());
 
-    notifyListeners();
+    var newTaskInSprint = TaskInSprint.fromTaskInSprint(id, taskInSprint);
+
+    _items.add(newTaskInSprint);
   }
 
-  Future update(String taskId, TaskInSprint taskInSprint) async {
-    await firestoreManager.update(collectionName, taskId, taskInSprint.toMap());
+  Future delete(String id) async {
+    await firestoreManager.delete(collectionName, id);
 
-    notifyListeners();
+    var taskInSprintIndex =
+        _items.indexWhere((taskInSprint) => id == taskInSprint.id);
+
+    _items.removeAt(taskInSprintIndex);
   }
 
-  Future removeRange(List<String> taskIds) async {
-    for (var taskId in taskIds) {
-      await firestoreManager.delete(collectionName, taskId);
+  Future removeRange(List<String> idList) async {
+    for (var id in idList) {
+      await delete(id);
     }
 
     notifyListeners();
@@ -46,12 +63,12 @@ class TaskInSprintProvider extends ChangeNotifier {
 
   Future updateTasksInSprint(
       List<TaskInSprint> newTasks, List<String> deleteTaskIds) async {
-    for (var deleteTaskId in deleteTaskIds) {
-      await firestoreManager.delete(collectionName, deleteTaskId);
+    for (var taskId in deleteTaskIds) {
+      await delete(taskId);
     }
 
-    for (var newTask in newTasks) {
-      await firestoreManager.add(collectionName, newTask.toMap());
+    for (var newTaskInSprint in newTasks) {
+      await add(newTaskInSprint);
     }
 
     notifyListeners();

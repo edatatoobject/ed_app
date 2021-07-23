@@ -26,7 +26,7 @@ class SubcategoryTextModal extends StatelessWidget {
 
   final controller = TextEditingController();
 
-  void saveSubcategory(BuildContext context) {
+  void saveSubcategory(BuildContext context) async {
     FocusScopeTool().dismissFocusScope(context);
 
     EasyLoading.show(status: 'loading...');
@@ -35,11 +35,11 @@ class SubcategoryTextModal extends StatelessWidget {
         Subcategory(categoryId: categoryId, name: controller.text);
 
     if (actionType == ActionType.Create) {
-      Provider.of<CategoryDataBlock>(context, listen: false)
+      await Provider.of<CategoryDataBlock>(context, listen: false)
           .subcategoryProvider
           .add(subcategory);
     } else {
-      Provider.of<CategoryDataBlock>(context, listen: false)
+      await Provider.of<CategoryDataBlock>(context, listen: false)
           .subcategoryProvider
           .update(subcategoryId, subcategory);
     }

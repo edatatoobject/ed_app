@@ -15,4 +15,9 @@ class Subcategory {
     return Subcategory(
         id: id, categoryId: mapData["categoryId"], name: mapData["name"]);
   }
+
+  static Subcategory fromSubcategory(String id, Subcategory subcategory) {
+    return Subcategory(
+        id: id, name: subcategory.name, categoryId: subcategory.categoryId);
+  }
 }

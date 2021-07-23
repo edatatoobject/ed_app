@@ -33,14 +33,24 @@ class CategoryProvider extends ChangeNotifier {
 
   //add
   Future add(Category category) async {
-    await firestoreManager.add(collectionName, category.toMap());
+    var id = await firestoreManager.add(collectionName, category.toMap());
+
+    var newCategory = Category.fromCategory(id, category);
+
+    _items.add(newCategory);
 
     notifyListeners();
   }
 
   //update
-  Future update(String categoryId, Category category) async {
-    await firestoreManager.update(collectionName, categoryId, category.toMap());
+  Future update(String id, Category category) async {
+    await firestoreManager.update(collectionName, id, category.toMap());
+
+    var categoryIndex = _items.indexWhere((category) => id == category.id);
+
+    var newCategory = Category.fromCategory(id, category);
+
+    _items[categoryIndex] = newCategory;
 
     notifyListeners();
   }
@@ -48,6 +58,10 @@ class CategoryProvider extends ChangeNotifier {
   //delete
   Future delete(String id) async {
     await firestoreManager.delete(collectionName, id);
+
+    var categoryIndex = _items.indexWhere((category) => id == category.id);
+
+    _items.removeAt(categoryIndex);
 
     notifyListeners();
   }

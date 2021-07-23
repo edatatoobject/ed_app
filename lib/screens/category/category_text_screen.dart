@@ -54,11 +54,11 @@ class _CategoryTextScreenState extends State<CategoryTextScreen> {
         categorySize: categorySizes[sizeIndex]);
 
     if (actionType == ActionType.Create) {
-      Provider.of<CategoryDataBlock>(context, listen: false)
+      await Provider.of<CategoryDataBlock>(context, listen: false)
           .categoryProvider
           .add(category);
     } else {
-      Provider.of<CategoryDataBlock>(context, listen: false)
+      await Provider.of<CategoryDataBlock>(context, listen: false)
           .categoryProvider
           .update(categoryId, category);
     }
@@ -112,10 +112,8 @@ class _CategoryTextScreenState extends State<CategoryTextScreen> {
             initialLabelIndex: sizeIndex,
             labels: ['Small', 'Medium', 'Large'],
             inactiveBgColor: Theme.of(context).cardColor,
-            activeBgColor: const Color.fromRGBO(90, 90, 90, 1),
+            activeBgColor: Theme.of(context).accentColor,
             activeFgColor: Theme.of(context).textTheme.subtitle2.color,
-            // activeBgColor: Theme.of(context).primaryColor,
-            // activeFgColor: Colors.white,
             onToggle: (index) => changeSize(index),
           ),
           SizedBox(

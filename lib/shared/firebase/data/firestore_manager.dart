@@ -58,15 +58,20 @@ class FirestoreManager {
   }
 
   //add
-  Future add(String collectionName, Map<String, dynamic> data) async {
+  Future<String> add(String collectionName, Map<String, dynamic> data) async {
     final collection = _getCollection(collectionName);
 
     _addUserId(data);
 
-    await collection
-        .add(data)
-        .then((value) => print("Added $value"))
-        .catchError((error) => print("Add error: $error"));
+    try {
+      var result = await collection.add(data).then((value) {
+        print("Added");
+        return value;
+      });
+      return result.id;
+    } catch (error) {
+      print("Add error: $error");
+    }
   }
 
   //update
