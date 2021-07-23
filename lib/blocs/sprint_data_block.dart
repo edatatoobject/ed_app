@@ -9,27 +9,16 @@ class SprintDataBlock extends ChangeNotifier {
   SprintProvider sprintProvider;
   TaskInSprintProvider taskInSprintProvider;
 
-  Sprint _sprint;
-  List<TaskInSprint> _tasksInSprint;
-
   void update(SprintProvider sprintProvider,
       TaskInSprintProvider taskInSprintProvider) {
     this.sprintProvider = sprintProvider;
     this.taskInSprintProvider = taskInSprintProvider;
-
-    _sprint = this.sprintProvider.getCurrentSprint();
-
-    if (_sprint != null) {
-      _tasksInSprint = this.taskInSprintProvider.getBySprintId(_sprint.id);
-    }
-
-    notifyListeners();
   }
 
   // ----- Sprints -----
 
   Sprint getCurrentSprint() {
-    return _sprint;
+    return sprintProvider.getCurrentSprint();
   }
 
   Sprint getSprintById(String sprintId) {
@@ -75,7 +64,13 @@ class SprintDataBlock extends ChangeNotifier {
   // ----- Tasks -----
 
   List<TaskInSprint> getCurrentSprintTasks() {
-    return _tasksInSprint;
+    var currentSprint = sprintProvider.getCurrentSprint();
+
+    if (currentSprint != null) {
+      return taskInSprintProvider.getBySprintId(currentSprint.id);
+    }
+
+    return null;
   }
 
   List<TaskInSprint> getSprintTasks(String sprintId) {
@@ -111,10 +106,12 @@ class SprintDataBlock extends ChangeNotifier {
             !tasksInSprint.contains(taskInSprint.id))
         .map((taskInSprint) => taskInSprint.id);
 
-    var notChangedTasks = tasks.where((task) => !removedTasks.contains(task.id));
+    var notChangedTasks =
+        tasks.where((task) => !removedTasks.contains(task.id));
 
     var addedTasks = tasksInSprint
-        .where((taskInSprint) => notChangedTasks.contains(taskInSprint.id)).toList();
+        .where((taskInSprint) => notChangedTasks.contains(taskInSprint.id))
+        .toList();
 
     await taskInSprintProvider.updateTasksInSprint(addedTasks, removedTasks);
   }

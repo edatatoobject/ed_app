@@ -7,13 +7,11 @@ class SprintProvider extends ChangeNotifier {
   final collectionName = "sprint";
   final firestoreManager = FirestoreManager();
 
-  final List<Sprint> _items = [];
+  List<Sprint> _items = [];
 
   Future initData() async {
-    if (_items.length == 0) {
-      var data = await firestoreManager.getAll(collectionName);
-      _items.addAll(_mapSprintList(data));
-    }
+    var data = await firestoreManager.getAll(collectionName);
+    _items = _mapSprintList(data);
   }
 
   List<Sprint> getAll() {
@@ -38,8 +36,7 @@ class SprintProvider extends ChangeNotifier {
   }
 
   void update(Sprint sprint) async {
-    await firestoreManager.update(
-        collectionName, sprint.id, sprint.toMap());
+    await firestoreManager.update(collectionName, sprint.id, sprint.toMap());
 
     notifyListeners();
   }

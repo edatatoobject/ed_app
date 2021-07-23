@@ -8,13 +8,11 @@ class TaskProvider extends ChangeNotifier {
   final collectionName = "tasks";
   final firestoreManager = FirestoreManager();
 
-  final List<Task> _items = [];
+  List<Task> _items = [];
 
   Future initData() async {
-    if (_items.length == 0) {
-      var data = await firestoreManager.getAll(collectionName);
-      _items.addAll(_mapTaskList(data));
-    }
+    var data = await firestoreManager.getAll(collectionName);
+    _items = _mapTaskList(data);
   }
 
   //get all
@@ -49,7 +47,9 @@ class TaskProvider extends ChangeNotifier {
   }
 
   int getCountByList(List<String> subcategoryIds) {
-    return _items.where((task) => subcategoryIds.contains(task.subcategoryId)).length;
+    return _items
+        .where((task) => subcategoryIds.contains(task.subcategoryId))
+        .length;
   }
 
   //add

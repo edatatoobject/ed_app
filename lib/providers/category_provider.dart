@@ -7,13 +7,11 @@ class CategoryProvider extends ChangeNotifier {
   final collectionName = "category";
   final firestoreManager = FirestoreManager();
 
-  final List<Category> _items = [];
+  List<Category> _items = [];
 
   Future initData() async {
-    if (_items.length == 0) {
-      var data = await firestoreManager.getAll(collectionName);
-      _items.addAll(_mapCategoryList(data));
-    }
+    var data = await firestoreManager.getAll(collectionName);
+    _items = _mapCategoryList(data);
   }
 
   //get all
