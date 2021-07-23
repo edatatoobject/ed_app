@@ -10,7 +10,7 @@ class CustomThemeData {
 
   static const Color accentColor = Colors.cyanAccent;
 
-  static InputDecoration BorderlessInputDecoreation(String hintText) {
+  static InputDecoration borderlessInputDecoreation(String hintText) {
     return InputDecoration(
         filled: false, border: InputBorder.none, hintText: hintText);
   }

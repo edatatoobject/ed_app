@@ -28,6 +28,11 @@ class _TasksPickerScreenState extends State<TasksPickerScreen> {
     Navigator.of(context).pop(pickedTasks);
   }
 
+  Future<bool> _onPopScope(BuildContext context) async {
+    Navigator.of(context).pop("cancel");
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     initialyActiveTasks =
@@ -40,32 +45,35 @@ class _TasksPickerScreenState extends State<TasksPickerScreen> {
     var categories = Provider.of<CategoryDataBlock>(context).getCategories();
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Text(
-                "Categories",
-                style: Theme.of(context).primaryTextTheme.headline5,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) => CategoryItemTP(
-                    categoryId: categories[index].id,
-                    addTask: addTask,
-                    removeTask: removeTask,
-                    activeTasks: initialyActiveTasks,
+      body: WillPopScope(
+        onWillPop: () => _onPopScope(context),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Text(
+                  "Categories",
+                  style: Theme.of(context).primaryTextTheme.headline5,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) => CategoryItemTP(
+                      categoryId: categories[index].id,
+                      addTask: addTask,
+                      removeTask: removeTask,
+                      activeTasks: initialyActiveTasks,
+                    ),
                   ),
                 ),
-              ),
-              ElevatedButton(
-                  onPressed: () => submit(context), child: Text("Submit"))
-            ],
+                ElevatedButton(
+                    onPressed: () => submit(context), child: Text("Submit"))
+              ],
+            ),
           ),
         ),
       ),

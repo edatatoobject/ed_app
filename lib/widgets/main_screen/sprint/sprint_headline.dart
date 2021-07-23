@@ -72,8 +72,10 @@ class SprintHeadline extends StatelessWidget {
         style: Theme.of(context).primaryTextTheme.subtitle1,
       ));
       sprintAppBar.add(IconButton(
-          onPressed: () =>
-              Navigator.of(context).pushNamed(SprintDetailScreen.routeName, arguments: currentSprint.id),
+          onPressed: () => 
+          Navigator.of(context).pushNamed(
+              SprintDetailScreen.routeName,
+              arguments: currentSprint.id),
           icon: Icon(Icons.settings)));
     } else {
       sprintAppBar.add(ElevatedButton(

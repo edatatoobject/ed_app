@@ -13,7 +13,6 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
   int _currentIndex = 0;
 
   List<Widget> _pages = [MainScreen(), CategoryScreen()];
-  List<String> _titles = ["Main", "Categories"];
 
   var bottomNavigationBarItems = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
@@ -37,15 +36,15 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
     return Scaffold(
       drawer: AppDrawer(),
       body: PageTransitionSwitcher(
-        child: _pages[_currentIndex],
-        duration: Duration(milliseconds: 500),
-        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
-          return FadeThroughTransition(
-              child: child,
-              animation: primaryAnimation,
-              secondaryAnimation: secondaryAnimation);
-        },
-      ),
+              child: _pages[_currentIndex],
+              duration: Duration(milliseconds: 500),
+              transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+                return FadeThroughTransition(
+                    child: child,
+                    animation: primaryAnimation,
+                    secondaryAnimation: secondaryAnimation);
+              },
+            ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
         items: bottomNavigationBarItems,

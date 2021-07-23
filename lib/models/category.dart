@@ -9,8 +9,33 @@ class Category {
   final IconInfo iconInfo;
 
   Category(
-      {@required this.id,
+      {this.id,
       @required this.name,
       @required this.categorySize,
       @required this.iconInfo});
+
+  Map<String, dynamic> toMap() {
+    return {
+      "name": name,
+      "categorySize": getSizeIndex(categorySize),
+      "iconCode": iconInfo.code,
+      "iconFontFamily": iconInfo.fontFamily,
+    };
+  }
+
+  static Category fromMap(String id, Map<String, dynamic> mapData) {
+    return Category(
+        id: id,
+        name: mapData["name"],
+        categorySize: getSizeByIndex(mapData["categorySize"]),
+        iconInfo: IconInfo(mapData["iconCode"], mapData["iconFontFamily"]));
+  }
+
+  static Category fromCategory(String id, Category category) {
+    return Category(
+        id: id,
+        categorySize: category.categorySize,
+        iconInfo: category.iconInfo,
+        name: category.name);
+  }
 }

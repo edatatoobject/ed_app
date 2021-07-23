@@ -1,8 +1,10 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
-import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/models/subcategory.dart';
+import 'package:ed_app/models/task.dart';
+import 'package:ed_app/tools/focus_scope_tool.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 class TaskTextModal extends StatefulWidget {
@@ -10,38 +12,37 @@ class TaskTextModal extends StatefulWidget {
   final String categoryId;
   final String subcategoryId;
   final ActionType actionType;
-
-  final controller = TextEditingController();
+  final String name;
 
   TaskTextModal(
       {Key key,
       @required this.categoryId,
       this.taskId,
       this.subcategoryId,
-      String name,
+      this.name,
       this.actionType})
-      : super(key: key) {
-    if (name != null && name.isNotEmpty) {
-      controller.text = name;
-    }
-  }
+      : super(key: key);
 
   @override
   _TaskTextModalState createState() => _TaskTextModalState();
 }
 
 class _TaskTextModalState extends State<TaskTextModal> {
-  var pickedSubcategory;
+  String pickedSubcategoryId;
+  final controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    pickedSubcategory = widget.subcategoryId;
+    pickedSubcategoryId = widget.subcategoryId;
+    if (widget.name != null && widget.name.isNotEmpty) {
+      controller.text = widget.name;
+    }
   }
 
   void changeSubcategory(String newValue) {
     setState(() {
-      pickedSubcategory = newValue;
+      pickedSubcategoryId = newValue;
     });
   }
 
@@ -52,22 +53,24 @@ class _TaskTextModalState extends State<TaskTextModal> {
         .toList();
   }
 
-  void saveTask() {
+  void saveTask() async {
+    FocusScopeTool().dismissFocusScope(context);
+
+    EasyLoading.show(status: 'loading...');
+
+    var task = Task(value: controller.text, subcategoryId: pickedSubcategoryId);
+
     if (widget.actionType == ActionType.Create) {
-      Provider.of<CategoryDataBlock>(context, listen: false)
+      await Provider.of<CategoryDataBlock>(context, listen: false)
           .taskProvider
-          .add(widget.controller.text, pickedSubcategory, TaskStatus.ToDo);
+          .add(task);
     } else {
-      Provider.of<CategoryDataBlock>(context, listen: false)
+      await Provider.of<CategoryDataBlock>(context, listen: false)
           .taskProvider
-          .edit(widget.taskId, widget.controller.text, pickedSubcategory);
+          .update(widget.taskId, task);
     }
 
-    FocusScopeNode currentFocus = FocusScope.of(context);
-
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
+    EasyLoading.dismiss();
 
     Navigator.of(context).pop();
   }
@@ -87,18 +90,19 @@ class _TaskTextModalState extends State<TaskTextModal> {
       padding: EdgeInsets.all(15),
       child: Column(
         children: [
-          Text(widget.actionType == ActionType.Create ? "Create" : "Edit", style: Theme.of(context).primaryTextTheme.bodyText1),
+          Text(widget.actionType == ActionType.Create ? "Create" : "Edit",
+              style: Theme.of(context).primaryTextTheme.bodyText1),
           DropdownButton<String>(
-              value: pickedSubcategory == null
+              value: pickedSubcategoryId == null
                   ? subcategories.first.id
-                  : pickedSubcategory,
+                  : pickedSubcategoryId,
               items: getDropdownMenuItems(subcategories),
               onChanged: changeSubcategory),
           const SizedBox(
             height: 20,
           ),
           TextField(
-            controller: widget.controller,
+            controller: controller,
             decoration: InputDecoration(hintText: "Task Name"),
           ),
           const SizedBox(

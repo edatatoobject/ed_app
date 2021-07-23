@@ -12,3 +12,16 @@ int getSizeIndex(CategorySize categorySize) {
       return 0;
   }
 }
+
+CategorySize getSizeByIndex(int index) {
+  switch (index) {
+    case 0:
+      return CategorySize.Small;
+    case 1:
+      return CategorySize.Medium;
+    case 2:
+      return CategorySize.Large;
+    default:
+      throw Exception("CategorySizeIndexError");
+  }
+}

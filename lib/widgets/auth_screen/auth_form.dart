@@ -1,7 +1,9 @@
 import 'package:ed_app/enums/auth/auth_mode.dart';
+import 'package:ed_app/shared/firebase/auth_provider.dart';
 import 'package:ed_app/shared/firebase/firebase_authentication.dart';
 import 'package:ed_app/tools/form_tool.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm();
@@ -100,7 +102,8 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _googleButton() {
-    return ElevatedButton(onPressed: signInWithGoogle, child: Text("Sign in with Google"));
+    return ElevatedButton(
+        onPressed: signInWithGoogle, child: Text("Sign in with Google"));
   }
 
   void submit() async {
@@ -125,6 +128,8 @@ class _LoginFormState extends State<LoginForm> {
       print("login error");
       return;
     }
+
+    Provider.of<AuthProvider>(context, listen: false).setLogin();
   }
 
   void signInWithGoogle() async {
@@ -132,6 +137,10 @@ class _LoginFormState extends State<LoginForm> {
 
     if (user == null) {
       print("Google auth error");
+    }
+
+    if (user != null) {
+      Provider.of<AuthProvider>(context, listen: false).setLogin();
     }
   }
 
