@@ -1,5 +1,6 @@
 import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/action_type.dart';
+import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/models/subcategory.dart';
 import 'package:ed_app/models/task.dart';
 import 'package:ed_app/tools/focus_scope_tool.dart';
@@ -58,7 +59,7 @@ class _TaskTextModalState extends State<TaskTextModal> {
 
     EasyLoading.show(status: 'loading...');
 
-    var task = Task(value: controller.text, subcategoryId: pickedSubcategoryId);
+    var task = Task(value: controller.text, subcategoryId: pickedSubcategoryId, status: widget.actionType == ActionType.Create? TaskStatus.ToDo: null);
 
     if (widget.actionType == ActionType.Create) {
       await Provider.of<CategoryDataBlock>(context, listen: false)
