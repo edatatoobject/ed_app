@@ -31,8 +31,8 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     var categoryId = ModalRoute.of(context).settings.arguments as String;
 
     var dataBloc = Provider.of<CategoryDataBlock>(context);
-    var category = dataBloc.getCategoryById(categoryId);
-    var subcategories = dataBloc.getSubcategoriesByCategoryId(categoryId);
+    var category = dataBloc.categoryProvider.getById(categoryId);
+    var subcategories = dataBloc.subcategoryProvider.getByCategoryId(categoryId);
 
     return Scaffold(
       body: SafeArea(

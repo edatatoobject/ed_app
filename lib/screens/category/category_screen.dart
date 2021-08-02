@@ -13,7 +13,7 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    var categories = Provider.of<CategoryDataBlock>(context).getCategories();
+    var categories = Provider.of<CategoryDataBlock>(context).categoryProvider.getAll();
 
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).backgroundColor),

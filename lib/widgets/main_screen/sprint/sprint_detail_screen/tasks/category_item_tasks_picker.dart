@@ -5,7 +5,11 @@ import 'package:provider/provider.dart';
 
 class CategoryItemTP extends StatefulWidget {
   const CategoryItemTP(
-      {Key key, this.categoryId, this.addTask, this.removeTask, this.activeTasks})
+      {Key key,
+      this.categoryId,
+      this.addTask,
+      this.removeTask,
+      this.activeTasks})
       : super(key: key);
 
   final Function(String taskId) addTask;
@@ -23,10 +27,10 @@ class _CategoryItemTPState extends State<CategoryItemTP> {
   Widget build(BuildContext context) {
     var categoryDataBlock = Provider.of<CategoryDataBlock>(context);
 
-    var category = categoryDataBlock.getCategoryById(widget.categoryId);
+    var category = categoryDataBlock.categoryProvider.getById(widget.categoryId);
 
     var subcategories =
-        categoryDataBlock.getSubcategoriesByCategoryId(widget.categoryId);
+        categoryDataBlock.subcategoryProvider.getByCategoryId(widget.categoryId);
 
     return Container(
         child: Column(
@@ -36,7 +40,8 @@ class _CategoryItemTPState extends State<CategoryItemTP> {
           style: Theme.of(context).primaryTextTheme.headline6,
         ),
         ...subcategories.map((subcategory) {
-          var tasks = categoryDataBlock.getTasksBySubcategoryId(subcategory.id);
+          var tasks =
+              categoryDataBlock.taskProvider.getToDoTasksBySubcategoryId(subcategory.id);
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +58,9 @@ class _CategoryItemTPState extends State<CategoryItemTP> {
                             taskId: task.id,
                             addTask: widget.addTask,
                             removeTask: widget.removeTask,
-                            isInitialActive: widget.activeTasks == null ? false : widget.activeTasks.contains(task.id),
+                            isInitialActive: widget.activeTasks == null
+                                ? false
+                                : widget.activeTasks.contains(task.id),
                           ))
                       .toList(),
                 ),

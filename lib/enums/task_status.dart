@@ -30,6 +30,6 @@ int getStatusIndex(TaskStatus status) {
     if (index == 0) {
       return TaskStatus.ToDo;
     } else {
-      return TaskStatus.ToDo;
+      return TaskStatus.Done;
     }
   }

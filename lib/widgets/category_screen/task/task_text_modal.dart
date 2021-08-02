@@ -78,14 +78,14 @@ class _TaskTextModalState extends State<TaskTextModal> {
 
   void deleteTask() {
     Provider.of<CategoryDataBlock>(context, listen: false)
-        .deleteTask(widget.taskId);
+        .taskProvider.delete(widget.taskId);
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     var subcategories = Provider.of<CategoryDataBlock>(context, listen: false)
-        .getSubcategoriesByCategoryId(widget.categoryId);
+        .subcategoryProvider.getByCategoryId(widget.categoryId);
 
     return Padding(
       padding: EdgeInsets.all(15),

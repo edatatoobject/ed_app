@@ -20,12 +20,12 @@ class _CategoryMainListState extends State<CategoryMainList> {
     var categoryDataBlock = Provider.of<CategoryDataBlock>(context);
 
     var tasks = categoryDataBlock
-        .getTasksByIds(tasksInSprint.map((e) => e.taskId).toList());
+        .taskProvider.getByIds(tasksInSprint.map((e) => e.taskId).toList());
 
     var subcategories = categoryDataBlock
-        .getSubcategoriesByIds(tasks.map((e) => e.subcategoryId).toList());
+        .subcategoryProvider.getByIds(tasks.map((e) => e.subcategoryId).toList());
 
-    var categories = categoryDataBlock.getCategoriesByIds(
+    var categories = categoryDataBlock.categoryProvider.getByIds(
         subcategories.map((e) => e.categoryId).toList());
 
     return categories.map((category) {

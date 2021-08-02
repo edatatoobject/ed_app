@@ -1,9 +1,11 @@
+import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/enums/task_in_sprint_status.dart';
 import 'package:ed_app/models/sprint.dart';
 import 'package:ed_app/models/taskInSprint.dart';
 import 'package:ed_app/providers/sprint_provider.dart';
 import 'package:ed_app/providers/task_in_sprint_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SprintDataBlock extends ChangeNotifier {
   SprintProvider sprintProvider;
@@ -102,8 +104,10 @@ class SprintDataBlock extends ChangeNotifier {
         .map((taskInSprint) => taskInSprint.taskId)
         .toList();
 
-    var notChangedTasks =
-        tasks.where((task) => !removedTasks.contains(task.taskId)).map((task) => task.taskId).toList();
+    var notChangedTasks = tasks
+        .where((task) => !removedTasks.contains(task.taskId))
+        .map((task) => task.taskId)
+        .toList();
 
     var addedTasks = tasksInSprint
         .where((taskInSprint) => !notChangedTasks.contains(taskInSprint.taskId))
@@ -114,6 +118,7 @@ class SprintDataBlock extends ChangeNotifier {
         .map((task) => task.id)
         .toList();
 
-    await taskInSprintProvider.updateTasksInSprint(addedTasks, removedTaskInSprintId);
+    await taskInSprintProvider.updateTasksInSprint(
+        addedTasks, removedTaskInSprintId);
   }
 }

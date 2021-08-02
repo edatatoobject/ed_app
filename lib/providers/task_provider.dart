@@ -31,6 +31,7 @@ class TaskProvider extends ChangeNotifier {
   }
 
   List<Task> getBySubcategoryId(String subcategoryId) {
+    print("stop blyat");
     return _items.where((task) => task.subcategoryId == subcategoryId).toList();
   }
 
@@ -50,6 +51,26 @@ class TaskProvider extends ChangeNotifier {
     return _items
         .where((task) => subcategoryIds.contains(task.subcategoryId))
         .length;
+  }
+
+  Future changeStatus(String id, TaskStatus status) async {
+    await firestoreManager
+        .update(collectionName, id, {"status": getStatusIndex(status)});
+
+    var taskIndex = _items.indexWhere((task) => id == task.id);
+
+    var task = _items[taskIndex];
+
+    var newTask = Task(
+        id: task.id,
+        subcategoryId: task.subcategoryId,
+        value: task.value,
+        status: status,
+        description: task.description);
+
+    _items[taskIndex] = newTask;
+
+    notifyListeners();
   }
 
   //add

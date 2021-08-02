@@ -42,7 +42,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
                 id: widget.id,
                 iconInfo: widget.iconInfo,
                 name: widget.name,
-                subcategoryCount: dataBloc.getSubcategoryCount(widget.id),
+                subcategoryCount: dataBloc.subcategoryProvider.getByCategoryId(widget.id).length,
               ),
             ]),
           ),

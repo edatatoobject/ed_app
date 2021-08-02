@@ -14,7 +14,7 @@ class TasksPickerScreen extends StatefulWidget {
 
 class _TasksPickerScreenState extends State<TasksPickerScreen> {
   List<String> initialyActiveTasks = [];
-  List<String> pickedTasks;
+  List<String> pickedTasks = [];
 
   void addTask(String taskId) {
     pickedTasks.add(taskId);
@@ -42,7 +42,7 @@ class _TasksPickerScreenState extends State<TasksPickerScreen> {
       pickedTasks = [...initialyActiveTasks];
     }
 
-    var categories = Provider.of<CategoryDataBlock>(context).getCategories();
+    var categories = Provider.of<CategoryDataBlock>(context).categoryProvider.getAll();
 
     return Scaffold(
       body: WillPopScope(

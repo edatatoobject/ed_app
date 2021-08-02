@@ -1,5 +1,7 @@
+import 'package:ed_app/blocs/category_data_bloc.dart';
 import 'package:ed_app/blocs/sprint_data_block.dart';
 import 'package:ed_app/enums/task_in_sprint_status.dart';
+import 'package:ed_app/enums/task_status.dart';
 import 'package:ed_app/models/task.dart';
 import 'package:ed_app/models/taskInSprint.dart';
 import 'package:ed_app/ui_elements/task_in_sprint_status_indicator.dart';
@@ -48,8 +50,7 @@ class _TaskMainModalItemState extends State<TaskMainModalItem> {
           ),
         );
       default:
-        throw new Exception(
-            "TaskMainModal.getMainActionButton: Status error");
+        throw new Exception("TaskMainModal.getMainActionButton: Status error");
     }
   }
 
@@ -83,10 +84,18 @@ class _TaskMainModalItemState extends State<TaskMainModalItem> {
       return;
     }
 
-    setState(() {
-      Provider.of<SprintDataBlock>(context, listen: false)
-          .changeTaskStatus(taskInSprint.id, dialogResult);
-    });
+    Provider.of<SprintDataBlock>(context, listen: false)
+        .changeTaskStatus(taskInSprint.id, dialogResult);
+
+    if (dialogResult == TaskInSprintStatus.Done) {
+      Provider.of<CategoryDataBlock>(context, listen: false)
+          .taskProvider
+          .changeStatus(taskId, TaskStatus.Done);
+    } else {
+      Provider.of<CategoryDataBlock>(context, listen: false)
+          .taskProvider
+          .changeStatus(taskId, TaskStatus.ToDo);
+    }
   }
 
   @override
