@@ -65,7 +65,7 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
           )),
       const PopupMenuDivider(),
       PopupMenuItem(
-          value: () => block.deleteSubcategory(widget.id),
+          value: () => block.subcategoryProvider.delete(widget.id),
           child: ListTile(
             leading: const Icon(Icons.delete),
             title: const Text("Delete"),
@@ -91,11 +91,11 @@ class _SubcategoryItemState extends State<SubcategoryItem> {
                   style: Theme.of(context).primaryTextTheme.bodyText2),
               const SizedBox(width: 20),
               Text(
-                  "ToDo: ${dataBloc.getToDoTasksBySubcategoryId(widget.id).length}",
+                  "ToDo: ${dataBloc.taskProvider.getToDoTasksBySubcategoryId(widget.id).length}",
                   style: Theme.of(context).primaryTextTheme.subtitle2),
               const SizedBox(width: 10),
               Text(
-                  "Done: ${dataBloc.getDoneTasksBySubcategoryId(widget.id).length}",
+                  "Done: ${dataBloc.taskProvider.getDoneTasksBySubcategoryId(widget.id).length}",
                   style: Theme.of(context).primaryTextTheme.subtitle2),
               Spacer(),
               PopupMenuButton(

@@ -37,7 +37,7 @@ class _TasksModalState extends State<TasksModal> {
     var dataBloc = Provider.of<CategoryDataBlock>(context);
     var subcategory =
         dataBloc.subcategoryProvider.getById(widget.subcategoryId);
-    var tasks = dataBloc.getTasksBySubcategoryId(widget.subcategoryId);
+    var tasks = dataBloc.taskProvider.getBySubcategoryId(widget.subcategoryId);
     return Container(
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(

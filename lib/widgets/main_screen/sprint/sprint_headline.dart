@@ -77,13 +77,6 @@ class SprintHeadline extends StatelessWidget {
               SprintDetailScreen.routeName,
               arguments: currentSprint.id),
           icon: Icon(Icons.settings)));
-    } else {
-      sprintAppBar.add(ElevatedButton(
-          onPressed: () {},
-          child: Text(
-            "Add new sprint...",
-            style: Theme.of(context).primaryTextTheme.subtitle1,
-          )));
     }
 
     return sprintAppBar;

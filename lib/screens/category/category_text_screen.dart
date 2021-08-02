@@ -76,7 +76,7 @@ class _CategoryTextScreenState extends State<CategoryTextScreen> {
       actionType = ActionType.Edit;
 
       var product =
-          Provider.of<CategoryDataBlock>(context).getCategoryById(categoryId);
+          Provider.of<CategoryDataBlock>(context).categoryProvider.getById(categoryId);
 
       controller.text = product.name;
       _iconData = IconData(product.iconInfo.code,

@@ -49,7 +49,7 @@ class _TaskPickerItemState extends State<TaskPickerItem> {
   @override
   Widget build(BuildContext context) {
     var task =
-        Provider.of<CategoryDataBlock>(context).getTaskById(widget.taskId);
+        Provider.of<CategoryDataBlock>(context).taskProvider.getById(widget.taskId);
     return Row(
       children: [
         Text(task.value),
